@@ -1,0 +1,4 @@
+---
+
+- name: restart fxa-customs-server
+  supervisorctl: name=fxa-customs-server state=restarted

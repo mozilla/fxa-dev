@@ -1,0 +1,6 @@
+---
+content_server_url: 'http://{{ hostvars["content"]["ansible_default_ipv4"]["address"] }}'
+database_url: 'http://{{ hostvars["db"]["ansible_default_ipv4"]["address"] }}:8000'
+public_url: 'http://{{ ansible_default_ipv4.address }}'
+domain: 'example.com'
+customs_server_url: 'http://{{ hostvars["customs"]["ansible_default_ipv4"]["address"] }}:7000'

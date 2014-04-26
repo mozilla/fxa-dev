@@ -1,0 +1,55 @@
+---
+
+- name: install base packages
+  yum: name={{ item }} state=present
+  with_items:
+    - git
+    - ntp
+    - epel-release
+
+- name: install aws shit
+  yum: name=https://s3-us-west-2.amazonaws.com/rpm-repo/6/x86_64/yum-plugins-s3-iam-1.0.1-1.el6.noarch.rpm state=present
+
+- name: install mozilla-services-aws yum repo
+  yum: name=https://s3.amazonaws.com/net.mozaws.prod.ops.rpmrepo/6/x86_64/mozilla-services-aws-release-6-5.noarch.rpm state=present
+
+- name: install epel packages
+  yum: name={{ item }} state=present enablerepo=epel
+  with_items:
+    - tmux
+    - htop
+    - python-pip
+    - python-virtualenv
+    - nodejs
+    - npm
+
+- name: install supervisord
+  pip: name=supervisor version=3.0 state=present
+- file: path=/etc/supervisor.d state=directory
+
+- name: upstart supervisord
+  copy: src=supervisor.conf dest=/etc/init/supervisor.conf owner=root group=root
+
+- name: configure supervisord
+  copy: src=supervisord.conf dest=/etc/supervisord.conf owner=root group=root
+  notify: restart supervisor
+
+- name: start supervisord
+  service: name=supervisor state=started
+
+- name: install heka
+  yum: name=heka state=present enablerepo=mozilla-services-aws
+
+# - name: upstart heka
+#   copy: src=hekad.conf dest=/etc/init/hekad.conf owner=root group=root
+
+#- name: configure heka
+
+#- name: start heka
+
+- name: configure ntp
+  copy: src=ntp.conf dest=/etc/ntp.conf
+  notify: restart ntp
+
+- name: start ntp
+  service: name=ntpd state=started enabled=true

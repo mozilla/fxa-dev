@@ -1,0 +1,22 @@
+---
+
+- name: install memcached
+  yum: name=memcached state=present enablerepo=epel
+
+- name: start memcached
+  service: name=memcached state=started enabled=true
+
+- name: install fxa-customs-server
+  git: repo=https://github.com/dannycoates/fxa-customs-server.git
+       dest=/fxa/fxa-customs-server
+
+- name: install fxa-customs-server dependencies
+  npm: path=/fxa/fxa-customs-server
+
+- name: supervise fxa-customs-server
+  copy: src=fxa-customs-server.conf dest=/etc/supervisor.d/fxa-customs-server.conf
+  notify: restart supervisor
+
+- name: configure fxa-customs-server
+  template: src=config.json.j2 dest=/etc/fxa_customsrc
+  notify: restart fxa-customs-server

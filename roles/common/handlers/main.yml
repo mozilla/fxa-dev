@@ -1,0 +1,10 @@
+---
+
+- name: restart ntp
+  service: name=ntpd state=restarted
+
+- name: restart supervisor
+  service: name=supervisor state=restarted
+
+- name: restart heka
+  service: name=hekad state=restarted

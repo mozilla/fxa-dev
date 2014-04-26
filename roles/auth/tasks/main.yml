@@ -1,0 +1,30 @@
+---
+
+- name: install gmp-devel
+  yum: name=gmp-devel state=present
+
+- name: install nginx
+  yum: name=nginx state=present enablerepo=mozilla-services-aws
+
+- name: configure nginx
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/fxa.conf
+  notify: restart nginx
+
+- name: install fxa-auth-server
+  git: repo=https://github.com/dannycoates/picl-idp.git
+       dest=/fxa/fxa-auth-server
+       version=http-db
+
+- name: install fxa-auth-server dependencies
+  npm: path=/fxa/fxa-auth-server
+
+- name: supervise fxa-auth-server
+  copy: src=fxa-auth-server.conf dest=/etc/supervisor.d/fxa-auth-server.conf
+  notify: restart supervisor
+
+- name: configure fxa-auth-server
+  template: src=config.json.j2 dest=/fxa/fxa-auth-server/config/prod.json
+  notify: restart fxa-auth-server
+
+- name: generate dev key-pair
+  command: node /fxa/fxa-auth-server/scripts/gen_keys.js

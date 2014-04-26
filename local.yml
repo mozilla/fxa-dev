@@ -1,0 +1,24 @@
+---
+
+- name: gather all facts
+  hosts: all
+
+- hosts: all
+  roles:
+    - common
+
+- hosts: db
+  roles:
+    - db
+
+- hosts: auth
+  roles:
+    - auth
+
+- hosts: content
+  roles:
+    - content
+
+- hosts: customs
+  roles:
+    - customs

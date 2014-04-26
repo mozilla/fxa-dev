@@ -1,0 +1,30 @@
+{
+    "publicUrl": "{{ public_url }}",
+    "domain": "{{ domain }}",
+    "db": {
+        "backend": "httpdb"
+    },
+    "httpdb": {
+      "url": "{{ database_url }}"
+    },
+    "secretKeyFile": "/fxa/fxa-auth-server/config/secret-key.json",
+    "publicKeyFile": "/fxa/fxa-auth-server/config/public-key.json",
+    "customsUrl": "{{ customs_server_url }}",
+    "contentServer": {
+        "url": "{{ content_server_url }}"
+    },
+    "templateServer": {
+        "url": "{{ content_server_url }}"
+    },
+    "smtp":{
+        "host": "127.0.0.1",
+        "port": 25,
+        "secure": false,
+        "sender":"Firefox Accounts <verification@accounts.firefox.com>",
+        "templatePath":"/fxa/fxa-auth-server/templates/email",
+        "redirectDomain": "firefox.com"
+    },
+    "listen": {
+        "port": 9000
+    }
+}

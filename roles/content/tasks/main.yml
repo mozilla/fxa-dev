@@ -1,0 +1,5 @@
+---
+
+- name: install fxa-content-server
+  git: repo=https://github.com/mozilla/fxa-content-server.git
+       dest=/fxa/fxa-content-server
