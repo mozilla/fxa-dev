@@ -1,21 +1,23 @@
 ---
 
 - name: install mysql
+  sudo: true
   yum: name=mysql-server state=present
 
 - name: start mysql
+  sudo: true
   service: name=mysqld state=started enabled=true
 
 - name: install fxa-auth-db-server
   git: repo=https://github.com/dannycoates/fxa-auth-db-server.git
-       dest=/fxa/fxa-auth-db-server
-
-- name: install fxa-auth-db-server dependencies
-  npm: path=/fxa/fxa-auth-db-server
-
-- name: run db patcher
-  command: node /fxa/fxa-auth-db-server/bin/db_patcher.js
+       dest=/data/fxa-auth-db-server
+       version={{ fxa_auth_db_server_version | default("master") }}
+  notify:
+    - install fxa-auth-db-server dependencies
+    - run db patcher
+    - restart fxa-auth-db-server
 
 - name: supervise fxa-auth-db-server
+  sudo: true
   copy: src=fxa-auth-db-server.conf dest=/etc/supervisor.d/fxa-auth-db-server.conf
   notify: restart supervisor

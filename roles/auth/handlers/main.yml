@@ -1,7 +1,15 @@
 ---
 
+- name: install fxa-auth-server dependencies
+  npm: path=/data/fxa-auth-server
+
+- name: gen dev key-pair
+  command: node /data/fxa-auth-server/scripts/gen_keys.js
+
 - name: restart fxa-auth-server
+  sudo: true
   supervisorctl: name=fxa-auth-server state=restarted
 
 - name: restart nginx
+  sudo: true
   service: name=nginx state=restarted

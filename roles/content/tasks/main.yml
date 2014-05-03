@@ -1,5 +1,44 @@
 ---
 
+- name: install gmp-devel
+  sudo: true
+  yum: name=gmp-devel state=present
+
+- name: install nginx
+  sudo: true
+  yum: name=nginx state=present enablerepo=mozilla-services-aws
+
+- name: configure nginx
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/default.conf
+  notify: restart nginx
+
+- name: start nginx
+  sudo: true
+  service: name=nginx state=started enabled=true
+
+- name: install nonsense
+  sudo: true
+  npm: name={{ item }} global=yes state=present
+  with_items:
+    - bower
+    - grunt-cli
+    - phantomjs
+
 - name: install fxa-content-server
   git: repo=https://github.com/mozilla/fxa-content-server.git
-       dest=/fxa/fxa-content-server
+       dest=/data/fxa-content-server
+       version={{ fxa_content_server_version | default("master") }}
+  notify:
+    - install fxa-content-server dependencies
+    - build fxa-content-server assets
+    - restart fxa-content-server
+
+- name: configure fxa-content-server
+  template: src=config.json.j2 dest=/data/fxa-content-server/server/config/local.json
+  notify: restart fxa-content-server
+
+- name: supervise fxa-content-server
+  sudo: true
+  copy: src=fxa-content-server.conf dest=/etc/supervisor.d/fxa-content-server.conf
+  notify: restart supervisor

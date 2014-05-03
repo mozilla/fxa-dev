@@ -4,3 +4,4 @@ database_url: 'http://{{ hostvars["db"]["ansible_default_ipv4"]["address"] }}:80
 public_url: 'http://{{ ansible_default_ipv4.address }}'
 domain: 'example.com'
 customs_server_url: 'http://{{ hostvars["customs"]["ansible_default_ipv4"]["address"] }}:7000'
+fxa_auth_server_version: 'http-db'

@@ -1,0 +1,15 @@
+---
+
+- name: install fxa-content-server dependencies
+  npm: path=/data/fxa-content-server
+
+- name: build fxa-content-server assets
+  command: grunt build chdir=/data/fxa-content-server
+
+- name: restart fxa-content-server
+  sudo: true
+  supervisorctl: name=fxa-content-server state=restarted
+
+- name: restart nginx
+  sudo: true
+  service: name=nginx state=restarted

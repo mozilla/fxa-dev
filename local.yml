@@ -1,24 +1,49 @@
 ---
 
 - name: gather all facts
+  remote_user: vagrant
   hosts: all
 
 - hosts: all
+  remote_user: vagrant
   roles:
     - common
 
 - hosts: db
+  remote_user: vagrant
   roles:
     - db
 
-- hosts: auth
-  roles:
-    - auth
-
 - hosts: content
+  remote_user: vagrant
   roles:
     - content
 
 - hosts: customs
+  remote_user: vagrant
   roles:
     - customs
+
+- hosts: auth
+  remote_user: vagrant
+  roles:
+    - auth
+
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+    - name: add fxa.local to /etc/hosts
+      sudo: true
+      local_action:
+        module: lineinfile
+        dest: /etc/hosts
+        regexp: " fxa.local$"
+        line: '{{ hostvars["content"]["ansible_default_ipv4"]["address"] }} fxa.local'
+    - name: add api.fxa.local to /etc/hosts
+      sudo: true
+      local_action:
+        module: lineinfile
+        dest: /etc/hosts
+        regexp: " api.fxa.local$"
+        line: '{{ hostvars["auth"]["ansible_default_ipv4"]["address"] }} api.fxa.local'

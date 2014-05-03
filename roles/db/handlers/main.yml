@@ -1,0 +1,11 @@
+---
+
+- name: install fxa-auth-db-server dependencies
+  npm: path=/data/fxa-auth-db-server
+
+- name: run db patcher
+  command: node /data/fxa-auth-db-server/bin/db_patcher.js
+
+- name: restart fxa-auth-db-server
+  sudo: true
+  supervisorctl: name=fxa-auth-db-server state=restarted

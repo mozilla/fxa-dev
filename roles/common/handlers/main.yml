@@ -1,10 +1,13 @@
 ---
 
 - name: restart ntp
+  sudo: true
   service: name=ntpd state=restarted
 
 - name: restart supervisor
+  sudo: true
   service: name=supervisor state=restarted
 
 - name: restart heka
+  sudo: true
   service: name=hekad state=restarted

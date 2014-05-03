@@ -1,3 +1,4 @@
 .vagrant
 packer/packer_cache
 packer/sl64-*
+node_modules

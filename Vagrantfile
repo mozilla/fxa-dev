@@ -8,13 +8,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "sl64"
   config.ssh.forward_agent = true
 
-  config.vm.provider "virtualbox" do |v|
-    v.memory = 1024
+  config.vm.provider "virtualbox" do |v, override|
+    override.vm.network "private_network", type: "dhcp"
+    v.memory = 512
+    v.cpus = 1
   end
 
   config.vm.provider "vmware_fusion" do |v, override|
     override.vm.box_url = "packer/sl64-vmware.box"
-    v.vmx["memsize"] = "1024"
+    v.vmx["memsize"] = "512"
     v.vmx["numvcpus"] = "1"
   end
 
@@ -34,8 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     db.vm.hostname = 'db'
     db.vm.provision "ansible" do |ansible|
       ansible.playbook = "local.yml"
-      ansible.sudo = true
-      ansible.verbose = 'vv'
+      #ansible.verbose = 'vvvv'
       ansible.limit = 'all'
     end
   end

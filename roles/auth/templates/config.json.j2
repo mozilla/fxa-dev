@@ -7,8 +7,8 @@
     "httpdb": {
       "url": "{{ database_url }}"
     },
-    "secretKeyFile": "/fxa/fxa-auth-server/config/secret-key.json",
-    "publicKeyFile": "/fxa/fxa-auth-server/config/public-key.json",
+    "secretKeyFile": "/data/fxa-auth-server/config/secret-key.json",
+    "publicKeyFile": "/data/fxa-auth-server/config/public-key.json",
     "customsUrl": "{{ customs_server_url }}",
     "contentServer": {
         "url": "{{ content_server_url }}"
@@ -21,7 +21,7 @@
         "port": 25,
         "secure": false,
         "sender":"Firefox Accounts <verification@accounts.firefox.com>",
-        "templatePath":"/fxa/fxa-auth-server/templates/email",
+        "templatePath":"/data/fxa-auth-server/templates/email",
         "redirectDomain": "firefox.com"
     },
     "listen": {

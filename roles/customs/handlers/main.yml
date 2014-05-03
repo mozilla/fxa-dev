@@ -1,4 +1,8 @@
 ---
 
+- name: install fxa-customs-server dependencies
+  npm: path=/data/fxa-customs-server
+
 - name: restart fxa-customs-server
+  sudo: true
   supervisorctl: name=fxa-customs-server state=restarted
