@@ -1,0 +1,9 @@
+---
+
+- name: install nginx
+  sudo: true
+  yum: name=nginx state=present enablerepo=mozilla-services-aws
+
+- name: start nginx
+  sudo: true
+  service: name=nginx state=started enabled=true

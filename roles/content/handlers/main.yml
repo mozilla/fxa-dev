@@ -10,6 +10,3 @@
   sudo: true
   supervisorctl: name=fxa-content-server state=restarted
 
-- name: restart nginx
-  sudo: true
-  service: name=nginx state=restarted
