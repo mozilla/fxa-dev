@@ -1,1 +1,1 @@
-auth_server_url: 'http://{{ hostvars["auth"]["ansible_default_ipv4"]["address"] }}'
+auth_server_url: 'http://{{ hostvars["auth"]["ansible_eth1"]["ipv4"]["address"] }}'

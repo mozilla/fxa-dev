@@ -1,7 +1,7 @@
 ---
-content_server_url: 'http://{{ hostvars["content"]["ansible_default_ipv4"]["address"] }}'
-database_url: 'http://{{ hostvars["db"]["ansible_default_ipv4"]["address"] }}:8000'
-public_url: 'http://{{ ansible_default_ipv4.address }}'
+content_server_url: 'http://{{ hostvars["content"]["ansible_eth1"]["ipv4"]["address"] }}'
+database_url: 'http://{{ hostvars["db"]["ansible_eth1"]["ipv4"]["address"] }}:8000'
+public_url: 'http://{{ ansible_eth1.ipv4.address }}'
 domain: 'example.com'
-customs_server_url: 'http://{{ hostvars["customs"]["ansible_default_ipv4"]["address"] }}:7000'
-fxa_auth_server_version: 'http-db'
+customs_server_url: 'http://{{ hostvars["customs"]["ansible_eth1"]["ipv4"]["address"] }}:7000'
+fxa_auth_server_version: 'master'

@@ -1,0 +1,2 @@
+---
+heka_aggregator: '{{ hostvars["log"]["ansible_eth1"]["ipv4"]["address"] }}:5565'

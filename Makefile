@@ -1,10 +1,12 @@
-.PHONY: local-vmware local
-
-local-vmware: packer/sl64-vmware.box
-	vagrant up --provider=vmware_fusion
+.PHONY: local local-vmware
 
 local: packer/sl64-virtualbox.box
 	vagrant up --provider=virtualbox
+
+local-vmware: packer/sl64-vmware.box
+	vagrant up --provider=vmware_fusion --no-provision
+	sleep 300
+	vagrant provision
 
 packer/sl64-vmware.box: packer/sl64.json
 	cd $(dir $<); \

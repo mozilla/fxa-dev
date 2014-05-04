@@ -5,7 +5,7 @@
 - [packer](http://www.packer.io/downloads.html)
 - [vagrant](http://www.vagrantup.com/downloads.html)
 - [ansible](http://docs.ansible.com/intro_installation.html)
-- vmware [fusion](https://www.vmware.com/products/fusion/) or [workstation](http://www.vmware.com/products/workstation)
+- [virtualbox](https://www.virtualbox.org/wiki/Downloads) or vmware ([fusion](https://www.vmware.com/products/fusion/) or [workstation](http://www.vmware.com/products/workstation))
 
 ## Usage
 

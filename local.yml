@@ -28,6 +28,12 @@
   roles:
     - auth
 
+- hosts: log
+  gather_facts: false
+  remote_user: vagrant
+  roles:
+    - log
+
 - hosts: localhost
   gather_facts: false
   connection: local
@@ -36,5 +42,6 @@
       sudo: true
       lineinfile: dest=/etc/hosts regexp="{{ item.regexp }}" line="{{ item.line }}"
       with_items:
-        - { regexp: " fxa.local$", line: '{{ hostvars["content"]["ansible_default_ipv4"]["address"] }} fxa.local'}
-        - { regexp: " api.fxa.local$", line: '{{ hostvars["auth"]["ansible_default_ipv4"]["address"] }} api.fxa.local'}
+        - { regexp: " fxa.local$", line: '{{ hostvars["content"]["ansible_eth1"]["ipv4"]["address"] }} fxa.local'}
+        - { regexp: " api.fxa.local$", line: '{{ hostvars["auth"]["ansible_eth1"]["ipv4"]["address"] }} api.fxa.local'}
+        - { regexp: " log.fxa.local$", line: '{{ hostvars["log"]["ansible_eth1"]["ipv4"]["address"] }} log.fxa.local'}

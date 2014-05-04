@@ -1,0 +1,13 @@
+---
+
+- name: create heka filters
+  sudo: true
+  copy: src=fxa_auth_memory.lua dest=/usr/share/heka/lua_filters/fxa_auth_memory.lua
+  notify: restart heka
+
+  # this replaces the whole default toml from the common role
+  # because the AggregatorOutput was causing an IO cycle.
+- name: configure heka aggregator
+  sudo: true
+  template: src=heka.toml.j2 dest=/etc/heka.d/!hekad.toml
+  notify: restart heka

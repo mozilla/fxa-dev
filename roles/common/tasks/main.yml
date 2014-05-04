@@ -52,12 +52,21 @@
   sudo: true
   yum: name=heka state=present enablerepo=mozilla-services-aws
 
-# - name: upstart heka
-#   copy: src=hekad.conf dest=/etc/init/hekad.conf owner=root group=root
+- file: path=/etc/heka.d state=directory
+  sudo: true
 
-#- name: configure heka
+- name: upstart heka
+  sudo: true
+  copy: src=hekad.conf dest=/etc/init/hekad.conf owner=root group=root
 
-#- name: start heka
+- name: configure heka
+  sudo: true
+  template: src=hekad.toml.j2 dest=/etc/heka.d/!hekad.toml
+  notify: restart heka
+
+- name: start heka
+  sudo: true
+  service: name=hekad state=started
 
 - name: configure ntp
   sudo: true
