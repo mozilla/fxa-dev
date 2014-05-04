@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     db.vm.hostname = 'db'
     db.vm.provision "ansible" do |ansible|
       ansible.playbook = "local.yml"
-      #ansible.verbose = 'vvvv'
+      #ansible.verbose = 'vvv'
       ansible.limit = 'all'
     end
   end

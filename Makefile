@@ -17,4 +17,4 @@ packer/sl64-virtualbox.box: packer/sl64.json
 .PHONY: update-local
 
 update-local:
-	ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory local.yml
+	ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory local.yml --tags code

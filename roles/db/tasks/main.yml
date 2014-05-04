@@ -9,6 +9,7 @@
   service: name=mysqld state=started enabled=true
 
 - name: install fxa-auth-db-server
+  tags: code
   git: repo=https://github.com/dannycoates/fxa-auth-db-server.git
        dest=/data/fxa-auth-db-server
        version={{ fxa_auth_db_server_version | default("master") }}

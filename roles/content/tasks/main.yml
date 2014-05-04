@@ -26,6 +26,7 @@
     - phantomjs
 
 - name: install fxa-content-server
+  tags: code
   git: repo=https://github.com/mozilla/fxa-content-server.git
        dest=/data/fxa-content-server
        version={{ fxa_content_server_version | default("master") }}

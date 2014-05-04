@@ -28,6 +28,7 @@
   service: name=postfix state=started enabled=true
 
 - name: install fxa-auth-server
+  tags: code
   git: repo=https://github.com/dannycoates/picl-idp.git
        dest=/data/fxa-auth-server
        version={{ fxa_auth_server_version | default("master") }}

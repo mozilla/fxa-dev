@@ -27,5 +27,6 @@ chown -R $VAGRANT_USER:$VAGRANT_USER $VAGRANT_HOME/.ssh
 echo '==> Recording box config date'
 date > /etc/vagrant_box_build_time
 
-echo '==> Customizing message of the day'
-echo 'Welcome to your Packer-built virtual machine.' > /etc/motd
+echo '==> installing ansible'
+yum -y install epel-release
+yum -y --enablerepo=epel install ansible

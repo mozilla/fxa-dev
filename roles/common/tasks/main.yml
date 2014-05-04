@@ -8,7 +8,7 @@
     - ntp
     - epel-release
 
-- name: install aws shit
+- name: install aws yum plugin
   sudo: true
   yum: name=https://s3-us-west-2.amazonaws.com/rpm-repo/6/x86_64/yum-plugins-s3-iam-1.0.1-1.el6.noarch.rpm state=present
 
@@ -28,12 +28,12 @@
 - name: install supervisord
   sudo: true
   pip: name=supervisor version=3.0 state=present
+
 - file: path=/etc/supervisor.d state=directory
   sudo: true
 
-- name: create /data directory
+- file: path=/data state=directory owner=vagrant group=vagrant
   sudo: true
-  file: path=/data state=directory owner=vagrant group=vagrant
 
 - name: upstart supervisord
   sudo: true
