@@ -1,9 +1,9 @@
 ---
 content_server_url: 'http://{{ hostvars["content"]["ansible_eth1"]["ipv4"]["address"] }}'
-database_url: 'http://{{ hostvars["db"]["ansible_eth1"]["ipv4"]["address"] }}:8000'
-public_url: 'http://{{ ansible_eth1.ipv4.address }}'
-domain: 'example.com'
+dbapi_server_url: 'http://{{ hostvars["db"]["ansible_eth1"]["ipv4"]["address"] }}:8000'
 customs_server_url: 'http://{{ hostvars["customs"]["ansible_eth1"]["ipv4"]["address"] }}:7000'
-fxa_auth_server_version: 'master'
-nginx_port: 80
-auth_port: 9000
+auth_server_version: 'master'
+auth_public_port: 81
+auth_private_port: 9000
+auth_public_url: 'http://{{ ansible_eth1.ipv4.address }}:{{ auth_public_port }}'
+auth_domain: 'example.com'

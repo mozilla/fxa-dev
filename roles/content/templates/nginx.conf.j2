@@ -1,9 +1,9 @@
 upstream upstream_content_server {
-    server 127.0.0.1:3030;
+    server 127.0.0.1:{{ content_private_port }};
 }
 
 server {
-    listen 80;
+    listen {{ content_public_port }};
 
     access_log /var/log/nginx/content_server.access.log main;
     error_log  /var/log/nginx/content_server.error.log;

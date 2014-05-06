@@ -12,28 +12,38 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |vb, override|
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-    vb.memory = 2048
-    vb.cpus = 2
+    vb.memory = 384
+    vb.cpus = 1
   end
 
   config.vm.provider "vmware_fusion" do |vw, override|
     override.vm.box_url = "packer/sl64-vmware.box"
-    vw.vmx["memsize"] = "2048"
-    vw.vmx["numvcpus"] = "2"
+    vw.vmx["memsize"] = "384"
+    vw.vmx["numvcpus"] = "1"
   end
 
-  config.vm.define "fxa" do |fxa|
-    fxa.vm.hostname = 'fxa'
-    fxa.vm.provision "ansible" do |ansible|
-      ansible.playbook = "local2.yml"
+  config.vm.define "auth" do |auth|
+    auth.vm.hostname = 'auth'
+  end
+
+  config.vm.define "content" do |content|
+    content.vm.hostname = 'content'
+  end
+
+  config.vm.define "customs" do |customs|
+    customs.vm.hostname = 'customs'
+  end
+
+  config.vm.define "log" do |log|
+    log.vm.hostname = 'log'
+  end
+
+  config.vm.define "db" do |db|
+    db.vm.hostname = 'db'
+    db.vm.provision "ansible" do |ansible|
+      ansible.playbook = "local.yml"
       #ansible.verbose = 'vvv'
       ansible.limit = 'all'
-      ansible.groups = {
-        "db" => ["fxa"],
-        "content" => ["fxa"],
-        "customs" => ["fxa"],
-        "auth" => ["fxa"]
-      }
     end
   end
 end

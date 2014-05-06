@@ -1,11 +1,11 @@
 {
-    "publicUrl": "{{ public_url }}",
-    "domain": "{{ domain }}",
+    "publicUrl": "{{ auth_public_url }}",
+    "domain": "{{ auth_domain }}",
     "db": {
         "backend": "httpdb"
     },
     "httpdb": {
-      "url": "{{ database_url }}"
+      "url": "{{ dbapi_server_url }}"
     },
     "secretKeyFile": "/data/fxa-auth-server/config/secret-key.json",
     "publicKeyFile": "/data/fxa-auth-server/config/public-key.json",
@@ -25,6 +25,6 @@
         "redirectDomain": "firefox.com"
     },
     "listen": {
-        "port": {{ auth_port }}
+        "port": {{ auth_private_port }}
     }
 }

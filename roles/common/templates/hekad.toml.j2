@@ -9,7 +9,4 @@ emit_in_payload = true
 [StatsdInput]
 address = "127.0.0.1:8125"
 
-[AggregatorOutput]
-type = "TcpOutput"
-address="{{ heka_aggregator }}"
-message_matcher = 'Type !~ /^heka\./'
+# TODO create a heka config for nodes that need an aggregator

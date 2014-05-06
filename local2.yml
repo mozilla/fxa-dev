@@ -1,0 +1,41 @@
+---
+
+- name: gather all facts
+  remote_user: vagrant
+  hosts: all
+
+- hosts: db
+  gather_facts: false
+  remote_user: vagrant
+  roles:
+    - db
+
+- hosts: content
+  gather_facts: false
+  remote_user: vagrant
+  vars:
+    auth_server_url: 'http://{{ ansible_eth1.ipv4.address }}:81'
+  roles:
+    - content
+
+- hosts: customs
+  gather_facts: false
+  remote_user: vagrant
+  roles:
+    - customs
+
+- hosts: auth
+  gather_facts: false
+  remote_user: vagrant
+  vars:
+    content_server_url: 'http://{{ ansible_eth1.ipv4.address }}'
+    dbapi_server_url: 'http://127.0.0.1:8000'
+    customs_server_url: 'http://127.0.0.1:7000'
+  roles:
+    - auth
+
+- hosts: log
+  gather_facts: false
+  remote_user: vagrant
+  roles:
+    - log

@@ -1,0 +1,26 @@
+  {
+    "logLevel": "info",
+    "port": {{ dbapi_private_port }},
+    "patchKey": "schema-patch-level",
+    "patchLevel": 2,
+    "master": {
+      "user": "root",
+      "password": "",
+      "database": "fxa",
+      "host": "127.0.0.1",
+      "port": 3306,
+      "connectionLimit": 10,
+      "waitForConnections": true,
+      "queueLimit": 100
+    },
+    "slave": {
+      "user": "root",
+      "password": "",
+      "database": "fxa",
+      "host": '127.0.0.1',
+      "port": 3306,
+      "connectionLimit": 10,
+      "waitForConnections": true,
+      "queueLimit": 100
+    }
+  }

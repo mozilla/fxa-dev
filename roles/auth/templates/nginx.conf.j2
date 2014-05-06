@@ -1,9 +1,9 @@
 upstream upstream_auth_server {
-    server 127.0.0.1:{{ auth_port }};
+    server 127.0.0.1:{{ auth_private_port }};
 }
 
 server {
-    listen {{ nginx_port }};
+    listen {{ auth_public_port }};
 
     access_log /var/log/nginx/auth_server.access.log main;
     error_log  /var/log/nginx/auth_server.error.log;
