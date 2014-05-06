@@ -5,3 +5,5 @@ public_url: 'http://{{ ansible_eth1.ipv4.address }}'
 domain: 'example.com'
 customs_server_url: 'http://{{ hostvars["customs"]["ansible_eth1"]["ipv4"]["address"] }}:7000'
 fxa_auth_server_version: 'master'
+nginx_port: 80
+auth_port: 9000
