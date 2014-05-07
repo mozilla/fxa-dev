@@ -1,12 +1,10 @@
-.PHONY: local local-vmware
+.PHONY: default vmware
 
-local: packer/sl64-virtualbox.box
+default: packer/sl64-virtualbox.box destroy
 	vagrant up --provider=virtualbox
 
-local-vmware: packer/sl64-vmware.box
-	vagrant up --provider=vmware_fusion --no-provision
-	sleep 300
-	vagrant provision
+vmware: packer/sl64-vmware.box destroy
+	vagrant up --provider=vmware_fusion
 
 packer/sl64-vmware.box: packer/sl64.json
 	cd $(dir $<); \
@@ -28,3 +26,11 @@ update:
 
 destroy:
 	vagrant destroy -f
+
+.PHONY: distclean
+
+distclean:
+	rm packer/sl64-virtualbox.box
+	rm packer/sl64-vmware.box
+	vagrant box remove sl64 --provider=virtualbox
+	vagrant box remove sl64 --provider=vmware_desktop

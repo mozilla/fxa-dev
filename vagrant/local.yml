@@ -1,0 +1,28 @@
+---
+
+- hosts: default
+  remote_user: vagrant
+  vars:
+    content_server_url: 'http://{{ host_ip }}'
+    auth_server_url: 'http://{{ host_ip }}:81'
+    auth_public_url: 'http://{{ host_ip }}:81'
+  roles:
+    - common
+    - mysql
+    - memcached
+    - authdb
+    - content
+    - customs
+    - auth
+    - log
+
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+    - name: add entries to /etc/hosts
+      sudo: true
+      lineinfile: dest=/etc/hosts regexp="{{ item.regexp }}" line="{{ item.line }}"
+      with_items:
+        - { regexp: " fxa.local$", line: '{{ hostvars["default"][hostvars["default"]["iface"]].ipv4.address }} fxa.local'}
+

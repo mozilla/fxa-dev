@@ -19,15 +19,19 @@
 
 - name: install fxa-content-server
   tags: code
+  sudo: true
+  sudo_user: app
   git: repo=https://github.com/mozilla/fxa-content-server.git
        dest=/data/fxa-content-server
-       version={{ fxa_content_server_version | default("master") }}
+       version={{ content_git_version }}
   notify:
     - install fxa-content-server dependencies
     - build fxa-content-server assets
     - restart fxa-content-server
 
 - name: configure fxa-content-server
+  sudo: true
+  sudo_user: app
   template: src=config.json.j2 dest=/data/fxa-content-server/server/config/local.json
   notify: restart fxa-content-server
 

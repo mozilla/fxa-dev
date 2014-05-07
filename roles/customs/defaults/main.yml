@@ -1,3 +1,4 @@
 ---
 customs_private_port: 7000
 customs_memcached_addr_port: '127.0.0.1:11211'
+customs_git_version: 'master'

@@ -1,18 +1,12 @@
 ---
 
-- name: install mysql
-  sudo: true
-  yum: name=mysql-server state=present
-
-- name: start mysql
-  sudo: true
-  service: name=mysqld state=started enabled=true
-
 - name: install fxa-auth-db-server
   tags: code
+  sudo: true
+  sudo_user: app
   git: repo=https://github.com/dannycoates/fxa-auth-db-server.git
        dest=/data/fxa-auth-db-server
-       version={{ fxa_auth_db_server_version | default("master") }}
+       version={{ authdb_git_version }}
   notify:
     - install fxa-auth-db-server dependencies
     - run db patcher

@@ -1,9 +1,13 @@
 ---
 
 - name: install fxa-auth-db-server dependencies
+  sudo: true
+  sudo_user: app
   npm: path=/data/fxa-auth-db-server
 
 - name: run db patcher
+  sudo: true
+  sudo_user: app
   command: node /data/fxa-auth-db-server/bin/db_patcher.js
 
 - name: restart fxa-auth-db-server

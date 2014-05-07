@@ -1,0 +1,45 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box_url = "../packer/sl64-virtualbox.box"
+  config.vm.box = "sl64"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.hostname = 'fxa'
+
+  config.vm.provider "virtualbox" do |vb, override|
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    override.vm.network "private_network", type: "dhcp"
+    vb.memory = 2048
+    vb.cpus = 2
+    override.vm.provision "ansible" do |ansible|
+      ansible.playbook = "local.yml"
+      ansible.verbose = 'vv'
+      ansible.limit = 'all'
+      ansible.ask_sudo_pass = true
+      ansible.extra_vars = {
+        host_ip: "{{ ansible_eth1.ipv4.address }}",
+        iface: "ansible_eth1"
+      }
+    end
+  end
+
+  config.vm.provider "vmware_fusion" do |vw, override|
+    override.vm.box_url = "../packer/sl64-vmware.box"
+    vw.vmx["memsize"] = "2048"
+    vw.vmx["numvcpus"] = "2"
+    override.vm.provision "ansible" do |ansible|
+      ansible.playbook = "local.yml"
+      ansible.verbose = 'vv'
+      ansible.limit = 'all'
+      ansible.ask_sudo_pass = true
+      ansible.extra_vars = {
+        host_ip: "{{ ansible_eth0.ipv4.address }}",
+        iface: "ansible_eth0"
+      }
+    end
+  end
+end

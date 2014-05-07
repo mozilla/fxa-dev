@@ -1,23 +1,19 @@
 ---
 
-- name: install memcached
-  sudo: true
-  yum: name=memcached state=present enablerepo=epel
-
-- name: start memcached
-  sudo: true
-  service: name=memcached state=started enabled=true
-
 - name: install fxa-customs-server
   tags: code
+  sudo: true
+  sudo_user: app
   git: repo=https://github.com/mozilla/fxa-customs-server.git
        dest=/data/fxa-customs-server
-       version={{ fxa_customs_server_version | default("master") }}
+       version={{ customs_git_version }}
   notify:
     - install fxa-customs-server dependencies
     - restart fxa-customs-server
 
 - name: configure fxa-customs-server
+  sudo: true
+  sudo_user: app
   template: src=config.json.j2 dest=/data/fxa-customs-server/fxa_customsrc
   notify: restart fxa-customs-server
 

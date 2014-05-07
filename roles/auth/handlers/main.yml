@@ -1,9 +1,13 @@
 ---
 
 - name: install fxa-auth-server dependencies
+  sudo: true
+  sudo_user: app
   npm: path=/data/fxa-auth-server
 
 - name: gen dev key-pair
+  sudo: true
+  sudo_user: app
   command: node /data/fxa-auth-server/scripts/gen_keys.js
 
 - name: restart fxa-auth-server

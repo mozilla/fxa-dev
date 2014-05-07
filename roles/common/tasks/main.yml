@@ -1,5 +1,9 @@
 ---
 
+- name: create app user
+  sudo: true
+  user: name=app state=present
+
 - name: install base packages
   sudo: true
   yum: name={{ item }} state=present
@@ -32,7 +36,7 @@
 - file: path=/etc/supervisor.d state=directory
   sudo: true
 
-- file: path=/data state=directory owner=vagrant group=vagrant
+- file: path=/data state=directory owner=app group=app
   sudo: true
 
 - name: upstart supervisord
@@ -61,7 +65,7 @@
 
 - name: configure heka
   sudo: true
-  template: src=hekad.toml.j2 dest=/etc/heka.d/!hekad.toml
+  copy: src=hekad.toml dest=/etc/heka.d/!hekad.toml
   notify: restart heka
 
 - name: start heka

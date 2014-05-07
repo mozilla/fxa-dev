@@ -54,21 +54,7 @@
 			"script/fix-slow-dns.sh",
 			"script/sshd.sh",
 			"script/vagrant.sh",
-			"script/vmtools.sh"
-		]
-	},
-	{
-		"type": "ansible-local",
-		"playbook_file": "common.yml",
-		"playbook_paths": ["./"],
-		"role_paths": [
-			"../roles/common"
-		]
-	},
-	{
-		"type": "shell",
-		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
-		"scripts": [
+			"script/vmtools.sh",
 			"script/cleanup.sh",
 			"script/zerodisk.sh"
 		]

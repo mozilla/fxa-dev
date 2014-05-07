@@ -4,6 +4,10 @@
   sudo: true
   yum: name=nginx state=present enablerepo=mozilla-services-aws
 
+- name: delete nginx default.conf
+  sudo: true
+  file: path=/etc/nginx/conf.d/default.conf state=absent
+
 - name: start nginx
   sudo: true
   service: name=nginx state=started enabled=true

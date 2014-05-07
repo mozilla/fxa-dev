@@ -1,0 +1,9 @@
+---
+
+- name: install memcached
+  sudo: true
+  yum: name=memcached state=present enablerepo=epel
+
+- name: start memcached
+  sudo: true
+  service: name=memcached state=started enabled=true

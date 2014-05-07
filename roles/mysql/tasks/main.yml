@@ -1,0 +1,9 @@
+---
+
+- name: install mysql
+  sudo: true
+  yum: name=mysql-server state=present
+
+- name: start mysql
+  sudo: true
+  service: name=mysqld state=started enabled=true
