@@ -17,10 +17,10 @@ packer/sl64-virtualbox.box: packer/sl64.json
 .PHONY: update-code update
 
 update-code:
-	ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory local.yml --tags code
+	ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory --private-key=./insecure_private_key -u vagrant --tags code local.yml
 
 update:
-	ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory local.yml
+	vagrant provision
 
 .PHONY: destroy
 
