@@ -8,3 +8,7 @@ auth_private_port: 9000
 auth_public_url: 'http://{{ ansible_default_ipv4.address }}:{{ auth_public_port }}'
 auth_domain: 'example.com'
 auth_git_version: 'master'
+auth_mail:
+  host: 127.0.0.1
+  port: 25
+  sender: Firefox Accounts <verification@accounts.firefox.com>
