@@ -20,4 +20,4 @@
 - name: supervise fxa-customs-server
   sudo: true
   copy: src=fxa-customs-server.conf dest=/etc/supervisor.d/fxa-customs-server.conf
-  notify: restart supervisor
+  notify: update supervisor

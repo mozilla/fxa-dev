@@ -8,6 +8,10 @@
   sudo: true
   service: name=supervisor state=restarted
 
+- name: update supervisor
+  sudo: true
+  command: supervisorctl update
+
 - name: restart heka
   sudo: true
   service: name=hekad state=restarted

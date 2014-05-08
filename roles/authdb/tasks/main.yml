@@ -15,4 +15,4 @@
 - name: supervise fxa-auth-db-server
   sudo: true
   copy: src=fxa-auth-db-server.conf dest=/etc/supervisor.d/fxa-auth-db-server.conf
-  notify: restart supervisor
+  notify: update supervisor

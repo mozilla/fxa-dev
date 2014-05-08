@@ -40,4 +40,4 @@
 - name: supervise fxa-auth-server
   sudo: true
   copy: src=fxa-auth-server.conf dest=/etc/supervisor.d/fxa-auth-server.conf
-  notify: restart supervisor
+  notify: update supervisor
