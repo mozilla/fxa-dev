@@ -1,0 +1,7 @@
+---
+region: us-west-2
+# aws key name to use or create
+key_name: dcoates
+# The {{ stack_name }}.{{ host_zone }} will be added to route53
+stack_name: dcoates
+hosted_zone: lcip.org
