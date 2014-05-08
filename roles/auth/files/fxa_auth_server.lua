@@ -7,6 +7,7 @@ require "lpeg"
 require "string"
 local clf = require "common_log_format"
 local dt = require "date_time"
+local util = require "util"
 
 local msg = {
     Timestamp = nil,
@@ -52,6 +53,11 @@ function process_message()
         json.user_agent_version,
         json.user_agent_os = clf.normalize_user_agent(json.agent)
         json.agent = nil
+    end
+
+    if json.err then
+        util.table_to_fields(json.err, json, "err")
+        json.err = nil
     end
 
     msg.Fields = json
