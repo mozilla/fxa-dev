@@ -58,3 +58,16 @@ cd aws
 3. run `make`
 
 To updated the stack just run `make` again.
+
+You can ssh into the EC2 instance with `ssh ec2-user@{{ whatever you configured in my_vars.yml }}`
+
+## Layout Notes
+
+- fxa sources are in `/data/fxa-*`
+- node processes are run by supervisord
+  - config in `/etc/supervisor.d`
+  - run `sudo supervisorctl status` for info
+- nginx is the web frontend
+  - config in `/etc/nginx/conf.d`
+- node process logs are in `/var/log/fxa-*`
+- heka dashboard is available on port 4352
