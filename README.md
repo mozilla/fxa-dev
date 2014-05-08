@@ -16,6 +16,8 @@ For an AWS environment:
 
 ## Usage
 
+### Local
+
 To run a local virtual machine evironment change directory to `vagrant`
 
 ```sh
@@ -42,3 +44,17 @@ To update other provisioning changes:
 ```sh
 make update
 ```
+
+### AWS
+
+To run on AWS change directory to `aws`
+
+```sh
+cd aws
+```
+
+1. Set the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables
+2. create a `my_vars.yml` file
+3. run `make`
+
+To updated the stack just run `make` again.
