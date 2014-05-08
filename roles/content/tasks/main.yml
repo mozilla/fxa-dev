@@ -21,7 +21,7 @@
   tags: code
   sudo: true
   sudo_user: app
-  git: repo=https://github.com/mozilla/fxa-content-server.git
+  git: repo={{ content_git_repo }}
        dest=/data/fxa-content-server
        version={{ content_git_version }}
   notify:

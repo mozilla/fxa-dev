@@ -4,7 +4,7 @@
   tags: code
   sudo: true
   sudo_user: app
-  git: repo=https://github.com/mozilla/fxa-customs-server.git
+  git: repo={{ customs_git_repo }}
        dest=/data/fxa-customs-server
        version={{ customs_git_version }}
   notify:

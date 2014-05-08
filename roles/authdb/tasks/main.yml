@@ -4,7 +4,7 @@
   tags: code
   sudo: true
   sudo_user: app
-  git: repo=https://github.com/dannycoates/fxa-auth-db-server.git
+  git: repo={{ authdb_git_repo }}
        dest=/data/fxa-auth-db-server
        version={{ authdb_git_version }}
   notify:

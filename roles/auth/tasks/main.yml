@@ -23,7 +23,7 @@
   tags: code
   sudo: true
   sudo_user: app
-  git: repo=https://github.com/mozilla/fxa-auth-server.git
+  git: repo={{ auth_git_repo }}
        dest=/data/fxa-auth-server
        version={{ auth_git_version }}
   notify:
