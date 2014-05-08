@@ -2,25 +2,25 @@
     "logLevel": "info",
     "port": {{ authdb_private_port }},
     "patchKey": "schema-patch-level",
-    "patchLevel": 2,
+    "patchLevel": {{ authdb_patch_level }},
     "master": {
-      "user": "root",
-      "password": "",
-      "database": "fxa",
-      "host": "127.0.0.1",
-      "port": 3306,
-      "connectionLimit": 10,
-      "waitForConnections": true,
-      "queueLimit": 100
+      "user": "{{ authdb_master.user }}",
+      "password": "{{ authdb_master.password }}",
+      "database": "{{ authdb_master.database }}",
+      "host": "{{ authdb_master.host }}",
+      "port": {{ authdb_master.port }},
+      "connectionLimit": {{ authdb_master.connection_limit }},
+      "waitForConnections": {{ authdb_master.wait_for_connections }},
+      "queueLimit": {{ authdb_master.queue_limit }}
     },
     "slave": {
-      "user": "root",
-      "password": "",
-      "database": "fxa",
-      "host": '127.0.0.1',
-      "port": 3306,
-      "connectionLimit": 10,
-      "waitForConnections": true,
-      "queueLimit": 100
+      "user": "{{ authdb_slave.user }}",
+      "password": "{{ authdb_slave.password }}",
+      "database": "{{ authdb_slave.database }}",
+      "host": "{{ authdb_slave.host }}",
+      "port": {{ authdb_slave.port }},
+      "connectionLimit": {{ authdb_slave.connection_limit }},
+      "waitForConnections": {{ authdb_slave.wait_for_connections }},
+      "queueLimit": {{ authdb_slave.queue_limit }}
     }
   }
