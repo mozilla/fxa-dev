@@ -19,16 +19,6 @@
   template: src=heka.toml.j2 dest=/etc/heka.d/fxa-auth-server.toml
   notify: restart heka
 
-# postfix should be temporary
-
-- name: install postfix
-  sudo: true
-  yum: name=postfix state=present
-
-- name: start postfix
-  sudo: true
-  service: name=postfix state=started enabled=true
-
 - name: install fxa-auth-server
   tags: code
   sudo: true

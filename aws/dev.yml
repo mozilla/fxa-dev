@@ -44,6 +44,7 @@
     auth_public_url: 'http://{{ stack_name }}.{{ hosted_zone }}:81'
   roles:
     - common
+    - email
     - mysql
     - memcached
     - authdb

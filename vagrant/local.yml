@@ -8,6 +8,7 @@
     auth_public_url: 'http://{{ host_ip }}:81'
   roles:
     - common
+    - email
     - mysql
     - memcached
     - authdb

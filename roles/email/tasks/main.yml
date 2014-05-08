@@ -1,0 +1,16 @@
+---
+
+- name: no sendmail
+  sudo: true
+  yum: name=sendmail state=absent
+
+- name: install postfix
+  sudo: true
+  yum: name=postfix state=present
+  notify: set MTA to postfix
+
+# TODO: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/postfix.html?tag=vig-20
+
+- name: start postfix
+  sudo: true
+  service: name=postfix state=started enabled=true
