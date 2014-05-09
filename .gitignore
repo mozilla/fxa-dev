@@ -1,5 +1,3 @@
 .vagrant
-vagrant/packer/packer_cache
-vagrant/packer/sl64-*
 node_modules
 aws/my_vars.yml

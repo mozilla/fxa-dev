@@ -4,8 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box_url = "../packer/sl64-virtualbox.box"
-  config.vm.box = "sl64"
+  config.vm.box = "dannycoates/sl64"
   config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.hostname = 'fxa'
 
@@ -28,7 +27,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provider "vmware_fusion" do |vw, override|
-    override.vm.box_url = "../packer/sl64-vmware.box"
     vw.vmx["memsize"] = "2048"
     vw.vmx["numvcpus"] = "2"
     override.vm.provision "ansible" do |ansible|
