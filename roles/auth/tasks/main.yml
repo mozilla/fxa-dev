@@ -7,7 +7,7 @@
 - name: configure nginx
   sudo: true
   template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/http_fxa_auth.conf
-  notify: restart nginx
+  notify: reload nginx config
 
 - name: create fxa-auth-server heka decoder
   sudo: true
