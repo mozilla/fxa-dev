@@ -13,4 +13,3 @@
 - name: restart fxa-content-server
   sudo: true
   supervisorctl: name=fxa-content-server state=restarted
-

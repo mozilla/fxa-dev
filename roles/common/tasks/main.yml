@@ -4,30 +4,36 @@
   sudo: true
   user: name=app state=present
 
+- name: update installed packages
+  sudo: true
+  yum: name=* state=latest
+
 - name: install base packages
   sudo: true
   yum: name={{ item }} state=present
   with_items:
+    - gcc-c++
     - git
     - ntp
-    - epel-release
-
-- name: install aws yum plugin
-  sudo: true
-  yum: name=https://s3-us-west-2.amazonaws.com/rpm-repo/6/x86_64/yum-plugins-s3-iam-1.0.1-1.el6.noarch.rpm state=present
-
-- name: install mozilla-services-aws yum repo
-  sudo: true
-  yum: name=https://s3.amazonaws.com/net.mozaws.prod.ops.rpmrepo/6/x86_64/mozilla-services-aws-release-6-5.noarch.rpm state=present
-
-- name: install epel packages
-  sudo: true
-  yum: name={{ item }} state=present enablerepo=epel
-  with_items:
     - python-pip
-    - python-virtualenv
-    - nodejs
-    - npm
+
+- name: install nave
+  sudo: true
+  get_url: url=https://raw.githubusercontent.com/isaacs/nave/master/nave.sh
+           dest=/usr/local/bin/nave
+           mode=755
+
+- name: install node
+  sudo: true
+  command: /usr/local/bin/nave usemain stable
+  register: nave_out
+  # TODO detect actual changes
+  changed_when: False
+
+- file: src=/usr/local/bin/node dest=/usr/bin/node state=link
+  sudo: true
+- file: src=/usr/local/bin/npm dest=/usr/bin/npm state=link
+  sudo: true
 
 - name: install supervisord
   sudo: true
@@ -54,23 +60,20 @@
 
 - name: install heka
   sudo: true
-  yum: name=heka state=present enablerepo=mozilla-services-aws
+  yum: name=https://dl.dropboxusercontent.com/u/3684283/heka-0_6_0-linux-amd64.rpm state=present
 
 - file: path=/etc/heka.d state=directory
   sudo: true
 
-- name: upstart heka
+- name: supervise heka
   sudo: true
-  copy: src=hekad.conf dest=/etc/init/hekad.conf owner=root group=root
+  copy: src=hekad.conf dest=/etc/supervisor.d/hekad.conf
+  notify: update supervisor
 
 - name: configure heka
   sudo: true
   copy: src=hekad.toml dest=/etc/heka.d/!hekad.toml
   notify: restart heka
-
-- name: start heka
-  sudo: true
-  service: name=hekad state=started
 
 - name: configure ntp
   sudo: true

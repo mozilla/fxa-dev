@@ -2,7 +2,7 @@
 
 - name: install nginx
   sudo: true
-  yum: name=nginx state=present enablerepo=mozilla-services-aws
+  yum: name=nginx state=present
 
 - name: delete nginx default.conf
   sudo: true

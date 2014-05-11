@@ -24,6 +24,7 @@
   git: repo={{ content_git_repo }}
        dest=/data/fxa-content-server
        version={{ content_git_version }}
+       force=true
   notify:
     - install fxa-content-server dependencies
     - build fxa-content-server assets

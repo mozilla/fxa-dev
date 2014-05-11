@@ -7,6 +7,7 @@
   git: repo={{ authdb_git_repo }}
        dest=/data/fxa-auth-db-server
        version={{ authdb_git_version }}
+       force=true
   notify:
     - install fxa-auth-db-server dependencies
     - run db patcher

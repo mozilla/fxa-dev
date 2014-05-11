@@ -14,4 +14,4 @@
 
 - name: restart heka
   sudo: true
-  service: name=hekad state=restarted
+  supervisorctl: name=hekad state=restarted

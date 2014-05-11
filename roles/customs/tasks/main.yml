@@ -7,6 +7,7 @@
   git: repo={{ customs_git_repo }}
        dest=/data/fxa-customs-server
        version={{ customs_git_version }}
+       force=true
   notify:
     - install fxa-customs-server dependencies
     - restart fxa-customs-server

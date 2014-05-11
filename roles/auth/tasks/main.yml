@@ -26,6 +26,7 @@
   git: repo={{ auth_git_repo }}
        dest=/data/fxa-auth-server
        version={{ auth_git_version }}
+       force=true
   notify:
     - install fxa-auth-server dependencies
     - gen dev key-pair
