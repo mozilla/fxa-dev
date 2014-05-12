@@ -9,3 +9,41 @@
   sudo: true
   template: src=heka.toml.j2 dest=/etc/heka.d/aggregator.toml
   notify: restart heka
+
+- name: install java
+  sudo: true
+  yum: name=java-1.7.0-openjdk state=present
+
+- name: install elasticsearch
+  sudo: true
+  yum: name=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.1.noarch.rpm state=present
+
+- name: supervise elasticsearch
+  sudo: true
+  copy: src=elasticsearch.conf dest=/etc/supervisor.d/elasticsearch.conf
+  notify: update supervisor
+
+- name: install grunt
+  sudo: true
+  npm: name=grunt-cli global=yes state=present
+
+- name: install kibana
+  sudo: true
+  sudo_user: app
+  git: repo=https://github.com/elasticsearch/kibana.git
+       dest=/data/kibana
+       version=master
+       force=true
+  notify:
+    - install kibana dependencies
+    - build kibana
+
+- name: configure kibana
+  sudo: true
+  sudo_user: app
+  template: src=kibana_config.js.j2 dest=/data/kibana/src/config.js
+
+- name: configure nginx
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/kibana.conf
+  notify: reload nginx config

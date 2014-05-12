@@ -70,6 +70,11 @@
             "IpProtocol" : "tcp",
             "FromPort" : "4352", "ToPort" : "4352",
             "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "9199", "ToPort" : "9199",
+            "CidrIp" : "0.0.0.0/0"
           }
         ]
       }

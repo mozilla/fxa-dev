@@ -16,6 +16,19 @@ type = "SandboxManagerFilter"
 message_matcher = "Type == 'heka.control.sandbox'"
 max_filters = 15
 
+[AuthElasticSearch]
+type = "ElasticSearchOutput"
+message_matcher = "Logger == 'FxaAuth' && Type != 'stat' && Type != 'server.nonceFunc'"
+index = "authlogs-%{2006-01-02}"
+type_name = "authlogline"
+server = "http://127.0.0.1:9200"
+cluster = "elasticsearch"
+esindexfromtimestamp = true
+flush_interval = 5000
+flush_count = 100
+format = "clean"
+id = "%{UUID}"
+
 [FxaAuthMemory]
 type = "SandboxFilter"
 script_type = "lua"
