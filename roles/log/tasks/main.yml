@@ -38,10 +38,12 @@
     - install kibana dependencies
     - build kibana
 
+- meta: flush_handlers
+
 - name: configure kibana
   sudo: true
   sudo_user: app
-  template: src=kibana_config.js.j2 dest=/data/kibana/src/config.js
+  template: src=kibana_config.js.j2 dest=/data/kibana/dist/config.js
 
 - name: configure nginx
   sudo: true

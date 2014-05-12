@@ -8,4 +8,4 @@
 - name: build kibana
   sudo: true
   sudo_user: app
-  command: grunt chdir=/data/kibana
+  command: grunt build chdir=/data/kibana
