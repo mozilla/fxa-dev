@@ -16,6 +16,9 @@
     - git
     - ntp
     - python-pip
+    - emacs-nox
+    - strace
+    - lsof
 
 - name: install nave
   sudo: true
