@@ -7,11 +7,9 @@
 - name: install postfix
   sudo: true
   yum: name=postfix state=present
-  notify: set MTA to postfix
-
-- name: start postfix
-  sudo: true
-  service: name=postfix state=started enabled=true
+  notify: 
+    - set MTA to postfix
+    - start postfix
 
 - name: install main.cf
   sudo: true

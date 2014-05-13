@@ -6,8 +6,14 @@
   # alternatives: name=mta path=/usr/sbin/sendmail.postfix
   command: alternatives --set mta /usr/sbin/sendmail.postfix
 
+- name: start postfix
+  sudo: true
+  service: name=postfix state=started enabled=true
+
 - name: reload postfix
+  sudo: true
   service: name=postfix state=reloaded
 
 - name: postmap sasl_passwd
-  shell: postmap hash:/etc/postfix/sasl_passwd
+  sudo: true
+  shell: /usr/sbin/postmap /etc/postfix/sasl_passwd
