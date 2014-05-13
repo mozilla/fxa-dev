@@ -5,3 +5,9 @@
   # the alternatives module isn't working
   # alternatives: name=mta path=/usr/sbin/sendmail.postfix
   command: alternatives --set mta /usr/sbin/sendmail.postfix
+
+- name: reload postfix
+  service: name=postfix state=reloaded
+
+- name: postmap sasl_passwd
+  shell: postmap hash:/etc/postfix/sasl_passwd
