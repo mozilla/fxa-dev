@@ -49,3 +49,5 @@
   sudo: true
   template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/kibana.conf
   notify: reload nginx config
+
+- meta: flush_handlers

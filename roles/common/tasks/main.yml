@@ -83,3 +83,5 @@
 - name: start ntp
   sudo: true
   service: name=ntpd state=started enabled=true
+
+- meta: flush_handlers

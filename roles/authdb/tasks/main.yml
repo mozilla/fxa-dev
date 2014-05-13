@@ -17,3 +17,5 @@
   sudo: true
   copy: src=fxa-auth-db-server.conf dest=/etc/supervisor.d/fxa-auth-db-server.conf
   notify: update supervisor
+
+- meta: flush_handlers

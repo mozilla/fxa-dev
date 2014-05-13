@@ -22,3 +22,5 @@
   sudo: true
   copy: src=fxa-customs-server.conf dest=/etc/supervisor.d/fxa-customs-server.conf
   notify: update supervisor
+
+- meta: flush_handlers
