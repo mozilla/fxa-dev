@@ -3,7 +3,7 @@
 - name: install fxa-customs-server dependencies
   sudo: true
   sudo_user: app
-  npm: path=/data/fxa-customs-server
+  npm: path=/data/fxa-customs-server production=true
 
 - name: restart fxa-customs-server
   sudo: true
