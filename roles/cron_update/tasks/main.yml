@@ -21,7 +21,7 @@
 
 - name: disable requiretty in /etc/sudoers
   sudo: true
-  lineinfile: dest=/etc/sudoers state=absent regexp='Defaults requiretty' validate='visudo -cf %s'
+  lineinfile: dest=/etc/sudoers state=absent regexp='Defaults\s+requiretty' validate='visudo -cf %s'
 
 - name: copy my_vars.yml
   sudo: true
