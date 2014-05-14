@@ -3,7 +3,7 @@
 - name: install fxa-auth-db-server dependencies
   sudo: true
   sudo_user: app
-  npm: path=/data/fxa-auth-db-server
+  npm: path=/data/fxa-auth-db-server production=true
 
 - name: run db patcher
   sudo: true
