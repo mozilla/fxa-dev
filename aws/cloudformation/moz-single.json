@@ -1,0 +1,158 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "Single machine Fxa Dev environment",
+
+  "Parameters" : {
+    "KeyName": {
+      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the web server",
+      "Type": "String",
+      "MinLength": "1",
+      "MaxLength": "255",
+      "AllowedPattern" : "[\\x20-\\x7E]*",
+      "ConstraintDescription" : "can contain only ASCII characters."
+    },
+    "HostedZone" : {
+      "Type" : "String",
+      "Description" : "The DNS name of an existing Amazon Route 53 hosted zone"
+    },
+    "StackName" : {
+      "Type" : "String",
+      "Description" : "subdomain"
+    }
+  },
+
+  "Mappings" : {
+    "RegionMap" : {
+      "us-east-1"      : { "AMI" : "ami-fb8e9292" },
+      "us-west-1"      : { "AMI" : "ami-7aba833f" },
+      "us-west-2"      : { "AMI" : "ami-043a5034" },
+      "eu-west-1"      : { "AMI" : "ami-2918e35e" },
+      "sa-east-1"      : { "AMI" : "ami-215dff3c" },
+      "ap-southeast-1" : { "AMI" : "ami-b40d5ee6" },
+      "ap-southeast-2" : { "AMI" : "ami-3b4bd301" },
+      "ap-northeast-1" : { "AMI" : "ami-c9562fc8" }
+    }
+  },
+
+  "Resources" : {
+    "FxaIAMRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument":{
+           "Statement":[
+              {
+                "Effect":"Allow",
+                "Principal":{ "Service":[ "ec2.amazonaws.com" ] },
+                "Action":[ "sts:AssumeRole" ]
+              }
+           ]
+        },
+        "Path": "/fxa/",
+        "Policies": [
+          {
+            "PolicyName":"PuppetConfigDeployIAMRequirements",
+            "PolicyDocument":{
+             "Version":"2012-10-17",
+             "Statement":[
+               {
+                  "Effect":"Allow",
+                  "Action":[ "S3:ListBucket", "S3:GetObject" ],
+                  "Resource": [
+                      "arn:aws:s3:::net.mozaws.ops.hiera-secrets",
+                      "arn:aws:s3:::net.mozaws.prod.ops.rpmrepo-protected",
+                      "arn:aws:s3:::net.mozaws.ops.rpmrepo-puppet"
+                  ]
+               },
+               {
+                  "Effect":"Allow",
+                  "Action":[ "S3:GetObject" ],
+                  "Resource":[
+                    "arn:aws:s3:::net.mozaws.ops.rpmrepo-protected/*",
+                    "arn:aws:s3:::net.mozaws.ops.rpmrepo-puppet/*",
+                    "arn:aws:s3:::net.mozaws.ops.hiera-secrets/common.yaml",
+                    "arn:aws:s3:::net.mozaws.ops.hiera-secrets/env/dev.yaml",
+                    "arn:aws:s3:::net.mozaws.ops.hiera-secrets/type/fxa.auth_server.dev.yaml",
+                    "arn:aws:s3:::net.mozaws.ops.hiera-secrets/app/fxa.dev.yaml"
+                  ]
+               },
+               { "Effect":"Allow", "Action": [ "ec2:DescribeTags" ], "Resource": "*" }
+             ]
+            }
+          }
+        ]
+      }
+    },
+
+    "FxaInstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Path": "/fxa/",
+        "Roles": [{ "Ref": "FxaIAMRole" }]
+      }
+    },
+
+    "Ec2Instance" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
+        "KeyName" : { "Ref" : "KeyName" },
+        "IamInstanceProfile": { "Ref": "FxaInstanceProfile" },
+        "InstanceType" : "m3.medium",
+        "SecurityGroups" : [{ "Ref" : "FxaDevSecurityGroup" }]
+      }
+    },
+
+    "FxaDevSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Fxa Dev",
+        "SecurityGroupIngress" : [
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "22", "ToPort" : "22",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "80", "ToPort" : "81",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "443", "ToPort" : "443",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "4352", "ToPort" : "4352",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "9199", "ToPort" : "9199",
+            "CidrIp" : "0.0.0.0/0"
+          }
+        ]
+      }
+    },
+
+    "FxaDNSRecord" : {
+      "Type" : "AWS::Route53::RecordSet",
+      "Properties" : {
+        "HostedZoneName" : { "Fn::Join" : [ "", [{"Ref" : "HostedZone"}, "." ]]},
+        "Name" : { "Fn::Join" : [ "", [{"Ref" : "StackName"}, ".", {"Ref" : "HostedZone"}, "."]]},
+        "Type" : "A",
+        "TTL" : "900",
+        "ResourceRecords" : [ { "Fn::GetAtt" : [ "Ec2Instance", "PublicIp" ] } ]
+      }
+    }
+  },
+
+  "Outputs" : {
+    "Instance" : {
+      "Value" : { "Fn::GetAtt" : [ "Ec2Instance", "PublicDnsName" ] },
+      "Description" : "DNS Name of the newly created EC2 instance"
+    }
+  }
+}

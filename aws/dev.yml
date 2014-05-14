@@ -19,7 +19,7 @@
         stack_name="{{ stack_name }}-fxadev"
         state=present
         region="{{ region }}"
-        template=cloudformation/basic.json
+        template=cloudformation/moz-single.json
       args:
         template_parameters:
           KeyName: "{{ key_name }}"

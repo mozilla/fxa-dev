@@ -18,3 +18,11 @@
     - customs
     - auth
     - log
+  tasks:
+    - name: get s3 secrets
+      sudo: true
+      sudo_user: app
+      s3: bucket=net.mozaws.ops.hiera-secrets
+          object=common.yaml
+          dest=/data/common.yml
+          mode=get
