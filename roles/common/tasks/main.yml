@@ -28,7 +28,7 @@
   command: /usr/local/bin/nave usemain stable
   register: nave_out
   # TODO detect actual changes
-  changed_when: False
+  changed_when: false
 
 - file: src=/usr/local/bin/node dest=/usr/bin/node state=link
   sudo: true
@@ -45,9 +45,22 @@
 - file: path=/data state=directory owner=app group=app
   sudo: true
 
+- name: upstart or systemd?
+  sudo: true
+  command: which initctl
+  failed_when: false
+  changed_when: false
+  register: is_upstart
+
 - name: upstart supervisord
   sudo: true
   copy: src=supervisor.conf dest=/etc/init/supervisor.conf owner=root group=root
+  when: is_upstart.rc == 0
+
+- name: systemd supervisord
+  sudo: true
+  copy: src=supervisor.systemd dest=/etc/systemd/system/supervisor.service owner=root group=root
+  when: is_upstart.rc != 0
 
 - name: configure supervisord
   sudo: true
