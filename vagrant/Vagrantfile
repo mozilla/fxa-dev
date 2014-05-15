@@ -4,7 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "dannycoates/sl64"
+  config.vm.box = "dannycoates/fedora20"
   config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.hostname = 'fxa.local'
 
@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.ask_sudo_pass = true
       ansible.extra_vars = {
         host_ip: "{{ ansible_eth1.ipv4.address }}",
-        iface: "ansible_eth1"
+        iface: 1
       }
     end
   end
@@ -35,8 +35,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.limit = 'all'
       ansible.ask_sudo_pass = true
       ansible.extra_vars = {
-        host_ip: "{{ ansible_eth0.ipv4.address }}",
-        iface: "ansible_eth0"
+        host_ip: "{{ ansible_default_ipv4.address }}",
+        iface: 0
       }
     end
   end

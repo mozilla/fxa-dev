@@ -31,6 +31,6 @@
       sudo: true
       lineinfile: dest=/etc/hosts regexp="{{ item.regexp }}" line="{{ item.line }}"
       with_items:
-        - { regexp: " fxa.local$", line: '{{ hostvars["default"][hostvars["default"]["iface"]].ipv4.address }} fxa.local'}
+        - { regexp: " fxa.local$", line: '{{ hostvars["default"]["ansible_all_ipv4_addresses"][hostvars["default"]["iface"]] }} fxa.local'}
         - { regexp: " 123done-fxa.local$", line: '{{ hostvars["default"][hostvars["default"]["iface"]].ipv4.address }} 123done-fxa.local'}
         - { regexp: " oauth-fxa.local$", line: '{{ hostvars["default"][hostvars["default"]["iface"]].ipv4.address }} oauth-fxa.local'}
