@@ -13,12 +13,16 @@
       "ConstraintDescription" : "can contain only ASCII characters."
     },
     "HostedZone" : {
-      "Type" : "String",
+      "Type": "String",
       "Description" : "The DNS name of an existing Amazon Route 53 hosted zone"
     },
-    "StackName" : {
-      "Type" : "String",
+    "Subdomain" : {
+      "Type": "String",
       "Description" : "subdomain"
+    },
+    "SSLCertificateName": {
+      "Type": "String",
+      "Description": "SSL Cert name from IAM"
     }
   },
 
@@ -36,6 +40,41 @@
   },
 
   "Resources" : {
+
+    "FxaDevSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Fxa Dev",
+        "SecurityGroupIngress" : [
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "22", "ToPort" : "22",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "80", "ToPort" : "81",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "443", "ToPort" : "443",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "4352", "ToPort" : "4352",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "9199", "ToPort" : "9199",
+            "CidrIp" : "0.0.0.0/0"
+          }
+        ]
+      }
+    },
+
     "FxaIAMRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -92,7 +131,7 @@
       }
     },
 
-    "Ec2Instance" : {
+    "FxaEc2Instance" : {
       "Type" : "AWS::EC2::Instance",
       "Properties" : {
         "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
@@ -103,37 +142,40 @@
       }
     },
 
-    "FxaDevSecurityGroup" : {
-      "Type" : "AWS::EC2::SecurityGroup",
-      "Properties" : {
-        "GroupDescription" : "Fxa Dev",
-        "SecurityGroupIngress" : [
+    "FxaELB":{
+      "Type":"AWS::ElasticLoadBalancing::LoadBalancer",
+      "Properties":{
+        "AvailabilityZones" : { "Fn::GetAZs" : "" },
+        "ConnectionDrainingPolicy":{ "Enabled" : true, "Timeout" : 15 },
+        "Listeners":[
           {
-            "IpProtocol" : "tcp",
-            "FromPort" : "22", "ToPort" : "22",
-            "CidrIp" : "0.0.0.0/0"
+            "InstancePort":"80",
+            "LoadBalancerPort":"443",
+            "PolicyNames" : ["ELBSecurityPolicy-2014-01"],
+            "Protocol":"HTTPS",
+            "SSLCertificateId":{
+               "Fn::Join":[ "",
+                  [
+                    "arn:aws:iam::", { "Ref":"AWS::AccountId" }, ":server-certificate/", {"Ref" : "SSLCertificateName"}
+                  ]
+               ]
+            }
           },
           {
-            "IpProtocol" : "tcp",
-            "FromPort" : "80", "ToPort" : "81",
-            "CidrIp" : "0.0.0.0/0"
-          },
-          {
-            "IpProtocol" : "tcp",
-            "FromPort" : "443", "ToPort" : "443",
-            "CidrIp" : "0.0.0.0/0"
-          },
-          {
-            "IpProtocol" : "tcp",
-            "FromPort" : "4352", "ToPort" : "4352",
-            "CidrIp" : "0.0.0.0/0"
-          },
-          {
-            "IpProtocol" : "tcp",
-            "FromPort" : "9199", "ToPort" : "9199",
-            "CidrIp" : "0.0.0.0/0"
+            "InstancePort":"81",
+            "LoadBalancerPort":"4443",
+            "PolicyNames" : ["ELBSecurityPolicy-2014-01"],
+            "Protocol":"HTTPS",
+            "SSLCertificateId":{
+               "Fn::Join":[ "",
+                  [
+                    "arn:aws:iam::", { "Ref":"AWS::AccountId" }, ":server-certificate/", {"Ref" : "SSLCertificateName"}
+                  ]
+               ]
+            }
           }
-        ]
+        ],
+        "Instances": [{ "Ref" : "FxaEc2Instance" }]
       }
     },
 
@@ -141,17 +183,19 @@
       "Type" : "AWS::Route53::RecordSet",
       "Properties" : {
         "HostedZoneName" : { "Fn::Join" : [ "", [{"Ref" : "HostedZone"}, "." ]]},
-        "Name" : { "Fn::Join" : [ "", [{"Ref" : "StackName"}, ".", {"Ref" : "HostedZone"}, "."]]},
+        "Name" : { "Fn::Join" : [ "", [{"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
         "Type" : "A",
-        "TTL" : "900",
-        "ResourceRecords" : [ { "Fn::GetAtt" : [ "Ec2Instance", "PublicIp" ] } ]
+        "AliasTarget" : {
+          "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },
+          "DNSName" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
+        }
       }
     }
   },
 
   "Outputs" : {
     "Instance" : {
-      "Value" : { "Fn::GetAtt" : [ "Ec2Instance", "PublicDnsName" ] },
+      "Value" : { "Fn::GetAtt" : [ "FxaEc2Instance", "PublicDnsName" ] },
       "Description" : "DNS Name of the newly created EC2 instance"
     }
   }

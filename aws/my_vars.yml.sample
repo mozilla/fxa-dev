@@ -2,6 +2,10 @@
 region: us-west-2
 # aws key name to use or create
 key_name: dcoates
-# The {{ stack_name }}.{{ host_zone }} will be added to route53
 stack_name: dcoates
+# The {{ subdomain }}.{{ host_zone }} will be added to route53
+subdomain: dcoates.dev
 hosted_zone: lcip.org
+# the name of the ssl cert in IAM to use in the ELB
+# this must be compatible with your stack_name and hosted_zone
+ssl_certificate_name: wildcard.dev.lcip.org

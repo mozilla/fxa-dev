@@ -16,7 +16,7 @@
       "Type" : "String",
       "Description" : "The DNS name of an existing Amazon Route 53 hosted zone"
     },
-    "StackName" : {
+    "Subdomain" : {
       "Type" : "String",
       "Description" : "subdomain"
     }
@@ -84,7 +84,7 @@
       "Type" : "AWS::Route53::RecordSet",
       "Properties" : {
         "HostedZoneName" : { "Fn::Join" : [ "", [{"Ref" : "HostedZone"}, "." ]]},
-        "Name" : { "Fn::Join" : [ "", [{"Ref" : "StackName"}, ".", {"Ref" : "HostedZone"}, "."]]},
+        "Name" : { "Fn::Join" : [ "", [{"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
         "Type" : "A",
         "TTL" : "900",
         "ResourceRecords" : [ { "Fn::GetAtt" : [ "Ec2Instance", "PublicIp" ] } ]

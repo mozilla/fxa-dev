@@ -6,9 +6,9 @@
   vars_files:
     - my_vars.yml
   vars:
-    content_server_url: 'http://{{ stack_name }}.{{ hosted_zone }}'
-    auth_server_url: 'http://{{ stack_name }}.{{ hosted_zone }}:81'
-    auth_public_url: 'http://{{ stack_name }}.{{ hosted_zone }}:81'
+    content_server_url: 'https://{{ subdomain }}.{{ hosted_zone }}'
+    auth_server_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4443'
+    auth_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4443'
   roles:
     - email
     - mysql
