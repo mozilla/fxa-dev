@@ -7,10 +7,24 @@
 - name: install postfix
   sudo: true
   yum: name=postfix state=present
-  notify: set MTA to postfix
+  notify: 
+    - set MTA to postfix
+    - start postfix
 
-# TODO: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/postfix.html?tag=vig-20
-
-- name: start postfix
+- name: install main.cf
   sudo: true
-  service: name=postfix state=started enabled=true
+  template:
+    src=main.cf.j2
+    dest=/etc/postfix/main.cf
+    owner=root group=root mode=0644
+  notify: reload postfix
+
+- name: install sasl_passwd
+  sudo: true
+  template:
+    src=sasl_passwd.j2
+    dest=/etc/postfix/sasl_passwd
+    owner=root group=root mode=0600
+  notify: 
+    - postmap sasl_passwd
+    - reload postfix

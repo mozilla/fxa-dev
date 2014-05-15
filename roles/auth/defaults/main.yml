@@ -12,4 +12,4 @@ auth_git_version: master
 auth_mail:
   host: 127.0.0.1
   port: 25
-  sender: Firefox Accounts <verification@accounts.firefox.com>
+  sender: Firefox Accounts <verification@{{ stack_name }}.{{ hosted_zone }}>

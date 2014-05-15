@@ -5,3 +5,7 @@ key_name: dcoates
 # The {{ stack_name }}.{{ host_zone }} will be added to route53
 stack_name: dcoates
 hosted_zone: lcip.org
+
+# secret credentials for AWS SES
+aws_ses_smtp_username: AKIVVVVVVVVVVVVVVVVV
+aws_ses_smtp_password: Arjvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
