@@ -179,16 +179,26 @@
       }
     },
 
-    "FxaDNSRecord" : {
-      "Type" : "AWS::Route53::RecordSet",
-      "Properties" : {
+    "FxaDNS": {
+      "Type": "AWS::Route53::RecordSetGroup",
+      "Properties": {
         "HostedZoneName" : { "Fn::Join" : [ "", [{"Ref" : "HostedZone"}, "." ]]},
-        "Name" : { "Fn::Join" : [ "", [{"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
-        "Type" : "A",
-        "AliasTarget" : {
-          "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },
-          "DNSName" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
-        }
+        "RecordSets": [
+          {
+            "Name" : { "Fn::Join" : [ "", [{"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
+            "Type" : "A",
+            "AliasTarget" : {
+              "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },
+              "DNSName" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
+            }
+          },
+          {
+            "Name" : { "Fn::Join" : [ "", ["meta-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
+            "Type": "A",
+            "TTL": "30",
+            "ResourceRecords" : [ { "Fn::GetAtt" : [ "FxaEc2Instance", "PublicIp" ] } ]
+          }
+        ]
       }
     }
   },

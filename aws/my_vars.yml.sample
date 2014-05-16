@@ -8,4 +8,5 @@ subdomain: dcoates.dev
 hosted_zone: lcip.org
 # the name of the ssl cert in IAM to use in the ELB
 # this must be compatible with your stack_name and hosted_zone
+# see http://docs.aws.amazon.com/IAM/latest/UserGuide/ManagingServerCerts.html
 ssl_certificate_name: wildcard.dev.lcip.org

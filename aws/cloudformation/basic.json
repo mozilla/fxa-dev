@@ -86,7 +86,7 @@
         "HostedZoneName" : { "Fn::Join" : [ "", [{"Ref" : "HostedZone"}, "." ]]},
         "Name" : { "Fn::Join" : [ "", [{"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
         "Type" : "A",
-        "TTL" : "900",
+        "TTL" : "30",
         "ResourceRecords" : [ { "Fn::GetAtt" : [ "Ec2Instance", "PublicIp" ] } ]
       }
     }
