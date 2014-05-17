@@ -25,7 +25,9 @@
 
 - name: install node
   sudo: true
-  command: /usr/local/bin/nave usemain stable
+  # there's an npm bug somewhere between 1.4.3 and 1.4.9 that breaks the
+  # content-server install, so use the older node for now
+  command: /usr/local/bin/nave usemain 0.10.26
   register: nave_out
   # TODO detect actual changes
   changed_when: false
