@@ -1,0 +1,4 @@
+---
+
+- name: update authorized_keys
+  shell: cat /data/identity-pubkeys/*.pub > ~/.ssh/authorized_keys

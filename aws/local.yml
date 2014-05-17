@@ -19,3 +19,4 @@
     - auth
     - log
     - cron_update
+    - team

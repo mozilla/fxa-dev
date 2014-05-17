@@ -42,7 +42,7 @@
 - file: path=/etc/supervisor.d state=directory
   sudo: true
 
-- file: path=/data state=directory owner=app group=app
+- file: path=/data state=directory owner=app group=app mode=0777
   sudo: true
 
 - name: upstart or systemd?
