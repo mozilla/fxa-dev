@@ -17,10 +17,10 @@
         "url": "{{ content_server_url }}"
     },
     "smtp":{
-        "host": "{{ auth_mail.host }}",
-        "port": {{ auth_mail.port }},
+        "host": "{{ auth_mail_host }}",
+        "port": {{ auth_mail_port }},
         "secure": false,
-        "sender":"{{ auth_mail.sender }}",
+        "sender":"{{ auth_mail_sender }}",
         "templatePath":"/data/fxa-auth-server/templates/email",
         "redirectDomain": "firefox.com"
     },

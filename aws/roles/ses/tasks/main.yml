@@ -1,0 +1,39 @@
+---
+
+- name: install postfix main.cf
+  sudo: true
+  template:
+    src=main.cf.j2
+    dest=/etc/postfix/main.cf
+    owner=root group=root mode=0644
+  notify: reload postfix
+
+- name: get s3 secrets
+  sudo: true
+  s3: bucket=net.mozaws.ops.hiera-secrets
+      object=/app/fxa.dev.yaml
+      dest=/data/fxa.dev.yml
+      mode=get
+
+- shell: 'grep -e "fxa::smtp::user" /data/fxa.dev.yml | sed "s/^fxa::smtp::user: ''\([^'']\+\)''/\1/"'
+  sudo: true
+  changed_when: false
+  register: smtp_user
+
+
+- shell: 'grep -e "fxa::smtp::pass" /data/fxa.dev.yml | sed "s/^fxa::smtp::pass: ''\([^'']\+\)''/\1/"'
+  sudo: true
+  changed_when: false
+  register: smtp_pass
+
+- name: install postfix sasl_passwd
+  sudo: true
+  template:
+    src=sasl_passwd.j2
+    dest=/etc/postfix/sasl_passwd
+    owner=root group=root mode=0600
+  notify:
+    - postmap sasl_passwd
+    - reload postfix
+
+- meta: flush_handlers

@@ -9,7 +9,6 @@ auth_public_url: http://{{ ansible_default_ipv4.address }}:{{ auth_public_port }
 auth_domain: example.com
 auth_git_repo: https://github.com/mozilla/fxa-auth-server.git
 auth_git_version: master
-auth_mail:
-  host: 127.0.0.1
-  port: 25
-  sender: Firefox Accounts <verification@accounts.firefox.com>
+auth_mail_host: 127.0.0.1
+auth_mail_port: 25
+auth_mail_sender: Firefox Accounts <verification@accounts.firefox.com>

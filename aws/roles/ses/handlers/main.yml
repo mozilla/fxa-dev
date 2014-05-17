@@ -1,0 +1,5 @@
+---
+
+- name: postmap sasl_passwd
+  sudo: true
+  command: /usr/sbin/postmap /etc/postfix/sasl_passwd

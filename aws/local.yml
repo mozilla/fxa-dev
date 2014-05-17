@@ -10,7 +10,7 @@
     auth_server_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4443'
     auth_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4443'
   roles:
-    - email
+    - ses
     - mysql
     - memcached
     - authdb
@@ -19,15 +19,3 @@
     - auth
     - log
     - cron_update
-  tasks:
-    - name: get s3 secrets
-      sudo: true
-      sudo_user: app
-      s3: bucket=net.mozaws.ops.hiera-secrets
-          object="{{ item.object }}"
-          dest="/data/{{ item.dest }}"
-          mode=get
-      with_items:
-        - { object: "/env/dev.yaml", dest: "dev.yml" }
-        - { object: "/type/fxa.auth_server.dev.yaml", dest: "auth.yml" }
-        - { object: "/app/fxa.dev.yaml", dest: "fxa.yml" }
