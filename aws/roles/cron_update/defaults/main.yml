@@ -1,0 +1,7 @@
+---
+cron_time:
+  weekday: '*'
+  month: '*'
+  day: '*'
+  hour: '*'
+  minute: '*/10'
