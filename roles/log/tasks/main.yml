@@ -5,11 +5,6 @@
   copy: src=fxa_auth_memory.lua dest=/usr/share/heka/lua_filters/fxa_auth_memory.lua
   notify: restart heka
 
-- name: configure heka aggregator
-  sudo: true
-  template: src=heka.toml.j2 dest=/etc/heka.d/aggregator.toml
-  notify: restart heka
-
 - name: install java
   sudo: true
   yum: name=java-1.7.0-openjdk state=present
@@ -49,5 +44,10 @@
   sudo: true
   template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/kibana.conf
   notify: reload nginx config
+
+- name: configure heka aggregator
+  sudo: true
+  template: src=heka.toml.j2 dest=/etc/heka.d/aggregator.toml
+  notify: restart heka
 
 - meta: flush_handlers
