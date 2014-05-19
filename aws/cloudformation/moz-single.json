@@ -138,7 +138,11 @@
         "KeyName" : { "Ref" : "KeyName" },
         "IamInstanceProfile": { "Ref": "FxaInstanceProfile" },
         "InstanceType" : "m3.medium",
-        "SecurityGroups" : [{ "Ref" : "FxaDevSecurityGroup" }]
+        "SecurityGroups" : [{ "Ref" : "FxaDevSecurityGroup" }],
+        "UserData": { "Fn::Base64": { "Fn::Join": ["",
+          ["#!/bin/bash -ex","\n",
+          "echo Defaults:ec2-user \\!requiretty >> /etc/sudoers;", "\n"]
+        ]}}
       }
     },
 
