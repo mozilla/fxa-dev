@@ -35,7 +35,7 @@
 - name: configure fxa-auth-server
   sudo: true
   sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-auth-server/config/prod.json
+  template: src=config.json.j2 dest=/data/fxa-auth-server/config/stage.json
   notify: restart fxa-auth-server
 
 - name: supervise fxa-auth-server
