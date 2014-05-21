@@ -1,5 +1,5 @@
 ---
-content_server_url: http://{{ ansible_default_ipv4.address }}
+content_public_url: http://{{ ansible_default_ipv4.address }}
 authdb_server_url: http://127.0.0.1:8000
 customs_server_url: http://127.0.0.1:7000
 auth_server_version: master

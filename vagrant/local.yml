@@ -3,7 +3,7 @@
 - hosts: default
   remote_user: vagrant
   vars:
-    content_server_url: 'http://{{ host_ip }}'
+    content_public_url: 'http://{{ host_ip }}'
     auth_server_url: 'http://{{ host_ip }}:81'
     auth_public_url: 'http://{{ host_ip }}:81'
   roles:
