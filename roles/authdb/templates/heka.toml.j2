@@ -1,0 +1,10 @@
+[FxaAuthDB]
+type = "LogstreamerInput"
+log_directory = "/var/log"
+file_match = 'fxa-auth-db\.log'
+decoder = "FxaAuthDBDecoder"
+
+[FxaAuthDBDecoder]
+type = "SandboxDecoder"
+script_type = "lua"
+filename = "lua_decoders/fxa_auth_db_server.lua"

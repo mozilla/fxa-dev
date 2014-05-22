@@ -1,5 +1,15 @@
 ---
 
+- name: create fxa-auth-db-server heka decoder
+  sudo: true
+  copy: src=fxa_auth_db_server.lua dest=/usr/share/heka/lua_decoders/fxa_auth_db_server.lua
+  notify: restart heka
+
+- name: configure heka
+  sudo: true
+  template: src=heka.toml.j2 dest=/etc/heka.d/fxa-auth-db-server.toml
+  notify: restart heka
+
 - name: install fxa-auth-db-server
   tags: code
   sudo: true
