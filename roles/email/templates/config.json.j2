@@ -1,0 +1,13 @@
+{
+  "port": {{ auth_mailer_port }},
+  "logLevel": "info",
+  "locales": ["en_US", "de"],
+  "mail": {
+    "host": "{{ auth_mailer_smtp_host }}",
+    "port": {{ auth_mailer_smtp_port }},
+    "secure": false,
+    "sender": "{{ auth_mailer_sender }}",
+    "verificationUrl": "{{ auth_mailer_verify_url }}",
+    "passwordResetUrl": "{{ auth_mailer_recovery_url }}"
+  }
+}

@@ -9,3 +9,12 @@
 - name: reload postfix
   sudo: true
   service: name=postfix state=reloaded
+
+- name: install fxa-auth-mailer dependencies
+  sudo: true
+  sudo_user: app
+  npm: path=/data/fxa-auth-mailer production=true
+
+- name: restart fxa-auth-mailer
+  sudo: true
+  supervisorctl: name=fxa-auth-mailer state=restarted

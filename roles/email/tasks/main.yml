@@ -9,8 +9,31 @@
   yum: name=postfix state=present
   notify: set MTA to postfix
 
-# TODO: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/postfix.html?tag=vig-20
-
 - name: start postfix
   sudo: true
   service: name=postfix state=started enabled=true
+
+- name: install fxa-auth-mailer
+  tags: code
+  sudo: true
+  sudo_user: app
+  git: repo={{ auth_mailer_git_repo }}
+       dest=/data/fxa-auth-mailer
+       version={{ auth_mailer_git_version}}
+       force=true
+  notify:
+    - install fxa-auth-mailer dependencies
+    - restart fxa-auth-mailer
+
+- name: configure fxa-auth-mailer
+  sudo: true
+  sudo_user: app
+  template: src=config.json.j2 dest=/data/fxa-auth-mailer/fxa_auth_mailerrc
+  notify: restart fxa-auth-mailer
+
+- name: supervise fxa-auth-mailer
+  sudo: true
+  copy: src=fxa-auth-mailer.conf dest=/etc/supervisor.d/fxa-auth-mailer.conf
+  notify: update supervisor
+
+- meta: flush_handlers
