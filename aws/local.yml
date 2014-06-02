@@ -9,6 +9,10 @@
     content_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}'
     auth_server_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4443'
     auth_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4443'
+    browserid_issuer: '{{ subdomain }}.{{ hosted_zone }}:4443'
+    oauth_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4444'
+    profile_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4445'
+    rp_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}:1230'
   roles:
     - ses
     - mysql
@@ -17,6 +21,9 @@
     - content
     - customs
     - auth
+    - oauth
+    - rp
+    - profile
     - log
     - cron_update
     - team

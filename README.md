@@ -70,3 +70,4 @@ You can ssh into the EC2 instance with `ssh ec2-user@{{ whatever you configured 
   - config in `/etc/nginx/conf.d`
 - node process logs are in `/var/log/fxa-*`
 - heka dashboard is available on port 4352
+- 123done oauth is available on port 1230

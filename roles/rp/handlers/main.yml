@@ -1,0 +1,10 @@
+---
+
+- name: install fxa-rp dependencies
+  sudo: true
+  sudo_user: app
+  npm: path=/data/fxa-rp production=true
+
+- name: restart fxa-rp
+  sudo: true
+  supervisorctl: name=fxa-rp state=restarted
