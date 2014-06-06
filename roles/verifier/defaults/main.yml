@@ -1,0 +1,5 @@
+---
+verifier_private_port: 7776
+verifier_public_port: 7777
+verifier_git_repo: https://github.com/vladikoff/browserid-verifier.git
+verifier_git_version: insecure

@@ -53,7 +53,7 @@
           },
           {
             "IpProtocol" : "tcp",
-            "FromPort" : "80", "ToPort" : "81",
+            "FromPort" : "80", "ToPort" : "84",
             "CidrIp" : "0.0.0.0/0"
           },
           {
@@ -176,6 +176,45 @@
                     "arn:aws:iam::", { "Ref":"AWS::AccountId" }, ":server-certificate/", {"Ref" : "SSLCertificateName"}
                   ]
                ]
+            }
+          },
+          {
+            "InstancePort":"82",
+            "LoadBalancerPort":"4444",
+            "PolicyNames" : ["ELBSecurityPolicy-2014-01"],
+            "Protocol":"HTTPS",
+            "SSLCertificateId":{
+              "Fn::Join":[ "",
+                [
+                  "arn:aws:iam::", { "Ref":"AWS::AccountId" }, ":server-certificate/", {"Ref" : "SSLCertificateName"}
+                ]
+              ]
+            }
+          },
+          {
+            "InstancePort":"83",
+            "LoadBalancerPort":"4445",
+            "PolicyNames" : ["ELBSecurityPolicy-2014-01"],
+            "Protocol":"HTTPS",
+            "SSLCertificateId":{
+              "Fn::Join":[ "",
+                [
+                  "arn:aws:iam::", { "Ref":"AWS::AccountId" }, ":server-certificate/", {"Ref" : "SSLCertificateName"}
+                ]
+              ]
+            }
+          },
+          {
+            "InstancePort":"84",
+            "LoadBalancerPort":"1230",
+            "PolicyNames" : ["ELBSecurityPolicy-2014-01"],
+            "Protocol":"HTTPS",
+            "SSLCertificateId":{
+              "Fn::Join":[ "",
+                [
+                  "arn:aws:iam::", { "Ref":"AWS::AccountId" }, ":server-certificate/", {"Ref" : "SSLCertificateName"}
+                ]
+              ]
             }
           }
         ],

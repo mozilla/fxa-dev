@@ -1,0 +1,5 @@
+---
+oauth_private_port: 9010
+oauth_public_port: 82
+oauth_git_repo: https://github.com/mozilla/fxa-oauth-server.git
+oauth_git_version: master

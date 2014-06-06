@@ -1,0 +1,31 @@
+---
+
+- name: configure nginx
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/http_verifier.conf
+  notify: reload nginx config
+
+- name: install verifier
+  tags: code
+  sudo: true
+  sudo_user: app
+  git: repo={{ verifier_git_repo }}
+       dest=/data/verifier
+       version={{ verifier_git_version }}
+       force=true
+  notify:
+    - install verifier dependencies
+    - restart verifier
+
+- name: configure verifier
+  sudo: true
+  sudo_user: app
+  template: src=config.json.j2 dest=/data/verifier/config.json
+  notify: restart verifier
+
+- name: supervise verifier
+  sudo: true
+  copy: src=verifier.conf dest=/etc/supervisor.d/verifier.conf
+  notify: update supervisor
+
+- meta: flush_handlers

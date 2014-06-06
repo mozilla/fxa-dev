@@ -1,0 +1,5 @@
+---
+profile_private_port: 9011
+profile_public_port: 83
+profile_git_repo: https://github.com/mozilla/fxa-profile-server.git
+profile_git_version: master

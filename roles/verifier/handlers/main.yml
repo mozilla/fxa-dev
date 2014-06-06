@@ -1,0 +1,10 @@
+---
+
+- name: install verifier dependencies
+  sudo: true
+  sudo_user: app
+  npm: path=/data/verifier production=true
+
+- name: restart verifier
+  sudo: true
+  supervisorctl: name=verifier state=restarted
