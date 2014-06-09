@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.limit = 'all'
       ansible.ask_sudo_pass = true
       ansible.extra_vars = {
-        host_ip: "{{ ansible_eth1.ipv4.address }}",
+        host_ip: "{{ ansible_enp0s8.ipv4.address }}",
         iface: 1
       }
     end
