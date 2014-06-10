@@ -185,6 +185,7 @@
 
     "FxaDNS": {
       "Type": "AWS::Route53::RecordSetGroup",
+      "DependsOn" : [ "FxaEc2Instance", "FxaELB" ],
       "Properties": {
         "HostedZoneName" : { "Fn::Join" : [ "", [{"Ref" : "HostedZone"}, "." ]]},
         "RecordSets": [
