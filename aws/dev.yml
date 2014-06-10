@@ -41,8 +41,8 @@
     - my_vars.yml
   vars:
     content_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}'
-    auth_server_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4443'
-    auth_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4443'
+    auth_server_url: 'https://{{ subdomain }}.{{ hosted_zone }}/auth'
+    auth_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}/auth'
   roles:
     - ses
     - mysql
