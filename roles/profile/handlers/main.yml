@@ -1,0 +1,10 @@
+---
+
+- name: install fxa-profile-server dependencies
+  sudo: true
+  sudo_user: app
+  npm: path=/data/fxa-profile-server production=true
+
+- name: restart fxa-profile-server
+  sudo: true
+  supervisorctl: name=fxa-profile-server state=restarted

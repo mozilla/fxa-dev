@@ -1,0 +1,31 @@
+---
+
+- name: configure nginx upstream
+  sudo: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa-rp.conf
+  notify: reload nginx config
+
+- name: install fxa-rp
+  tags: code
+  sudo: true
+  sudo_user: app
+  git: repo={{ rp_git_repo }}
+       dest=/data/fxa-rp
+       version={{ rp_git_version }}
+       force=true
+  notify:
+    - install fxa-rp dependencies
+    - restart fxa-rp
+
+- name: configure fxa-rp
+  sudo: true
+  sudo_user: app
+  template: src=config.json.j2 dest=/data/fxa-rp/config.json
+  notify: restart fxa-rp
+
+- name: supervise fxa-rp
+  sudo: true
+  copy: src=fxa-rp.conf dest=/etc/supervisor.d/fxa-rp.conf
+  notify: update supervisor
+
+- meta: flush_handlers

@@ -69,4 +69,12 @@ You can ssh into the EC2 instance with `ssh ec2-user@{{ whatever you configured 
 - nginx is the web frontend
   - config in `/etc/nginx/conf.d`
 - node process logs are in `/var/log/fxa-*`
-- heka dashboard is available on port 4352
+
+## Example urls
+
+- logs: https://latest.dev.lcip.org/logs/
+- heka: https://latest.dev.lcip.org/heka/
+- content server: https://latest.dev.lcip.org
+- auth server: https://latest.dev.lcip.org/auth/
+- oauth server: https://oauth-latest.dev.lcip.org
+- demo oauth site: https://123done-latest.dev.lcip.org

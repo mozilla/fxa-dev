@@ -1,0 +1,7 @@
+---
+rp_private_port: 4900
+rp_git_repo: https://github.com/mozilla/123done.git
+rp_git_version: oauth
+rp_public_url: https://{{ rp_domain_name }}
+oauth_public_url: https://{{ oauth_domain_name }}
+profile_public_url: https://{{ domain_name }}/profile

@@ -1,41 +1,48 @@
-server {
-  listen {{ kibana_public_port }};
+location /heka {
+  rewrite ^/heka(.*)$ $1 break;
+  proxy_pass http://127.0.0.1:4352;
+  proxy_read_timeout 90;
+}
 
-  access_log /var/log/nginx/kibana.access.log;
+location /logs {
+  alias /data/kibana/dist/;
+  index index.html index.htm;
+}
 
-  location / {
-    root /data/kibana/dist;
-    index index.html index.htm;
-  }
+location ~ ^/logs/_aliases$ {
+  rewrite ^/logs(.*)$ $1 break;
+  proxy_pass http://127.0.0.1:9200;
+  proxy_read_timeout 90;
+}
+location ~ ^/logs/.*/_aliases$ {
+  rewrite ^/logs(.*)$ $1 break;
+  proxy_pass http://127.0.0.1:9200;
+  proxy_read_timeout 90;
+}
+location ~ ^/logs/_nodes$ {
+  rewrite ^/logs(.*)$ $1 break;
+  proxy_pass http://127.0.0.1:9200;
+  proxy_read_timeout 90;
+}
+location ~ ^/logs/.*/_search$ {
+  rewrite ^/logs(.*)$ $1 break;
+  proxy_pass http://127.0.0.1:9200;
+  proxy_read_timeout 90;
+}
+location ~ ^/logs/.*/_mapping {
+  rewrite ^/logs(.*)$ $1 break;
+  proxy_pass http://127.0.0.1:9200;
+  proxy_read_timeout 90;
+}
 
-  location ~ ^/_aliases$ {
-    proxy_pass http://127.0.0.1:9200;
-    proxy_read_timeout 90;
-  }
-  location ~ ^/.*/_aliases$ {
-    proxy_pass http://127.0.0.1:9200;
-    proxy_read_timeout 90;
-  }
-  location ~ ^/_nodes$ {
-    proxy_pass http://127.0.0.1:9200;
-    proxy_read_timeout 90;
-  }
-  location ~ ^/.*/_search$ {
-    proxy_pass http://127.0.0.1:9200;
-    proxy_read_timeout 90;
-  }
-  location ~ ^/.*/_mapping {
-    proxy_pass http://127.0.0.1:9200;
-    proxy_read_timeout 90;
-  }
-
-  # Password protected end points
-  location ~ ^/kibana-int/dashboard/.*$ {
-    proxy_pass http://127.0.0.1:9200;
-    proxy_read_timeout 90;
-  }
-  location ~ ^/kibana-int/temp.*$ {
-    proxy_pass http://127.0.0.1:9200;
-    proxy_read_timeout 90;
-  }
+# Password protected end points
+location ~ ^/logs/kibana-int/dashboard/.*$ {
+  rewrite ^/logs(.*)$ $1 break;
+  proxy_pass http://127.0.0.1:9200;
+  proxy_read_timeout 90;
+}
+location ~ ^/logs/kibana-int/temp.*$ {
+  rewrite ^/logs(.*)$ $1 break;
+  proxy_pass http://127.0.0.1:9200;
+  proxy_read_timeout 90;
 }

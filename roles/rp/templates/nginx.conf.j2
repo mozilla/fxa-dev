@@ -1,0 +1,7 @@
+location /123done/ {
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header Host $http_host;
+  proxy_redirect off;
+  rewrite ^/123done(.*)$ $1 break;
+  proxy_pass http://upstream_rp;
+}

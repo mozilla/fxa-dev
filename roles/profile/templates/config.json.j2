@@ -1,0 +1,22 @@
+{
+  "logging": {
+    "handlers": {
+      "console": {
+        "formatter": "pretty_with_time"
+      }
+    },
+    "loggers": {
+      "fxa": {
+        "level": "verbose"
+      }
+    }
+  },
+  "publicUrl": "{{ profile_public_url }}",
+  "oauth": {
+    "url": "{{ oauth_public_url }}/v1"
+  },
+  "server": {
+    "host": "127.0.0.1",
+    "port": 9011
+  }
+}

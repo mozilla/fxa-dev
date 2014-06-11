@@ -1,0 +1,47 @@
+{
+  "contentUrl": "{{ content_public_url }}/oauth/",
+  "db": {
+    "driver": "memory"
+  },
+  "browserid": {
+    "issuer": "{{ browserid_issuer }}"
+  },
+  "publicUrl": "{{ oauth_public_url }}",
+  "clients": [
+    {
+      "id": "dcdb5ae7add825d2",
+      "secret": "b93ef8a8f3e553a430d7e5b904c6132b2722633af9f03128029201d24a97f2a8",
+      "name": "123done",
+      "imageUri": "{{ oauth_public_url }}/img/logo@2x.png",
+      "redirectUri": "{{ rp_public_url }}/api/oauth",
+      "whitelisted": true
+    },
+    {
+      "id": "dcdb5ae7add825d3",
+      "secret": "b93ef8a8f3e553a430d7e5b904c6132b2722633af9f03128029201d24a97f2a9",
+      "name": "Loop",
+      "imageUri": "{{ oauth_public_url }}/img/logo@2x.png",
+      "redirectUri": "http://localhost:5000/fxaOauth/redirect",
+      "whitelisted": true
+    }
+  ],
+  "env": "stage",
+  "logging": {
+    "formatters": {
+      "pretty": {
+        "format": "[%(date)s] %(name)s.%(levelname)s: %(message)s",
+        "colorize": false
+      }
+    },
+    "handlers": {
+      "console": {
+        "formatter": "pretty"
+      }
+    },
+    "loggers": {
+      "fxa": {
+        "level": "verbose"
+      }
+    }
+  }
+}

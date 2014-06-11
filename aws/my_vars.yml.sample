@@ -11,3 +11,10 @@ auth_mail_sender: Firefox Accounts <verification@{{ subdomain }}.{{ hosted_zone 
 # this must be compatible with your stack_name and hosted_zone
 # see http://docs.aws.amazon.com/IAM/latest/UserGuide/ManagingServerCerts.html
 ssl_certificate_name: wildcard.dev.lcip.org
+# how often to auto-update (defaults to every 10 minutes)
+# the example below will set it to only update on January 1, 00:00 UTC
+cron_time:
+  minute: 0
+  hour: 0
+  day: 1
+  month: 1
