@@ -1,0 +1,10 @@
+---
+
+- name: install fxa-oauth-server dependencies
+  sudo: true
+  sudo_user: app
+  npm: path=/data/fxa-oauth-server production=true
+
+- name: restart fxa-oauth-server
+  sudo: true
+  supervisorctl: name=fxa-oauth-server state=restarted

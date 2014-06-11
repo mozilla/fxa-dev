@@ -1,0 +1,7 @@
+---
+oauth_private_port: 9010
+oauth_git_repo: https://github.com/mozilla/fxa-oauth-server.git
+oauth_git_version: master
+oauth_public_url: https://{{ oauth_domain_name }}
+browserid_issuer: "{{ domain_name }}"
+rp_public_url: https://{{ rp_domain_name }}

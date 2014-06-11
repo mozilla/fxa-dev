@@ -1,0 +1,6 @@
+---
+profile_private_port: 9011
+profile_git_repo: https://github.com/mozilla/fxa-profile-server.git
+profile_git_version: master
+profile_public_url: https://{{ domain_name }}/profile
+oauth_public_url: http://{{ oauth_domain_name }}

@@ -1,4 +1,5 @@
-auth_server_url: http://{{ ansible_default_ipv4.address }}:81
+auth_server_url: http://{{ ansible_default_ipv4.address }}/auth
+oauth_public_url: https://{{ oauth_domain_name }}
 content_public_url: http://127.0.0.1
 content_public_port: 80
 content_private_port: 3030

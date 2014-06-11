@@ -40,9 +40,14 @@
   vars_files:
     - my_vars.yml
   vars:
-    content_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}'
-    auth_server_url: 'https://{{ subdomain }}.{{ hosted_zone }}/auth'
-    auth_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}/auth'
+    domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+    oauth_domain_name: "oauth-{{ domain_name }}"
+    rp_domain_name: "123done-{{ domain_name }}"
+    content_public_url: 'https://{{ domain_name }}'
+    auth_server_url: 'https://{{ domain_name }}/auth'
+    auth_public_url: 'https://{{ domain_name }}/auth'
+    oauth_public_url: 'https://{{ oauth_domain_name }}'
+    rp_public_url: 'https://{{ rp_domain_name }}'
   roles:
     - ses
     - mysql
@@ -51,6 +56,9 @@
     - content
     - customs
     - auth
+    - oauth
+    - profile
+    - rp
     - log
     - cron_update
     - team

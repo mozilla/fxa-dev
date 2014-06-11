@@ -1,0 +1,31 @@
+---
+
+- name: configure nginx
+  sudo: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_oauth.conf
+  notify: reload nginx config
+
+- name: install fxa-oauth-server
+  tags: code
+  sudo: true
+  sudo_user: app
+  git: repo={{ oauth_git_repo }}
+       dest=/data/fxa-oauth-server
+       version={{ oauth_git_version }}
+       force=true
+  notify:
+    - install fxa-oauth-server dependencies
+    - restart fxa-oauth-server
+
+- name: configure fxa-oauth-server
+  sudo: true
+  sudo_user: app
+  template: src=config.json.j2 dest=/data/fxa-oauth-server/config/local.json
+  notify: restart fxa-oauth-server
+
+- name: supervise fxa-oauth-server
+  sudo: true
+  copy: src=fxa-oauth-server.conf dest=/etc/supervisor.d/fxa-oauth-server.conf
+  notify: update supervisor
+
+- meta: flush_handlers

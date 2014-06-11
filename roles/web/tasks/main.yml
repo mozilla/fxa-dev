@@ -16,7 +16,7 @@
 
 - name: copy base nginx.conf
   sudo: true
-  copy: src=nginx.conf dest=/etc/nginx/nginx.conf
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
   notify: reload nginx config
 
 - name: start nginx
