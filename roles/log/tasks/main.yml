@@ -40,9 +40,9 @@
   sudo_user: app
   template: src=kibana_config.js.j2 dest=/data/kibana/dist/config.js
 
-- name: configure nginx
+- name: configure nginx location
   sudo: true
-  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/kibana.conf
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/kibana.conf
   notify: reload nginx config
 
 - name: configure heka aggregator

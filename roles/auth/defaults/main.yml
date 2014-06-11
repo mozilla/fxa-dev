@@ -5,7 +5,7 @@ customs_server_url: http://127.0.0.1:7000
 auth_mailer_url: http://127.0.0.1:1810
 auth_server_version: master
 auth_private_port: 9000
-auth_public_url: {{ content_public_url }}/auth
+auth_public_url: "{{ content_public_url }}/auth"
 auth_domain: example.com
 auth_git_repo: https://github.com/mozilla/fxa-auth-server.git
 auth_git_version: master
