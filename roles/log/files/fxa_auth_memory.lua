@@ -12,9 +12,8 @@ local static_title      = "Fxa Auth Server"
 local rows              = read_config("rows") or 1440
 local sec_per_row       = read_config("sec_per_row") or 60
 local pid_expiration    = (read_config("pid_expiration") or 600) * 1e9
-local HEAP_TOTAL        = 1
-local HEAP_USED         = 2
-local RSS               = 3
+local HEAP_USED         = 1
+local RSS               = 2
 
 pids = {}
 last_update = 0
@@ -23,15 +22,13 @@ function process_message ()
     local ts    = read_message("Timestamp")
     local host  = read_message("Hostname")
     local pid   = read_message("Pid")
-    local ht    = read_message("Fields[heapTotal]")
     local hu    = read_message("Fields[heapUsed]")
     local rss   = read_message("Fields[rss]")
 
     local key = string.format("%s PID:%d", host, pid)
     local p = pids[key]
     if not p then
-        p  = circular_buffer.new(rows, 3, sec_per_row)
-        p:set_header(HEAP_TOTAL, "heapTotal", "B", "max")
+        p  = circular_buffer.new(rows, 2, sec_per_row)
         p:set_header(HEAP_USED , "heapUsed" , "B", "max")
         p:set_header(RSS       , "rss"      , "B", "max")
         pids[key] = p
@@ -41,7 +38,6 @@ function process_message ()
         last_update = ts
     end
 
-    p:set(ts, HEAP_TOTAL, ht)
     p:set(ts, HEAP_USED , hu)
     p:set(ts, RSS       , rss)
     return 0
