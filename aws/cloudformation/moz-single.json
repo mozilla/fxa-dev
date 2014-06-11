@@ -53,22 +53,7 @@
           },
           {
             "IpProtocol" : "tcp",
-            "FromPort" : "80", "ToPort" : "81",
-            "CidrIp" : "0.0.0.0/0"
-          },
-          {
-            "IpProtocol" : "tcp",
-            "FromPort" : "443", "ToPort" : "443",
-            "CidrIp" : "0.0.0.0/0"
-          },
-          {
-            "IpProtocol" : "tcp",
-            "FromPort" : "4352", "ToPort" : "4352",
-            "CidrIp" : "0.0.0.0/0"
-          },
-          {
-            "IpProtocol" : "tcp",
-            "FromPort" : "9199", "ToPort" : "9199",
+            "FromPort" : "80", "ToPort" : "80",
             "CidrIp" : "0.0.0.0/0"
           }
         ]
@@ -155,19 +140,6 @@
           {
             "InstancePort":"80",
             "LoadBalancerPort":"443",
-            "PolicyNames" : ["ELBSecurityPolicy-2014-01"],
-            "Protocol":"HTTPS",
-            "SSLCertificateId":{
-               "Fn::Join":[ "",
-                  [
-                    "arn:aws:iam::", { "Ref":"AWS::AccountId" }, ":server-certificate/", {"Ref" : "SSLCertificateName"}
-                  ]
-               ]
-            }
-          },
-          {
-            "InstancePort":"81",
-            "LoadBalancerPort":"4443",
             "PolicyNames" : ["ELBSecurityPolicy-2014-01"],
             "Protocol":"HTTPS",
             "SSLCertificateId":{
