@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "dannycoates/sl64"
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.hostname = 'fxa'
+  config.vm.hostname = 'fxa.local'
 
   config.vm.provider "virtualbox" do |vb, override|
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
