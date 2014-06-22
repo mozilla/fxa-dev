@@ -1,6 +1,11 @@
-auth_server_url: http://{{ ansible_default_ipv4.address }}/auth
-oauth_public_url: https://{{ oauth_domain_name }}
-content_public_url: http://127.0.0.1
+---
+public_protocol: https
+private_protocol: http
+domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+auth_public_url: "{{ public_protocol }}://{{ domain_name }}/auth"
+oauth_domain_name: "oauth-{{ domain_name }}"
+oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
+content_public_url: "{{ public_protocol }}://{{ domain_name }}"
 content_public_port: 80
 content_private_port: 3030
 content_git_repo: https://github.com/mozilla/fxa-content-server.git

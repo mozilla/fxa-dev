@@ -3,13 +3,8 @@
 - hosts: default
   remote_user: vagrant
   vars:
+    public_protocol: http
     domain_name: fxa.local
-    oauth_domain_name: "oauth-{{ domain_name }}"
-    rp_domain_name: "123done-{{ domain_name }}"
-    content_public_url: 'http://{{ domain_name }}'
-    auth_server_url: 'http://{{ domain_name }}/auth'
-    auth_public_url: 'http://{{ domain_name }}/auth'
-    oauth_public_url: 'http://{{ oauth_domain_name }}'
   roles:
     - email
     - mysql
@@ -32,5 +27,5 @@
       lineinfile: dest=/etc/hosts regexp="{{ item.regexp }}" line="{{ item.line }}"
       with_items:
         - { regexp: " fxa.local$", line: '{{ hostvars["default"]["ansible_all_ipv4_addresses"][hostvars["default"]["iface"]] }} fxa.local'}
-        - { regexp: " 123done-fxa.local$", line: '{{ hostvars["default"][hostvars["default"]["iface"]].ipv4.address }} 123done-fxa.local'}
-        - { regexp: " oauth-fxa.local$", line: '{{ hostvars["default"][hostvars["default"]["iface"]].ipv4.address }} oauth-fxa.local'}
+        - { regexp: " 123done-fxa.local$", line: '{{ hostvars["default"]["ansible_all_ipv4_addresses"][hostvars["default"]["iface"]] }} 123done-fxa.local'}
+        - { regexp: " oauth-fxa.local$", line: '{{ hostvars["default"]["ansible_all_ipv4_addresses"][hostvars["default"]["iface"]] }} oauth-fxa.local'}

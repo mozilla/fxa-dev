@@ -1,7 +1,12 @@
 ---
+public_protocol: https
+private_protocol: http
+domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 oauth_private_port: 9010
+oauth_domain_name: "oauth-{{ domain_name }}"
 oauth_git_repo: https://github.com/mozilla/fxa-oauth-server.git
 oauth_git_version: master
-oauth_public_url: https://{{ oauth_domain_name }}
+oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
 browserid_issuer: "{{ domain_name }}"
-rp_public_url: https://{{ rp_domain_name }}
+rp_domain_name: "123done-{{ domain_name }}"
+rp_public_url: "{{ public_protocol }}://{{ rp_domain_name }}"

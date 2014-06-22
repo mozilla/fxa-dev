@@ -39,15 +39,6 @@
   gather_facts: true
   vars_files:
     - my_vars.yml
-  vars:
-    domain_name: "{{ subdomain }}.{{ hosted_zone }}"
-    oauth_domain_name: "oauth-{{ domain_name }}"
-    rp_domain_name: "123done-{{ domain_name }}"
-    content_public_url: 'https://{{ domain_name }}'
-    auth_server_url: 'https://{{ domain_name }}/auth'
-    auth_public_url: 'https://{{ domain_name }}/auth'
-    oauth_public_url: 'https://{{ oauth_domain_name }}'
-    rp_public_url: 'https://{{ rp_domain_name }}'
   roles:
     - ses
     - mysql

@@ -13,6 +13,15 @@
   sudo: true
   service: name=postfix state=started enabled=true
 
+# fedora 20 doesn't include rsyslog by default
+- name: install rsyslog
+  sudo: true
+  yum: name=rsyslog state=present
+
+- name: start rsyslog
+  sudo: true
+  service: name=rsyslog state=started enabled=true
+
 - name: install fxa-auth-mailer
   tags: code
   sudo: true
