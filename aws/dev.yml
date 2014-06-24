@@ -39,10 +39,6 @@
   gather_facts: true
   vars_files:
     - my_vars.yml
-  vars:
-    content_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}'
-    auth_server_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4443'
-    auth_public_url: 'https://{{ subdomain }}.{{ hosted_zone }}:4443'
   roles:
     - ses
     - mysql
@@ -51,6 +47,9 @@
     - content
     - customs
     - auth
+    - oauth
+    - profile
+    - rp
     - log
     - cron_update
     - team

@@ -1,0 +1,36 @@
+---
+
+- name: configure nginx upstream
+  sudo: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_profile.conf
+  notify: reload nginx config
+
+- name: configure nginx location
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_profile.conf
+  notify: reload nginx config
+
+- name: install fxa-profile-server
+  tags: code
+  sudo: true
+  sudo_user: app
+  git: repo={{ profile_git_repo }}
+       dest=/data/fxa-profile-server
+       version={{ profile_git_version }}
+       force=true
+  notify:
+    - install fxa-profile-server dependencies
+    - restart fxa-profile-server
+
+- name: configure fxa-profile-server
+  sudo: true
+  sudo_user: app
+  template: src=config.json.j2 dest=/data/fxa-profile-server/config/local.json
+  notify: restart fxa-profile-server
+
+- name: supervise fxa-profile-server
+  sudo: true
+  copy: src=fxa-profile-server.conf dest=/etc/supervisor.d/fxa-profile-server.conf
+  notify: update supervisor
+
+- meta: flush_handlers

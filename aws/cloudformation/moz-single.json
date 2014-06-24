@@ -53,22 +53,7 @@
           },
           {
             "IpProtocol" : "tcp",
-            "FromPort" : "80", "ToPort" : "81",
-            "CidrIp" : "0.0.0.0/0"
-          },
-          {
-            "IpProtocol" : "tcp",
-            "FromPort" : "443", "ToPort" : "443",
-            "CidrIp" : "0.0.0.0/0"
-          },
-          {
-            "IpProtocol" : "tcp",
-            "FromPort" : "4352", "ToPort" : "4352",
-            "CidrIp" : "0.0.0.0/0"
-          },
-          {
-            "IpProtocol" : "tcp",
-            "FromPort" : "9199", "ToPort" : "9199",
+            "FromPort" : "80", "ToPort" : "80",
             "CidrIp" : "0.0.0.0/0"
           }
         ]
@@ -164,19 +149,6 @@
                   ]
                ]
             }
-          },
-          {
-            "InstancePort":"81",
-            "LoadBalancerPort":"4443",
-            "PolicyNames" : ["ELBSecurityPolicy-2014-01"],
-            "Protocol":"HTTPS",
-            "SSLCertificateId":{
-               "Fn::Join":[ "",
-                  [
-                    "arn:aws:iam::", { "Ref":"AWS::AccountId" }, ":server-certificate/", {"Ref" : "SSLCertificateName"}
-                  ]
-               ]
-            }
           }
         ],
         "Instances": [{ "Ref" : "FxaEc2Instance" }]
@@ -190,6 +162,22 @@
         "RecordSets": [
           {
             "Name" : { "Fn::Join" : [ "", [{"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
+            "Type" : "A",
+            "AliasTarget" : {
+              "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },
+              "DNSName" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
+            }
+          },
+          {
+            "Name" : { "Fn::Join" : [ "", ["oauth-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
+            "Type" : "A",
+            "AliasTarget" : {
+              "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },
+              "DNSName" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
+            }
+          },
+          {
+            "Name" : { "Fn::Join" : [ "", ["123done-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
             "Type" : "A",
             "AliasTarget" : {
               "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },

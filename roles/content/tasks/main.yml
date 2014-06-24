@@ -4,9 +4,14 @@
   sudo: true
   yum: name=gmp-devel state=present
 
-- name: configure nginx
+- name: configure nginx upstream
   sudo: true
-  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/http_fxa_content.conf
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_content.conf
+  notify: reload nginx config
+
+- name: configure nginx location
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_content.conf
   notify: reload nginx config
 
 - name: configure heka

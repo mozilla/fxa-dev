@@ -4,9 +4,20 @@
   sudo: true
   yum: name=nginx state=present
 
+- file: path=/etc/nginx/conf.d/upstream state=directory
+  sudo: true
+
+- file: path=/etc/nginx/conf.d/location state=directory
+  sudo: true
+
 - name: delete nginx default.conf
   sudo: true
   file: path=/etc/nginx/conf.d/default.conf state=absent
+
+- name: copy base nginx.conf
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  notify: reload nginx config
 
 - name: start nginx
   sudo: true

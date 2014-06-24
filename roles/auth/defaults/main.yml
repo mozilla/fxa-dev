@@ -1,13 +1,13 @@
 ---
-content_public_url: http://{{ ansible_default_ipv4.address }}
-authdb_server_url: http://127.0.0.1:8000
-customs_server_url: http://127.0.0.1:7000
-auth_mailer_url: http://127.0.0.1:1810
+public_protocol: https
+private_protocol: http
+domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+content_public_url: "{{ public_protocol }}://{{ domain_name }}"
+authdb_server_url: "{{ private_protocol }}://127.0.0.1:8000"
+customs_server_url: "{{ private_protocol }}://127.0.0.1:7000"
+auth_mailer_url: "{{ private_protocol }}://127.0.0.1:1810"
 auth_server_version: master
-auth_public_port: 81
 auth_private_port: 9000
-auth_public_url: http://{{ ansible_default_ipv4.address }}:{{ auth_public_port }}
-auth_domain: example.com
 auth_git_repo: https://github.com/mozilla/fxa-auth-server.git
 auth_git_version: master
 auth_mail_host: 127.0.0.1
