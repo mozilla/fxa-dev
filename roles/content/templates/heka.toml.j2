@@ -1,0 +1,11 @@
+[FxaContent]
+type = "LogstreamerInput"
+log_directory = "/var/log"
+file_match = 'fxa-content\.err'
+decoder = "FxaContentDecoder"
+
+[FxaContentDecoder]
+type = "SandboxDecoder"
+script_type = "lua"
+filename = "lua_decoders/fxa_auth_server.lua"
+
