@@ -57,7 +57,7 @@ cd aws
 3. create a `environments/foo.yml` file ('foo' can be anything)
 4. run `make foo`
 
-To updated the stack just run `make` again.
+To updated the stack just run `make foo` again.
 
 You can ssh into the EC2 instance with `ssh ec2-user@{{ whatever you configured in my_vars.yml }}`
 
