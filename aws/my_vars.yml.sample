@@ -1,8 +1,17 @@
 ---
-region: us-west-2
+# key_name is the only variable that should be in my_vars.yml
+# The other variables should be put in a yml file in the environments directory
+
 # aws key name to use or create
 key_name: dcoates
+
+
+
+
+# The following variables should be put into a yml file in the environments directory
+
 stack_name: dcoates
+region: us-west-2
 # The {{ subdomain }}.{{ host_zone }} will be added to route53
 subdomain: dcoates.dev
 hosted_zone: lcip.org

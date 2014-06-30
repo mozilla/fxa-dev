@@ -4,6 +4,7 @@
   connection: local
   gather_facts: false
   vars_files:
+    - "environments/{{ stack_name }}.yml"
     - my_vars.yml
   tasks:
     - name: create key pair
@@ -38,15 +39,16 @@
   remote_user: ec2-user
   gather_facts: true
   vars_files:
+    - "environments/{{ stack_name }}.yml"
     - my_vars.yml
   roles:
     - ses
     - mysql
     - memcached
-    - authdb
-    - content
     - customs
+    - authdb
     - auth
+    - content
     - oauth
     - profile
     - rp

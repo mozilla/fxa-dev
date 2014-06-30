@@ -39,4 +39,4 @@
         day={{ cron_time.day | default('*') }}
         hour={{ cron_time.hour | default('*') }}
         minute={{ cron_time.minute | default('*/10') }}
-        job="cd /data/fxa-dev/aws; ansible-playbook -i localhost, local.yml > /var/log/ansible/update.log"
+        job="cd /data/fxa-dev/aws; ansible-playbook -i localhost, local.yml --extra-vars \"stack_name={{ stack_name }}\" > /var/log/ansible/update.log"

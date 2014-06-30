@@ -1,0 +1,9 @@
+---
+region: us-west-2
+subdomain: nightly.dev
+hosted_zone: lcip.org
+ssl_certificate_name: wildcard.dev.lcip.org
+auth_mail_sender: Firefox Accounts <verification@{{ domain_name }}>
+cron_time:
+  minute: 5
+  hour: 10

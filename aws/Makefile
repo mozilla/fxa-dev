@@ -1,4 +1,6 @@
-.PHONY: default update
+.PHONY: default
 
-default:
-	ansible-playbook -i localhost, dev.yml
+default: latest
+
+%:
+	ansible-playbook -i localhost, dev.yml --extra-vars "stack_name=$@"

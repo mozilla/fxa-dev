@@ -4,15 +4,16 @@
   hosts: localhost
   connection: local
   vars_files:
+    - "environments/{{ stack_name }}.yml"
     - my_vars.yml
   roles:
     - ses
     - mysql
     - memcached
-    - authdb
-    - content
     - customs
+    - authdb
     - auth
+    - content
     - log
     - cron_update
     - team
