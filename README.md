@@ -54,7 +54,8 @@ cd aws
 
 1. Set the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables
 2. create a `my_vars.yml` file
-3. run `make`
+3. create a `environments/foo.yml` file ('foo' can be anything)
+4. run `make foo`
 
 To updated the stack just run `make` again.
 
