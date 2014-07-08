@@ -53,13 +53,13 @@ cd aws
 ```
 
 1. Set the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables
-2. create a `my_vars.yml` file
 3. create a `environments/foo.yml` file ('foo' can be anything)
+  a) see `environments/EXAMPLE.yml` for a base reference
 4. run `make foo`
 
 To updated the stack just run `make foo` again.
 
-You can ssh into the EC2 instance with `ssh ec2-user@{{ whatever you configured in my_vars.yml }}`
+You can ssh into the EC2 instance with `ssh ec2-user@{{ whatever you configured in foo.yml }}`
 
 ## Layout Notes
 

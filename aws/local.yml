@@ -5,7 +5,6 @@
   connection: local
   vars_files:
     - "environments/{{ stack_name }}.yml"
-    - my_vars.yml
   roles:
     - ses
     - mysql

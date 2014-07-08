@@ -5,7 +5,8 @@
   gather_facts: false
   vars_files:
     - "environments/{{ stack_name }}.yml"
-    - my_vars.yml
+  vars:
+    key_name: "{{ stack_name }}-fxadev"
   tasks:
     - name: create key pair
       local_action:
@@ -40,7 +41,6 @@
   gather_facts: true
   vars_files:
     - "environments/{{ stack_name }}.yml"
-    - my_vars.yml
   roles:
     - ses
     - mysql

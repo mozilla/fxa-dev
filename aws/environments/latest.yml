@@ -3,4 +3,3 @@ region: us-west-2
 subdomain: latest.dev
 hosted_zone: lcip.org
 ssl_certificate_name: wildcard.dev.lcip.org
-auth_mail_sender: Firefox Accounts <verification@{{ domain_name }}>

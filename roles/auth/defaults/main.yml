@@ -11,4 +11,4 @@ auth_git_repo: https://github.com/mozilla/fxa-auth-server.git
 auth_git_version: master
 auth_mail_host: 127.0.0.1
 auth_mail_port: 25
-auth_mail_sender: Firefox Accounts <verification@accounts.firefox.com>
+auth_mail_sender: "Firefox Accounts <verification@{{ domain_name }}>"
