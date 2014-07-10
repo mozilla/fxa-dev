@@ -8,11 +8,11 @@ cron_time:
   minute: 0
   hour: 0
 
-auth_git_version: train-15
-authdb_git_version: train-15
-content_git_version: train-15
+auth_git_version: train-16
+authdb_git_version: d20b2f4f32fd2b0aff23673cde4df2d35ae7ff1c
+content_git_version: train-16
 customs_git_version: d5f96e7308aae0a803ea140dfa3b0234f9389d86
 auth_mailer_git_version: 452434ae0f0c8099d75c2742cfb0e1a9f7aa35d6
-oauth_git_version: 0.14.0
-profile_git_version: 0.14.0
+oauth_git_version: d41c8bab6a43f555a9ae23ac1349724ec8f71ae4
+profile_git_version: a383374a3733bca72353c2b71b7042e2306898d2
 rp_git_version: 25ca96e19f6171b12b17370c377f5502a927ed97
