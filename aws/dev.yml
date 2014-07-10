@@ -16,7 +16,7 @@
         key_material: "{{ item }}"
       with_file: ~/.ssh/id_rsa.pub
 
-    - name: create basic stack
+    - name: create basic stack (this will take a while)
       action: cloudformation
         stack_name="{{ stack_name }}-fxadev"
         state=present
@@ -28,6 +28,7 @@
           HostedZone: "{{ hosted_zone }}"
           Subdomain: "{{ subdomain }}"
           SSLCertificateName: "{{ ssl_certificate_name }}"
+          RDSPassword: "{{ rds_password }}"
       register: stack
 
     - debug: var=stack
@@ -39,11 +40,18 @@
   hosts: whatevs
   remote_user: ec2-user
   gather_facts: true
+  vars:
+    rds_host: "{{ hostvars['localhost']['stack']['stack_outputs']['RDSEndpoint'] }}"
+    authdb_primary_host: "{{ rds_host }}"
+    authdb_primary_password: "{{ rds_password }}"
+    authdb_replica_host: "{{ rds_host }}"
+    authdb_replica_password: "{{ rds_password }}"
+    oauth_db_host: "{{ rds_host }}"
+    oauth_db_password: "{{ rds_password }}"
   vars_files:
     - "environments/{{ stack_name }}.yml"
   roles:
     - ses
-    - mysql
     - memcached
     - customs
     - authdb

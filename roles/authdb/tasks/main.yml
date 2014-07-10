@@ -26,7 +26,7 @@
 - name: configure fxa-auth-db-server
   sudo: true
   sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-auth-db-server/fxa_dbrc
+  template: src=config.json.j2 dest=/data/fxa-auth-db-server/.fxa_dbrc
   notify: restart fxa-auth-db-server
 
 - name: supervise fxa-auth-db-server

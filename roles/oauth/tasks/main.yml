@@ -1,9 +1,5 @@
 ---
 
-- name: create oauth database
-  sudo: true
-  command: mysql -uroot -e"CREATE DATABASE IF NOT EXISTS fxa_oauth;"
-
 - name: configure nginx
   sudo: true
   template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_oauth.conf

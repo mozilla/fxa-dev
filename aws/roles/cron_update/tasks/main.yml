@@ -14,9 +14,9 @@
 
 - name: install fxa-dev
   sudo: true
-  git: repo=https://github.com/dannycoates/fxa-dev.git
+  git: repo={{ fxadev_git_repo }}
        dest=/data/fxa-dev
-       version=master
+       version={{ fxadev_git_version }}
        force=true
 
 - name: disable requiretty in /etc/sudoers
@@ -35,4 +35,4 @@
         day={{ cron_time.day | default('*') }}
         hour={{ cron_time.hour | default('*') }}
         minute={{ cron_time.minute | default('*/10') }}
-        job="cd /data/fxa-dev/aws; ansible-playbook -i localhost, local.yml --extra-vars \"stack_name={{ stack_name }}\" > /var/log/ansible/update.log"
+        job="cd /data/fxa-dev/aws; ansible-playbook -i localhost, local.yml --extra-vars \"stack_name={{ stack_name }} rds_host={{ rds_host }}\" > /var/log/ansible/update.log"

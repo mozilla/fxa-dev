@@ -5,9 +5,15 @@
   connection: local
   vars_files:
     - "environments/{{ stack_name }}.yml"
+  vars:
+    authdb_primary_host: "{{ rds_host }}"
+    authdb_primary_password: "{{ rds_password }}"
+    authdb_replica_host: "{{ rds_host }}"
+    authdb_replica_password: "{{ rds_password }}"
+    oauth_db_host: "{{ rds_host }}"
+    oauth_db_password: "{{ rds_password }}"
   roles:
     - ses
-    - mysql
     - memcached
     - customs
     - authdb

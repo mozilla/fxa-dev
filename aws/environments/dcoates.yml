@@ -3,6 +3,7 @@ region: us-west-2
 subdomain: dcoates.dev
 hosted_zone: lcip.org
 ssl_certificate_name: wildcard.dev.lcip.org
+rds_password: 3s,hE2;QDw?6)t8e
 cron_time:
   minute: 5
   hour: 10

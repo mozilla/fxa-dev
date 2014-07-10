@@ -23,6 +23,11 @@
     "SSLCertificateName": {
       "Type": "String",
       "Description": "SSL Cert name from IAM"
+    },
+    "RDSPassword": {
+      "Type": "String",
+      "MinLength": "8",
+      "Description": "RDS password"
     }
   },
 
@@ -118,6 +123,7 @@
 
     "FxaEc2Instance" : {
       "Type" : "AWS::EC2::Instance",
+      "DependsOn" : ["FxaInstanceProfile", "FxaDevSecurityGroup"],
       "Properties" : {
         "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
         "KeyName" : { "Ref" : "KeyName" },
@@ -133,6 +139,7 @@
 
     "FxaELB":{
       "Type":"AWS::ElasticLoadBalancing::LoadBalancer",
+      "DependsOn" : "FxaEc2Instance",
       "Properties":{
         "AvailabilityZones" : { "Fn::GetAZs" : "" },
         "ConnectionDrainingPolicy":{ "Enabled" : true, "Timeout" : 15 },
@@ -155,8 +162,34 @@
       }
     },
 
+    "FxaRDSSecurityGroup":{
+       "Type":"AWS::RDS::DBSecurityGroup",
+       "DependsOn" : "FxaDevSecurityGroup",
+       "Properties":{
+          "GroupDescription":"SG to Allow access to FXA RDS",
+          "DBSecurityGroupIngress":{
+             "EC2SecurityGroupName": { "Ref":"FxaDevSecurityGroup" }
+          }
+       }
+    },
+
+    "FxaRDSInstance":{
+       "Type":"AWS::RDS::DBInstance",
+       "DependsOn" : "FxaRDSSecurityGroup",
+       "Properties":{
+          "AllocatedStorage": "10",
+          "DBInstanceClass": "db.t1.micro",
+          "DBSecurityGroups":[ { "Ref":"FxaRDSSecurityGroup" } ],
+          "Engine":"MySQL",
+          "EngineVersion":"5.6",
+          "MasterUsername":"root",
+          "MasterUserPassword":{ "Ref" : "RDSPassword" }
+       }
+    },
+
     "FxaDNS": {
       "Type": "AWS::Route53::RecordSetGroup",
+      "DependsOn" : [ "FxaEc2Instance", "FxaELB", "FxaRDSInstance" ],
       "Properties": {
         "HostedZoneName" : { "Fn::Join" : [ "", [{"Ref" : "HostedZone"}, "." ]]},
         "RecordSets": [
@@ -199,6 +232,10 @@
     "Instance" : {
       "Value" : { "Fn::GetAtt" : [ "FxaEc2Instance", "PublicDnsName" ] },
       "Description" : "DNS Name of the newly created EC2 instance"
+    },
+    "RDSEndpoint": {
+      "Description": "RDS Endpoint",
+      "Value": {"Fn::GetAtt":[ "FxaRDSInstance", "Endpoint.Address" ]}
     }
   }
 }

@@ -3,6 +3,7 @@ region: us-west-2
 subdomain: stable.dev
 hosted_zone: lcip.org
 ssl_certificate_name: wildcard.dev.lcip.org
+rds_password: Q&}PzHU79J8Ex}3,
 cron_time:
   minute: 0
   hour: 0

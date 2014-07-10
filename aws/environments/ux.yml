@@ -3,5 +3,6 @@ region: us-west-2
 subdomain: ux.dev
 hosted_zone: lcip.org
 ssl_certificate_name: wildcard.dev.lcip.org
+rds_password: Q)vy7]e9Q8G%9f{K
 
 content_git_version: ux-dev

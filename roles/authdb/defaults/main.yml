@@ -2,22 +2,10 @@
 authdb_private_port: 8000
 authdb_git_repo: https://github.com/mozilla/fxa-auth-db-server.git
 authdb_git_version: master
-authdb_patch_level: 2
-authdb_master:
-  user: root
-  password:
-  database: fxa
-  host: 127.0.0.1
-  port: 3306
-  connection_limit: 10
-  wait_for_connections: true
-  queue_limit: 100
-authdb_slave:
-  user: root
-  password:
-  database: fxa
-  host: 127.0.0.1
-  port: 3306
-  connection_limit: 10
-  wait_for_connections: true
-  queue_limit: 100
+authdb_patch_level: 3
+authdb_primary_host: 127.0.0.1
+authdb_primary_user: root
+authdb_primary_password: foobarbaz
+authdb_replica_host: 127.0.0.1
+authdb_replica_user: root
+authdb_replica_password: foobarbaz
