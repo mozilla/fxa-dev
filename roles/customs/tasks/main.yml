@@ -20,7 +20,7 @@
 - name: configure fxa-customs-server
   sudo: true
   sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-customs-server/fxa_customsrc
+  template: src=config.json.j2 dest=/data/fxa-customs-server/config/stage.json
   notify: restart fxa-customs-server
 
 - meta: flush_handlers

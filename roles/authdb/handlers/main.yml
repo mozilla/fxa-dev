@@ -8,7 +8,7 @@
 - name: run db patcher
   sudo: true
   sudo_user: app
-  command: node bin/db_patcher.js chdir=/data/fxa-auth-db-server
+  shell: NODE_ENV=stage node bin/db_patcher.js chdir=/data/fxa-auth-db-server
 
 - name: restart fxa-auth-db-server
   sudo: true
