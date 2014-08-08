@@ -19,6 +19,9 @@
     - authdb
     - auth
     - content
+    - oauth
+    - profile
+    - rp
     - log
     - cron_update
     - team
