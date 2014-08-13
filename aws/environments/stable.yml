@@ -7,6 +7,8 @@ rds_password: Q&}PzHU79J8Ex}3,
 cron_time:
   minute: 0
   hour: 0
+  month: 1
+  day: 1
 
 auth_git_version: train-18
 authdb_git_version: train-18
