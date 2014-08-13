@@ -6,3 +6,4 @@ ssl_certificate_name: wildcard.dev.lcip.org
 rds_password: Q)vy7]e9Q8G%9f{K
 
 content_git_version: ux-dev
+auth_mailer_git_repo: https://github.com/johngruen/fxa-auth-mailer.git
