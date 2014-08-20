@@ -1,8 +1,16 @@
 ---
 
+- name: create supervsr group for using supervisorctl
+  sudo: true
+  group: name=supervsr state=present
+
 - name: create app user
   sudo: true
-  user: name=app state=present
+  user: name=app state=present append=yes groups=supervsr
+
+- name: add ec2-user to group supervsr
+  sudo: true
+  user: name=ec2-user append=yes groups=supervsr
 
 - name: update installed packages
   sudo: true
