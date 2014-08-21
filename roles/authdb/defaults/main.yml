@@ -2,7 +2,6 @@
 authdb_private_port: 8000
 authdb_git_repo: https://github.com/mozilla/fxa-auth-db-server.git
 authdb_git_version: master
-authdb_patch_level: 3
 authdb_primary_host: 127.0.0.1
 authdb_primary_user: root
 authdb_primary_password: foobarbaz
