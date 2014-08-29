@@ -55,7 +55,7 @@ function process_message()
         json.agent = nil
     end
 
-    if json.err then
+    if type(json.err) == "table" then
         util.table_to_fields(json.err, json, "err")
         json.err = nil
     end
