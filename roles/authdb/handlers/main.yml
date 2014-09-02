@@ -5,6 +5,11 @@
   sudo_user: app
   npm: path=/data/fxa-auth-db-server production=true
 
+- name: install fxa-auth-db-server mysql-patcher devDependency
+  sudo: true
+  sudo_user: app
+  npm: name=mysql-patcher path=/data/fxa-auth-db-server
+
 - name: run db patcher
   sudo: true
   sudo_user: app
