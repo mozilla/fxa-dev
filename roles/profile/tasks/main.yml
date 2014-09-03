@@ -10,6 +10,10 @@
   template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_profile.conf
   notify: reload nginx config
 
+- name: install GraphicsMagick
+  sudo: true
+  yum: name=GraphicsMagick state=present
+
 - name: install fxa-profile-server
   tags: code
   sudo: true
@@ -20,13 +24,23 @@
        force=true
   notify:
     - install fxa-profile-server dependencies
-    - restart fxa-profile-server
+    - restart fxa-profile:* group
+
+- name: create fxa-profile local img upload directory
+  sudo: true
+  file: state=directory path=/data/fxa-profile-server/var/public owner=app group=app
 
 - name: configure fxa-profile-server
   sudo: true
   sudo_user: app
   template: src=config.json.j2 dest=/data/fxa-profile-server/config/local.json
-  notify: restart fxa-profile-server
+  notify: restart fxa-profile:* group
+
+- name: configure fxa-profile worker
+  sudo: true
+  sudo_user: app
+  template: src=worker.json.j2 dest=/data/fxa-profile-server/config/worker.json
+  notify: restart fxa-profile:* group
 
 - name: supervise fxa-profile-server
   sudo: true
