@@ -26,6 +26,7 @@
     },
     "RDSPassword": {
       "Type": "String",
+      "NoEcho": "true",
       "MinLength": "8",
       "Description": "RDS password"
     }
