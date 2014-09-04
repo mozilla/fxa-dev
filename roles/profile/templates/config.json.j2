@@ -1,4 +1,11 @@
 {
+  "db": {
+    "driver": "mysql"
+  },
+  "mysql": {
+    "password": "{{ profile_db_password }}",
+    "host": "{{ profile_db_host }}"
+  },
   "logging": {
     "handlers": {
       "console": {
@@ -18,5 +25,8 @@
   "server": {
     "host": "127.0.0.1",
     "port": 9011
+  },
+  "img": {
+    "driver": "local"
   }
 }
