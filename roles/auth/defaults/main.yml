@@ -12,3 +12,5 @@ auth_git_version: master
 auth_mail_host: 127.0.0.1
 auth_mail_port: 25
 auth_mail_sender: "Firefox Accounts <verification@{{ domain_name }}>"
+rp_domain_name: "123done-{{ domain_name }}"
+rp_public_url: "{{ public_protocol }}://{{ rp_domain_name }}"

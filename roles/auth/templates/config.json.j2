@@ -26,5 +26,6 @@
     },
     "listen": {
         "port": {{ auth_private_port }}
-    }
+    },
+    "trustedJKUs": ["{{ rp_public_url }}/.well-known/public-keys"]
 }
