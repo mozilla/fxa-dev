@@ -6,5 +6,7 @@
   "oauth_uri": "{{ oauth_public_url }}/v1",
   "profile_uri": "{{ profile_public_url }}/v1",
   "scopes": "profile",
-  "port": {{ rp_private_port }}
+  "port": {{ rp_private_port }},
+  "preverify_email_audience": "{{ domain_name }}",
+	"preverify_email_jku": "{{ rp_public_url }}/.well-known/public-keys"
 }
