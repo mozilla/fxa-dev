@@ -9,6 +9,7 @@
     - lsof
     - tmux
     - htop
+    - mysql
 
 - name: get team public keys
   git: repo=https://github.com/mozilla/identity-pubkeys.git
