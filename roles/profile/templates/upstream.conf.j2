@@ -1,3 +1,7 @@
 upstream upstream_profile_server {
     server 127.0.0.1:{{ profile_private_port }};
 }
+
+upstream upstream_profile_static_server {
+    server 127.0.0.1:{{ profile_private_static_port }};
+}
