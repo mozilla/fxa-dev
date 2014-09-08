@@ -24,9 +24,17 @@
   },
   "server": {
     "host": "127.0.0.1",
-    "port": 9011
+    "port": {{ profile_private_port }}
   },
   "img": {
-    "driver": "local"
+    "driver": "local",
+    "providers": {
+      "gravatar": "^http(://www|s://secure)\\.gravatar\\.com/avatar/[0-9a-f]{32}(\\?s=\\d+)?$",
+      "fxa": "^{{ profile_public_url }}/a/[0-9a-f]{32}$"
+    },
+    "compute": {
+      "maxProcesses": 5
+    },
+    "url": "{{ profile_public_url }}/a/{id}"
   }
 }
