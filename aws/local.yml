@@ -12,6 +12,8 @@
     authdb_replica_password: "{{ rds_password }}"
     oauth_db_host: "{{ rds_host }}"
     oauth_db_password: "{{ rds_password }}"
+    profile_db_host: "{{ rds_host }}"
+    profile_db_password: "{{ rds_password }}"
   roles:
     - ses
     - memcached
