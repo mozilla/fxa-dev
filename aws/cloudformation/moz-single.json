@@ -188,6 +188,62 @@
        }
     },
 
+    "FxaBasketQueue": {
+      "Type": "AWS::SQS::Queue"
+    },
+
+    "FxaSNSTopic": {
+      "Type" : "AWS::SNS::Topic",
+      "Properties" : {
+        "Subscription" : [
+           { "Endpoint" : { "Fn::GetAtt" : [ "FxaBasketQueue", "Arn" ] }, "Protocol" : "sqs" }
+        ]
+      }
+    },
+
+    "FxaSNSTopicPolicy": {
+      "Type": "AWS::SNS::TopicPolicy",
+      "Properties": {
+        "PolicyDocument" :  {
+           "Id" : "FxaSNSTopicPolicy",
+           "Statement" : [ {
+              "Sid" : "Allow-Publish-To-Everyone",
+              "Effect" : "Allow",
+              "Principal" : {
+                 "AWS" : "*"
+              },
+              "Action" : "sns:Publish",
+              "Resource" : "*"
+           } ]
+        },
+        "Topics" : [ { "Ref" : "FxaSNSTopic" } ]
+      }
+    },
+
+    "FxaBasketQueuePolicy": {
+      "Type": "AWS::SQS::QueuePolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Id": "FxaBasketQueuePolicy",
+          "Statement": [
+            {
+              "Sid": "Allow-SendMessage-To-BasketQueue-From-SNS",
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:SendMessage"],
+              "Resource": "*",
+              "Condition": {
+                "ArnEquals": {
+                  "aws:SourceArn": { "Ref": "FxaSNSTopic" }
+                }
+              }
+            }
+          ]
+        },
+        "Queues": [{ "Ref" : "FxaBasketQueue" }]
+      }
+    },
+
     "FxaDNS": {
       "Type": "AWS::Route53::RecordSetGroup",
       "DependsOn" : [ "FxaEc2Instance", "FxaELB", "FxaRDSInstance" ],
@@ -237,6 +293,14 @@
     "RDSEndpoint": {
       "Description": "RDS Endpoint",
       "Value": {"Fn::GetAtt":[ "FxaRDSInstance", "Endpoint.Address" ]}
+    },
+    "BasketQueueURL": {
+      "Description": "Fxa Account Changes for the Basket API consumer",
+      "Value": { "Ref": "FxaBasketQueue" }
+    },
+    "SNS": {
+      "Description": "Fxa Account Changes ARN",
+      "Value": { "Ref": "FxaSNSTopic" }
     }
   }
 }

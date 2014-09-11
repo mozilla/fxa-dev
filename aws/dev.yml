@@ -42,6 +42,8 @@
   gather_facts: true
   vars:
     rds_host: "{{ hostvars['localhost']['stack']['stack_outputs']['RDSEndpoint'] }}"
+    auth_sns_arn: "{{ hostvars['localhost']['stack']['stack_outputs']['SNS'] }}"
+    basket_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['BasketQueueURL'] }}"
     authdb_primary_host: "{{ rds_host }}"
     authdb_primary_password: "{{ rds_password }}"
     authdb_replica_host: "{{ rds_host }}"

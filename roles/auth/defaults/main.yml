@@ -6,6 +6,7 @@ content_public_url: "{{ public_protocol }}://{{ domain_name }}"
 authdb_server_url: "{{ private_protocol }}://127.0.0.1:8000"
 customs_server_url: "{{ private_protocol }}://127.0.0.1:7000"
 auth_mailer_url: "{{ private_protocol }}://127.0.0.1:1810"
+auth_sns_arn: ""
 auth_private_port: 9000
 auth_git_repo: https://github.com/mozilla/fxa-auth-server.git
 auth_git_version: master
