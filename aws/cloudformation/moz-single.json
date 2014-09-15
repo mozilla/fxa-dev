@@ -237,6 +237,12 @@
                   "aws:SourceArn": { "Ref": "FxaSNSTopic" }
                 }
               }
+            },
+            {
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:ReceiveMessage", "sqs:DeleteMessage"],
+              "Resource": "*"
             }
           ]
         },
