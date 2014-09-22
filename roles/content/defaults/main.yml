@@ -5,6 +5,7 @@ domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 auth_public_url: "{{ public_protocol }}://{{ domain_name }}/auth"
 oauth_domain_name: "oauth-{{ domain_name }}"
 oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
+profile_public_url: "{{ public_protocol }}://{{ domain_name }}/profile"
 content_public_url: "{{ public_protocol }}://{{ domain_name }}"
 content_public_port: 80
 content_private_port: 3030
