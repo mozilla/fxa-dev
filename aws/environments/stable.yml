@@ -15,6 +15,6 @@ authdb_git_version: train-22
 content_git_version: train-22
 customs_git_version: train-03
 auth_mailer_git_version: 452434ae0f0c8099d75c2742cfb0e1a9f7aa35d6
-oauth_git_version: 0.20.0
-profile_git_version: 0.20.0
-rp_git_version: b348675bbc0d41782b6d941e4b3b14ac9da5e276
+oauth_git_version: 0.22.0
+profile_git_version: 0.22.0
+rp_git_version: 4651ab27ecf869e8e7985f47bcc103fa866cb617
