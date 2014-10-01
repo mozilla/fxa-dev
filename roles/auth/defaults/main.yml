@@ -13,4 +13,4 @@ auth_git_version: master
 auth_mail_host: 127.0.0.1
 auth_mail_port: 25
 auth_mail_sender: "Firefox Accounts <verification@{{ domain_name }}>"
-trusted_jkus: [ "{{ public_protocol }}://123done-{{ domain_name }}/.well-known/public-keys", "https://marketplace-dev.allizom.org/api/v1/account/fxa-preverify-key/" ]
+trusted_jku: "{{ public_protocol }}://123done-{{ domain_name }}/.well-known/public-keys"
