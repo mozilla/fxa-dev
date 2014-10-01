@@ -10,10 +10,10 @@ cron_time:
   month: 1
   day: 1
 
-auth_git_version: train-20
-authdb_git_version: train-20
-content_git_version: train-20
-customs_git_version: train-02
+auth_git_version: train-22
+authdb_git_version: train-22
+content_git_version: train-22
+customs_git_version: train-03
 auth_mailer_git_version: 452434ae0f0c8099d75c2742cfb0e1a9f7aa35d6
 oauth_git_version: 0.20.0
 profile_git_version: 0.20.0
