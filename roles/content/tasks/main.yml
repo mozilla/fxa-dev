@@ -25,7 +25,6 @@
   with_items:
     - bower
     - grunt-cli
-    - phantomjs
 
 - name: install fxa-content-server
   tags: code
