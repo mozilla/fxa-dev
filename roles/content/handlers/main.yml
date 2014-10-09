@@ -8,7 +8,7 @@
 - name: build fxa-content-server assets
   sudo: true
   sudo_user: app
-  command: grunt build chdir=/data/fxa-content-server
+  command: grunt build --no-minify chdir=/data/fxa-content-server
 
 - name: restart fxa-content-server
   sudo: true
