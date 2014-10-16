@@ -250,6 +250,36 @@
       }
     },
 
+    "FxaCustomsBanQueue": {
+      "Type": "AWS::SQS::Queue"
+    },
+
+    "FxaCustomsBanQueuePolicy": {
+      "Type": "AWS::SQS::QueuePolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Id": "FxaCustomsBanQueuePolicy",
+          "Statement": [
+            {
+              "Sid": "Allow-Send-To-CustomsBanQueue-From-Anywhere",
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:SendMessage"],
+              "Resource": "*"
+            },
+            {
+              "Sid": "Allow-Read-From-CustomsBanQueue-From-Anywhere",
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:ReceiveMessage", "sqs:DeleteMessage"],
+              "Resource": "*"
+            }
+          ]
+        },
+        "Queues": [{ "Ref" : "FxaCustomsBanQueue" }]
+      }
+    },
+
     "FxaDNS": {
       "Type": "AWS::Route53::RecordSetGroup",
       "DependsOn" : [ "FxaEc2Instance", "FxaELB", "FxaRDSInstance" ],
@@ -303,6 +333,10 @@
     "BasketQueueURL": {
       "Description": "Fxa Account Changes for the Basket API consumer",
       "Value": { "Ref": "FxaBasketQueue" }
+    },
+    "CustomsBanQueueURL": {
+      "Description": "Fxa customs ban queue for use by mozdef",
+      "Value": { "Ref": "FxaCustomsBanQueue" }
     },
     "SNS": {
       "Description": "Fxa Account Changes ARN",
