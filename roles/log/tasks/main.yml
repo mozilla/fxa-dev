@@ -27,7 +27,7 @@
   sudo_user: app
   git: repo=https://github.com/elasticsearch/kibana.git
        dest=/data/kibana
-       version=master
+       version=v3.1.1
        force=true
   notify:
     - install kibana dependencies
