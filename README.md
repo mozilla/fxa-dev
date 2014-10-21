@@ -78,4 +78,5 @@ You can ssh into the EC2 instance with `ssh ec2-user@{{ whatever you configured 
 - content server: https://latest.dev.lcip.org
 - auth server: https://latest.dev.lcip.org/auth/
 - oauth server: https://oauth-latest.dev.lcip.org
+- sync tokenserver: https://latest.dev.lcip.org/syncserver/token/1.0/sync/1.5
 - demo oauth site: https://123done-latest.dev.lcip.org

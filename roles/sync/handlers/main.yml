@@ -1,0 +1,10 @@
+---
+
+- name: build syncserver virtualenv
+  sudo: true
+  sudo_user: app
+  command: make -C /data/syncserver build
+
+- name: restart syncserver process
+  sudo: true
+  supervisorctl: name=syncserver state=restarted
