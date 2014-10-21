@@ -53,6 +53,8 @@
     oauth_db_password: "{{ rds_password }}"
     profile_db_host: "{{ rds_host }}"
     profile_db_password: "{{ rds_password }}"
+    sync_db_host: "{{ rds_host }}"
+    sync_db_password: "{{ rds_password }}"
   vars_files:
     - "environments/{{ stack_name }}.yml"
   roles:
@@ -64,6 +66,7 @@
     - content
     - oauth
     - profile
+    - sync
     - rp
     - log
     - cron_update
