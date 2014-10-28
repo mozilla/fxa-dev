@@ -1,0 +1,36 @@
+---
+
+- name: configure nginx
+  sudo: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_kv.conf
+  notify: reload nginx config
+
+- name: configure nginx location
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_kv.conf
+  notify: reload nginx config
+
+- name: install fxa-kv-server
+  tags: code
+  sudo: true
+  sudo_user: app
+  git: repo={{ kv_git_repo }}
+       dest=/data/fxa-kv-server
+       version={{ kv_git_version }}
+       force=true
+  notify:
+    - install fxa-kv-server dependencies
+    - restart fxa-kv-server
+
+- name: configure fxa-kv-server
+  sudo: true
+  sudo_user: app
+  template: src=config.json.j2 dest=/data/fxa-kv-server/config.json
+  notify: restart fxa-kv-server
+
+- name: supervise fxa-kv-server
+  sudo: true
+  copy: src=fxa-kv-server.conf dest=/etc/supervisor.d/fxa-kv-server.conf
+  notify: update supervisor
+
+- meta: flush_handlers

@@ -1,0 +1,6 @@
+---
+domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+kv_private_port: 7586
+kv_git_repo: https://github.com/dannycoates/fxa-kv-server.git
+kv_git_version: master
+oauth_domain_name: "oauth-{{ domain_name }}"

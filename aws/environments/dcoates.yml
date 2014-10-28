@@ -5,6 +5,7 @@ hosted_zone: lcip.org
 ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
 rds_password: 3s,hE2;QDw?6)t8e
 auth_git_repo: https://github.com/dannycoates/picl-idp.git
+rp_git_repo: https://github.com/dannycoates/123done.git
 cron_time:
   minute: 0
   hour: 0
