@@ -65,6 +65,7 @@
     - auth
     - content
     - oauth
+    - oauth-console
     - profile
     - kv
     - sync

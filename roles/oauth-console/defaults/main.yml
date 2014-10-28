@@ -1,0 +1,7 @@
+---
+public_protocol: https
+private_protocol: http
+domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+oauth_console_private_port: 10137
+oauth_console_git_repo: https://github.com/mozilla/fxa-oauth-console.git
+oauth_console_git_version: master

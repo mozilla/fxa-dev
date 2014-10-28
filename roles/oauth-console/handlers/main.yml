@@ -1,0 +1,18 @@
+---
+
+- name: install fxa-oauth-console dependencies
+  sudo: true
+  sudo_user: app
+  npm: path=/data/fxa-oauth-console production=true
+
+- name: build fxa-oauth-console assets
+  sudo: true
+  sudo_user: app
+  command: node_modules/.bin/ember build --environment=production chdir=/data/fxa-oauth-console
+  environment:
+    CONFIG_FILES: "/data/fxa-oauth-console/config/local.json"
+
+
+- name: restart fxa-oauth-console
+  sudo: true
+  supervisorctl: name=fxa-oauth-console state=restarted

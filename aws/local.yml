@@ -24,6 +24,7 @@
     - auth
     - content
     - oauth
+    - oauth-console
     - profile
     - sync
     - rp

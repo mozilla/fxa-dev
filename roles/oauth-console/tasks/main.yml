@@ -1,0 +1,32 @@
+---
+
+- name: configure nginx
+  sudo: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_oauth.conf
+  notify: reload nginx config
+
+- name: install fxa-oauth-console
+  tags: code
+  sudo: true
+  sudo_user: app
+  git: repo={{ oauth_console_git_repo }}
+       dest=/data/fxa-oauth-console
+       version={{ oauth_console_git_version }}
+       force=true
+  notify:
+    - install fxa-oauth-console dependencies
+    - build fxa-oauth-console assets
+    - restart fxa-oauth-console
+
+- name: configure fxa-oauth-console
+  sudo: true
+  sudo_user: app
+  template: src=config.json.j2 dest=/data/fxa-oauth-console/config/local.json
+  notify: restart fxa-oauth-console
+
+- name: supervise fxa-oauth-console
+  sudo: true
+  copy: src=fxa-oauth-console.conf dest=/etc/supervisor.d/fxa-oauth-console.conf
+  notify: update supervisor
+
+- meta: flush_handlers
