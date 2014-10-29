@@ -12,7 +12,7 @@ use = egg:syncserver
 public_url = {{ sync_public_url }}
 
 # This defines the database in which to store all server data.
-sqluri = pymysql://root:{{ sync_db_password }}@{{ sync_db_host }}/sync
+sqluri = "pymysql://root:{{ sync_db_password | replace("$", "$$") }}@{{ sync_db_host }}/sync"
 
 # This is a secret key used for signing authentication tokens.
 # It should be long and randomly-generated.
