@@ -3,7 +3,7 @@
 - name: install fxa-content-server dependencies
   sudo: true
   sudo_user: app
-  command: npm install chdir=/data/fxa-content-server
+  command: npm install --production chdir=/data/fxa-content-server
 
 - name: build fxa-content-server assets
   sudo: true
