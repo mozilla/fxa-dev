@@ -1,0 +1,11 @@
+---
+
+- name: install able dependencies
+  sudo: true
+  sudo_user: app
+  npm: path=/data/able
+
+- name: restart able
+  sudo: true
+  supervisorctl: name=able state=restarted
+

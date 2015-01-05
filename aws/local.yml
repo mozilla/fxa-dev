@@ -28,6 +28,7 @@
     - profile
     - sync
     - rp
+    - able
     - log
     - cron_update
     - team

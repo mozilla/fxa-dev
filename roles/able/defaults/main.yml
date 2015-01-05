@@ -1,0 +1,6 @@
+---
+domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+able_private_port: 9798
+able_git_repo: https://github.com/dannycoates/able.git
+able_git_version: master
+oauth_domain_name: "oauth-{{ domain_name }}"
