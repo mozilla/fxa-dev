@@ -22,7 +22,8 @@
         "secure": false,
         "sender":"{{ auth_mail_sender }}",
         "templatePath":"/data/fxa-auth-server/templates/email",
-        "redirectDomain": "firefox.com"
+        "redirectDomain": "firefox.com",
+        "resendBlackoutPeriod": 0
     },
     "listen": {
         "port": {{ auth_private_port }}
