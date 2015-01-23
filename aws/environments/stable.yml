@@ -18,4 +18,4 @@ auth_mailer_git_version: f90dfa3f2a893fdc8e6ece24858840a67f2732c3
 oauth_git_version: 0.26.2
 profile_git_version: 0.26.1
 rp_git_version: 2ba0044d57212cde3de80a63e0de2befea80b4f5
-oauth_console_git_version: 0.3.3
+oauth_console_git_version: 0.3.4
