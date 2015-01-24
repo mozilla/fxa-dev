@@ -8,7 +8,7 @@ auth_git_repo: https://github.com/dannycoates/picl-idp.git
 auth_git_version: ab-test
 rp_git_repo: https://github.com/dannycoates/123done.git
 content_git_repo: https://github.com/dannycoates/fxa-content-server.git
-content_git_version: change-avatar-ab
+content_git_version: ablify
 cron_time:
   minute: 0
   hour: 0
