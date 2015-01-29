@@ -21,7 +21,7 @@
 - name: configure fxa-rp
   sudo: true
   sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-rp/config.json
+  template: src=config.json.j2 dest=/data/fxa-rp/config-dev.json
   notify: restart fxa-rp
 
 - name: supervise fxa-rp
