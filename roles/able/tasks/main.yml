@@ -1,0 +1,37 @@
+---
+
+- name: configure nginx upstream
+  sudo: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_able.conf
+  notify: reload nginx config
+
+- name: configure nginx location
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_able.conf
+  notify: reload nginx config
+
+- name: install able
+  tags: code
+  sudo: true
+  sudo_user: app
+  git: repo={{ able_git_repo }}
+       dest=/data/able
+       version={{ able_git_version }}
+       force=true
+  notify:
+    - install able dependencies
+    - build js bundle
+    - restart able
+
+- name: configure able
+  sudo: true
+  sudo_user: app
+  template: src=config.json.j2 dest=/data/able/config.json
+  notify: restart able
+
+- name: supervise able
+  sudo: true
+  copy: src=able.conf dest=/etc/supervisor.d/able.conf
+  notify: update supervisor
+
+- meta: flush_handlers
