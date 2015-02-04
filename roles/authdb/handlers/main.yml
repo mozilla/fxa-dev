@@ -1,19 +1,19 @@
 ---
 
-- name: install fxa-auth-db-server dependencies
+- name: install fxa-auth-db-mysql dependencies
   sudo: true
   sudo_user: app
-  npm: path=/data/fxa-auth-db-server production=true
+  npm: path=/data/fxa-auth-db-mysql production=true
 
-- name: install fxa-auth-db-server mysql-patcher devDependency
+- name: install fxa-auth-db-mysql mysql-patcher devDependency
   sudo: true
   sudo_user: app
-  npm: name=mysql-patcher path=/data/fxa-auth-db-server
+  npm: name=mysql-patcher path=/data/fxa-auth-db-mysql
 
 - name: run db patcher
   sudo: true
   sudo_user: app
-  shell: NODE_ENV=stage node bin/db_patcher.js chdir=/data/fxa-auth-db-server
+  shell: NODE_ENV=stage node bin/db_patcher.js chdir=/data/fxa-auth-db-mysql
 
 - name: restart fxa-auth-db-server
   sudo: true

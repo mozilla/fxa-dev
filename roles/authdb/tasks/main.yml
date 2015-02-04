@@ -10,24 +10,24 @@
   template: src=heka.toml.j2 dest=/etc/heka.d/fxa-auth-db-server.toml
   notify: restart heka
 
-- name: install fxa-auth-db-server
+- name: install fxa-auth-db-mysql
   tags: code
   sudo: true
   sudo_user: app
   git: repo={{ authdb_git_repo }}
-       dest=/data/fxa-auth-db-server
+       dest=/data/fxa-auth-db-mysql
        version={{ authdb_git_version }}
        force=true
   notify:
-    - install fxa-auth-db-server dependencies
-    - install fxa-auth-db-server mysql-patcher devDependency
+    - install fxa-auth-db-mysql dependencies
+    - install fxa-auth-db-mysql mysql-patcher devDependency
     - run db patcher
     - restart fxa-auth-db-server
 
 - name: configure fxa-auth-db-server
   sudo: true
   sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-auth-db-server/config/stage.json
+  template: src=config.json.j2 dest=/data/fxa-auth-db-mysql/config/stage.json
   notify: restart fxa-auth-db-server
 
 - name: supervise fxa-auth-db-server
