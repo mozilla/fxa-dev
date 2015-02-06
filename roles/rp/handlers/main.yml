@@ -8,7 +8,7 @@
 - name: gen preverified token keypair
   sudo: true
   sudo_user: app
-  command: node /data/fxa-rp/scripts/gen_keys.js
+  command: node /data/fxa-rp/scripts/gen_keys.js chdir=/data/fxa-rp
 
 - name: restart fxa-rp
   sudo: true
