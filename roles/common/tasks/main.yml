@@ -33,7 +33,7 @@
 
 - name: install node
   sudo: true
-  command: /usr/bin/nave usemain stable
+  command: /usr/bin/nave usemain 0.10.36
   # TODO detect actual changes
   changed_when: false
 
