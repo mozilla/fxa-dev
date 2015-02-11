@@ -1,5 +1,5 @@
 ---
-fxadev_git_repo: https://github.com/dannycoates/fxa-dev.git
+fxadev_git_repo: https://github.com/mozilla/fxa-dev.git
 fxadev_git_version: master
 cron_time:
   weekday: '*'
