@@ -43,6 +43,10 @@ http {
         listen       80;
         server_name  {{ domain_name }};
 
+        if ($http_x_forwarded_proto = 'http') {
+            return 301 https://{{ domain_name }}$request_uri;
+        }
+
         #charset koi8-r;
 
         #access_log  /var/log/nginx/host.access.log  main;
