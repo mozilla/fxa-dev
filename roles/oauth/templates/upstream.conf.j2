@@ -3,6 +3,7 @@ upstream upstream_oauth_server {
 }
 
 server {
+  listen 1443;
   server_name {{ oauth_domain_name }};
 
   location / {

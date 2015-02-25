@@ -3,6 +3,7 @@ upstream upstream_rp {
 }
 
 server {
+  listen 1443;
   server_name {{ rp_domain_name }};
 
   location / {

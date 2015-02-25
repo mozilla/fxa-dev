@@ -59,6 +59,30 @@
           },
           {
             "IpProtocol" : "tcp",
+            "FromPort" : "1443", "ToPort" : "1443",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "80", "ToPort" : "80",
+            "CidrIp" : "0.0.0.0/0"
+          }
+        ]
+      }
+    },
+
+    "FxaDevELBSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Fxa Dev ELB",
+        "SecurityGroupIngress" : [
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "443", "ToPort" : "443",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
             "FromPort" : "80", "ToPort" : "80",
             "CidrIp" : "0.0.0.0/0"
           }
@@ -146,9 +170,9 @@
         "ConnectionDrainingPolicy":{ "Enabled" : true, "Timeout" : 15 },
         "Listeners":[
           {
-            "InstancePort":"80",
+            "InstancePort":"1443",
             "LoadBalancerPort":"443",
-            "PolicyNames" : ["ELBSecurityPolicy-2014-10"],
+            "PolicyNames" : ["ELBSecurityPolicy-2015-02"],
             "Protocol":"HTTPS",
             "SSLCertificateId":{
                "Fn::Join":[ "",
@@ -157,9 +181,15 @@
                   ]
                ]
             }
+          },
+          {
+            "InstancePort":"80",
+            "LoadBalancerPort":"80",
+            "Protocol":"HTTP"
           }
         ],
-        "Instances": [{ "Ref" : "FxaEc2Instance" }]
+        "Instances": [{ "Ref" : "FxaEc2Instance" }],
+        "SecurityGroups": [{ "Fn::GetAtt" : [ "FxaDevELBSecurityGroup", "GroupId" ] }]
       }
     },
 

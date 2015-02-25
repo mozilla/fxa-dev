@@ -37,15 +37,16 @@ http {
 
     index   index.html index.htm;
 
+    server {
+        listen 80 default;
+        return 301 https://$host$request_uri;
+    }
+
     include /etc/nginx/conf.d/upstream/*.conf;
 
     server {
-        listen       80;
+        listen       1443;
         server_name  {{ domain_name }};
-
-        if ($http_x_forwarded_proto = 'http') {
-            return 301 https://{{ domain_name }}$request_uri;
-        }
 
         #charset koi8-r;
 
