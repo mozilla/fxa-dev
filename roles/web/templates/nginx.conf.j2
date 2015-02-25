@@ -37,6 +37,8 @@ http {
 
     index   index.html index.htm;
 
+    port_in_redirect off;
+
     server {
         listen 80 default;
         return 301 https://$host$request_uri;
