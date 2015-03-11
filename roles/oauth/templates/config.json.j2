@@ -284,7 +284,7 @@
       "id": "2e59bc0f30faa234",
       "hashedSecret": "340e85670318d659ffa94507a75b464ca6e0d55aeb6d9da0e1eb6c4695b3c3a7",
       "whitelisted": true
-    },    
+    },
     {
       "id": "66041b7ec3991ec0",
       "name": "FxaOauthClient",
@@ -305,6 +305,10 @@
     }
   ],
   "env": "stage",
+  "internal": {
+    "host": "127.0.0.1",
+    "port": {{ oauth_internal_port }}
+  },
   "logging": {
     "formatters": {
       "pretty": {

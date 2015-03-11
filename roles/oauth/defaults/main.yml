@@ -3,6 +3,7 @@ public_protocol: https
 private_protocol: http
 domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 oauth_private_port: 9010
+oauth_internal_port: 9011
 oauth_db_host: 127.0.0.1
 oauth_db_password:
 oauth_domain_name: "oauth-{{ domain_name }}"
