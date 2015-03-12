@@ -1,7 +1,9 @@
   {
-    "logLevel": "info",
     "port": {{ authdb_private_port }},
     "patchKey": "schema-patch-level",
+    "logging": {
+      "level": "info"
+    },
     "master": {
       "user": "{{ authdb_primary_user }}",
       "password": "{{ authdb_primary_password }}",
