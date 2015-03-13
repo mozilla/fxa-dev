@@ -1,28 +1,3 @@
-upstream upstream_oauth_server {
-    server 127.0.0.1:{{ oauth_private_port }};
-}
-
 upstream upstream_oauth_console_server {
     server 127.0.0.1:{{ oauth_console_private_port }};
-}
-
-server {
-  listen 1443;
-  server_name {{ oauth_domain_name }};
-
-  location / {
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $http_host;
-    proxy_redirect off;
-    proxy_pass http://upstream_oauth_server;
-  }
-
-  location /console/ {
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $http_host;
-    proxy_redirect off;
-    rewrite ^/console(.*)$ $1 break;
-    proxy_pass http://upstream_oauth_console_server;
-  }
-
 }

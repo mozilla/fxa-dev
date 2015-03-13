@@ -1,8 +1,19 @@
 ---
 
-- name: configure nginx
+- file: path=/etc/nginx/conf.d/oauth_console/upstream state=directory
   sudo: true
-  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_oauth.conf
+
+- name: configure nginx upstream
+  sudo: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/oauth_console/upstream/http_fxa_oauth_console.conf
+  notify: reload nginx config
+
+- file: path=/etc/nginx/conf.d/oauth_console/location state=directory
+  sudo: true
+
+- name: configure nginx location
+  sudo: true
+  template: src=location.conf.j2 dest=/etc/nginx/conf.d/oauth_console/location/http_fxa_oauth_console.conf
   notify: reload nginx config
 
 - name: install fxa-oauth-console
