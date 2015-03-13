@@ -17,5 +17,5 @@ customs_git_version: train-06
 auth_mailer_git_version: f90dfa3f2a893fdc8e6ece24858840a67f2732c3
 oauth_git_version: 0.30.3
 profile_git_version: 0.31.0
-rp_git_version: 0a6ab3c0bedbc810d5e98047189ae0fbf6df4e85
+rp_git_version: ee26a0b4168b151a5fc4f69e3008d3ff2ae1df55
 oauth_console_git_version: 0.3.6
