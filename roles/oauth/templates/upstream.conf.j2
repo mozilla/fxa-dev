@@ -46,7 +46,13 @@ server {
     proxy_set_header Host $http_host;
     proxy_redirect off;
     rewrite ^(.*)$ $1 break;
+
+    # Switch backend server based on method. Set internal as default.
     proxy_pass http://upstream_oauth_internal_server;
+
+    # For requests that are not PUT, POST, or DELETE, use the
+    # upstream_oauth_server. This means GET /v1/client/{client_id}
+    # will be handled by the main oauth server.
     limit_except PUT POST DELETE {
       proxy_pass http://upstream_oauth_server;
     }
