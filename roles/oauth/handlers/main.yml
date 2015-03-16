@@ -5,6 +5,7 @@
   sudo_user: app
   npm: path=/data/fxa-oauth-server production=true
 
-- name: restart fxa-oauth-server
+- name: restart fxa-oauth:* group
   sudo: true
-  supervisorctl: name=fxa-oauth-server state=restarted
+  # restarts group if name ends with ':'; must be quoted
+  supervisorctl: name="fxa-oauth:" state=restarted

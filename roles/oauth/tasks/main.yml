@@ -15,13 +15,13 @@
        force=true
   notify:
     - install fxa-oauth-server dependencies
-    - restart fxa-oauth-server
+    - restart fxa-oauth:* group
 
 - name: configure fxa-oauth-server
   sudo: true
   sudo_user: app
   template: src=config.json.j2 dest=/data/fxa-oauth-server/config/local.json
-  notify: restart fxa-oauth-server
+  notify: restart fxa-oauth:* group
 
 - name: supervise fxa-oauth-server
   sudo: true
