@@ -3,7 +3,7 @@ upstream upstream_oauth_server {
 }
 
 upstream upstream_oauth_internal_server {
-    server 127.0.0.1:{{ oauth_internal_port }};
+    server 127.0.0.1:{{ oauth_internal_private_port }};
 }
 
 # pull in upstream_oauth_console_server
