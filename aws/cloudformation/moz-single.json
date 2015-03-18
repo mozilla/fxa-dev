@@ -130,7 +130,8 @@
                     "arn:aws:s3:::net.mozaws.ops.hiera-secrets/app/fxa.dev.yaml"
                   ]
                },
-               { "Effect":"Allow", "Action": [ "ec2:DescribeTags" ], "Resource": "*" }
+               { "Effect":"Allow", "Action": [ "ec2:DescribeTags" ], "Resource": "*" },
+               { "Effect":"Allow", "Action": [ "elasticache:DescribeCacheClusters" ], "Resource": "*" }
              ]
             }
           }
@@ -310,6 +311,29 @@
       }
     },
 
+    "RedisClusterSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Fxa Notifications Elasticache Group",
+        "SecurityGroupIngress": [ {
+          "IpProtocol": "tcp",
+          "FromPort": "6379",
+          "ToPort": "6379",
+          "SourceSecurityGroupName": {"Ref": "FxaDevSecurityGroup"}
+        } ]
+      }
+    },
+
+    "FxaNotificationsRedisCluster": {
+      "Type": "AWS::ElastiCache::CacheCluster",
+      "Properties": {
+        "CacheNodeType": "cache.t2.micro",
+        "Engine": "redis",
+        "NumCacheNodes": "1",
+        "VpcSecurityGroupIds": [{"Fn::GetAtt": ["RedisClusterSecurityGroup", "GroupId"]}]
+      }
+    },
+
     "FxaDNS": {
       "Type": "AWS::Route53::RecordSetGroup",
       "DependsOn" : [ "FxaEc2Instance", "FxaELB", "FxaRDSInstance" ],
@@ -371,6 +395,10 @@
     "SNS": {
       "Description": "Fxa Account Changes ARN",
       "Value": { "Ref": "FxaSNSTopic" }
+    },
+    "Redis": {
+      "Description": "Fxa Notifications Redis",
+      "Value": { "Ref": "FxaNotificationsRedisCluster" }
     }
   }
 }
