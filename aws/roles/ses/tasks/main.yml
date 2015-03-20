@@ -14,6 +14,7 @@
       object=/app/fxa.dev.yaml
       dest=/data/fxa.dev.yml
       mode=get
+  changed_when: false
 
 - shell: 'grep -e "fxa::smtp::user" /data/fxa.dev.yml | sed "s/^fxa::smtp::user: ''\([^'']\+\)''/\1/"'
   sudo: true

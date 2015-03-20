@@ -1,0 +1,21 @@
+{
+  "server": {
+    "port": {{ notification_public_port }}
+  },
+  "oauth": {
+    "host": "{{ oauth_public_host }}",
+    "port": {{ oauth_public_port }}
+  },
+  "jwk": {
+    "secretKeyFile": "./secret.pem",
+    "publicKeyFile": "./public.pem",
+    "trustedJKUs": ["{{ auth_public_url }}/.well-known/public-keys"]
+  },
+  "db": {
+    "driver": "redis",
+    "redis": {
+      "host": "{{ redis_host.stdout }}",
+      "port": {{ redis_port }}
+    }
+  }
+}

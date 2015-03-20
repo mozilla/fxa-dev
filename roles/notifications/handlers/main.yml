@@ -1,0 +1,10 @@
+---
+
+- name: install fxa-notification-server dependencies
+  sudo: true
+  sudo_user: app
+  npm: path=/data/fxa-notification-server
+
+- name: restart fxa-notification-server
+  sudo: true
+  supervisorctl: name=fxa-notification-server state=restarted

@@ -45,6 +45,7 @@
     auth_sns_arn: "{{ hostvars['localhost']['stack']['stack_outputs']['SNS'] }}"
     basket_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['BasketQueueURL'] }}"
     customs_ban_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['CustomsBanQueueURL'] }}"
+    redis_id: "{{ hostvars['localhost']['stack']['stack_outputs']['Redis'] }}"
     authdb_primary_host: "{{ rds_host }}"
     authdb_primary_password: "{{ rds_password }}"
     authdb_replica_host: "{{ rds_host }}"
@@ -66,6 +67,7 @@
     - content
     - oauth
     - oauth-console
+    - notifications
     - profile
     - kv
     - sync
