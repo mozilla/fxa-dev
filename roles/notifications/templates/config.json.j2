@@ -9,7 +9,7 @@
   "jwk": {
     "secretKeyFile": "./secret.pem",
     "publicKeyFile": "./public.pem",
-    "trustedJKUs": ["{{ auth_public_url }}/.well-known/public-keys"]
+    "trustedJKUs": ["{{ auth_public_jku }}"]
   },
   "db": {
     "driver": "redis",

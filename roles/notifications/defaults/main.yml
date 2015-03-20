@@ -4,7 +4,7 @@ domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 notification_public_port: 7879
 oauth_public_host: "oauth-{{ domain_name }}"
 oauth_public_port: 443
-auth_public_url: "{{ public_protocol }}://{{ domain_name }}"
+auth_public_jku: "{{ public_protocol }}://{{ domain_name }}/.well-known/public-keys"
 redis_port: 6379
 notification_git_repo: https://github.com/mozilla/fxa-notification-server.git
 notification_git_version: master
