@@ -1,4 +1,6 @@
 ---
+public_protocol: https
+domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 authdb_private_port: 8000
 authdb_git_repo: https://github.com/mozilla/fxa-auth-db-mysql.git
 authdb_git_version: master
@@ -8,3 +10,6 @@ authdb_primary_password: foobarbaz
 authdb_replica_host: 127.0.0.1
 authdb_replica_user: root
 authdb_replica_password: foobarbaz
+notification_public_port: 7879
+notification_publish_url: "http://127.0.0.1:{{ notification_public_port }}/v0/publish"
+auth_public_jku: "{{ public_protocol }}://{{ domain_name }}/.well-known/public-keys"

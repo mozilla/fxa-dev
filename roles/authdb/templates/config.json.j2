@@ -23,5 +23,14 @@
       "connectionLimit": 10,
       "waitForConnections": true,
       "queueLimit": 100
+    },
+    "notifications": {
+      "publishUrl": "{{ notification_publish_url }}",
+      "jwt": {
+        "secretKeyFile": "/data/fxa-auth-server/config/secret-key.json",
+        "iss": "{{ domain_name }}",
+        "kid": "dev-1",
+        "jku": "{{ auth_public_jku }}"
+      }
     }
   }
