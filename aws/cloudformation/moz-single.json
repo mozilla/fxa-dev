@@ -173,7 +173,7 @@
           {
             "InstancePort":"1443",
             "LoadBalancerPort":"443",
-            "PolicyNames" : ["ELBSecurityPolicy-2015-02"],
+            "PolicyNames" : ["ELBSecurityPolicy-2015-03"],
             "Protocol":"HTTPS",
             "SSLCertificateId":{
                "Fn::Join":[ "",
