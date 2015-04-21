@@ -1,0 +1,8 @@
+---
+region: us-west-2
+subdomain: uxwip.dev
+hosted_zone: lcip.org
+ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
+rds_password: Q)vy7]e9Q8G%9f{K
+
+content_git_version: issue-2336-new-settings-page
