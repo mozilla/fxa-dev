@@ -12,10 +12,10 @@ cron_time:
 
 auth_git_version: train-34
 authdb_git_version: train-34
-content_git_version: train-34
+content_git_version: train-35
 customs_git_version: train-34
 auth_mailer_git_version: 31470ec0361a773688d2a295f7f5a39686909ed1
-oauth_git_version: 0.33.0
-profile_git_version: 0.33.0
+oauth_git_version: 0.35.0
+profile_git_version: 0.35.0
 rp_git_version: d376b31e1ed79ea31729917edd6fe5807f7c6658
 oauth_console_git_version: 0.3.6
