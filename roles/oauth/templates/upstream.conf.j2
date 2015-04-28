@@ -27,6 +27,7 @@ server {
   # POST /v1/client
   # POST /v1/client/{client_id}
   # DELETE /v1/client/{client_id}
+  # POST /v1/developer/activate
   #
   # However, `GET /client` must be routed to the regular
   # oauth server. So, exactly match `GET /v1/clients` and
@@ -34,6 +35,14 @@ server {
   #
 
   location = /v1/clients {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    rewrite ^(.*)$ $1 break;
+    proxy_pass http://upstream_oauth_internal_server;
+  }
+
+  location = /v1/developer {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
