@@ -10,12 +10,12 @@ cron_time:
   month: 1
   day: 1
 
-auth_git_version: train-34
-authdb_git_version: train-34
-content_git_version: train-35
-customs_git_version: train-34
-auth_mailer_git_version: 31470ec0361a773688d2a295f7f5a39686909ed1
-oauth_git_version: 0.35.0
-profile_git_version: 0.35.0
-rp_git_version: d376b31e1ed79ea31729917edd6fe5807f7c6658
+auth_git_version: train-36
+authdb_git_version: train-36
+content_git_version: train-36
+customs_git_version: train-36
+auth_mailer_git_version: d2eb3b298464455c8fe18fd964141ba89a0d1a0e
+oauth_git_version: 0.36.1
+profile_git_version: 0.36.0
+rp_git_version: 65ac3b11332044eabca6ce48e9bbc14a894828a3
 oauth_console_git_version: 0.3.6
