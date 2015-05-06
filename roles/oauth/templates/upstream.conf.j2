@@ -42,14 +42,6 @@ server {
     proxy_pass http://upstream_oauth_internal_server;
   }
 
-  location = /v1/developer {
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $http_host;
-    proxy_redirect off;
-    rewrite ^(.*)$ $1 break;
-    proxy_pass http://upstream_oauth_internal_server;
-  }
-
   location /v1/client {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
@@ -65,6 +57,14 @@ server {
     limit_except PUT POST DELETE {
       proxy_pass http://upstream_oauth_server;
     }
+  }
+
+  location /v1/developer {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    rewrite ^(.*)$ $1 break;
+    proxy_pass http://upstream_oauth_internal_server;
   }
 
   # pull in location /console
