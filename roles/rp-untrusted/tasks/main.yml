@@ -1,0 +1,32 @@
+---
+
+- name: configure nginx upstream
+  sudo: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa-rp-untrusted.conf
+  notify: reload nginx config
+
+- name: install fxa-rp-untrusted
+  tags: code
+  sudo: true
+  sudo_user: app
+  git: repo={{ rp_untrusted_git_repo }}
+       dest=/data/fxa-rp-untrusted
+       version={{ rp_untrusted_git_version }}
+       force=true
+  notify:
+    - install fxa-rp-untrusted dependencies
+    - gen preverified token keypair
+    - restart fxa-rp-untrusted
+
+- name: configure fxa-rp-untrusted
+  sudo: true
+  sudo_user: app
+  template: src=config.json.j2 dest=/data/fxa-rp-untrusted/config-dev.json
+  notify: restart fxa-rp-untrusted
+
+- name: supervise fxa-rp-untrusted
+  sudo: true
+  copy: src=fxa-rp-untrusted.conf dest=/etc/supervisor.d/fxa-rp-untrusted.conf
+  notify: update supervisor
+
+- meta: flush_handlers
