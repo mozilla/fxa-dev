@@ -1,0 +1,13 @@
+---
+public_protocol: https
+private_protocol: http
+domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+rp_untrusted_private_port: 4902
+rp_untrusted_git_repo: https://github.com/mozilla/123done.git
+rp_untrusted_git_version: oauth
+rp_untrusted_domain_name: "321done-{{ domain_name }}"
+rp_untrusted_public_url: "{{ public_protocol }}://{{ rp_untrusted_domain_name }}"
+oauth_domain_name: "oauth-{{ domain_name }}"
+oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
+profile_public_url: "{{ public_protocol }}://{{ domain_name }}/profile"
+kv_public_url: "{{ public_protocol }}://{{ domain_name }}/kv"

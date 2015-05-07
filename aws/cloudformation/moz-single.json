@@ -365,6 +365,14 @@
             }
           },
           {
+            "Name" : { "Fn::Join" : [ "", ["321done-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
+            "Type" : "A",
+            "AliasTarget" : {
+              "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },
+              "DNSName" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
+            }
+          },
+          {
             "Name" : { "Fn::Join" : [ "", ["meta-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
             "Type": "A",
             "TTL": "30",

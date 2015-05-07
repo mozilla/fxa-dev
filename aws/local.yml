@@ -29,6 +29,7 @@
     - profile
     - sync
     - rp
+    - rp-untrusted
     - able
     - log
     - cron_update
