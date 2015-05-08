@@ -29,5 +29,9 @@
         "port": {{ auth_private_port }}
     },
     "snsTopicArn": "{{ auth_sns_arn }}",
-    "trustedJKUs": [ "{{ trusted_jku }}", "https://marketplace-dev.allizom.org/api/v1/account/fxa-preverify-key/" ]
+    "trustedJKUs": [
+        "{{ 123done_trusted_jku }}",
+        "{{ 321done_trusted_jku }}",
+        "https://marketplace-dev.allizom.org/api/v1/account/fxa-preverify-key/"
+    ]
 }
