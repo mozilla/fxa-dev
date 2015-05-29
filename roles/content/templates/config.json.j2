@@ -15,5 +15,14 @@
   "page_template_subdirectory": "dist",
   "metrics" : {
     "sample_rate" : 1
+  },
+  "basket": {
+    "proxy_url": "http://127.0.0.1:{{ basket_private_port }}",
+    "api_url": "http://127.0.0.1:10140",
+    "api_key": "good enough for use with localhost null server"
+  },
+  "marketing_email": {
+    "api_url": "{{ content_public_url }}/basket",
+    "preferences_url": "https://www-dev.allizom.org/newsletter/existing/"
   }
 }

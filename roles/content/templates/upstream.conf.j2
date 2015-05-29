@@ -1,3 +1,7 @@
 upstream upstream_content_server {
     server 127.0.0.1:{{ content_private_port }};
 }
+
+upstream upstream_basket_server {
+    server 127.0.0.1:{{ basket_private_port }};
+}

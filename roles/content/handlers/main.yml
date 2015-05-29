@@ -13,3 +13,11 @@
 - name: restart fxa-content-server
   sudo: true
   supervisorctl: name=fxa-content-server state=restarted
+
+- name: restart fxa-basket-proxy
+  sudo: true
+  supervisorctl: name=fxa-basket-proxy state=restarted
+
+- name: restart fxa-null-basket
+  sudo: true
+  supervisorctl: name=fxa-null-basket state=restarted
