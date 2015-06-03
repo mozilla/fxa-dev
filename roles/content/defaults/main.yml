@@ -11,3 +11,4 @@ content_public_port: 80
 content_private_port: 3030
 content_git_repo: https://github.com/mozilla/fxa-content-server.git
 content_git_version: master
+basket_private_port: 1114
