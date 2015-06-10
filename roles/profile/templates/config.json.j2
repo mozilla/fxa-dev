@@ -7,16 +7,8 @@
     "host": "{{ profile_db_host }}"
   },
   "logging": {
-    "handlers": {
-      "console": {
-        "formatter": "pretty_with_time"
-      }
-    },
-    "loggers": {
-      "fxa": {
-        "level": "verbose"
-      }
-    }
+    "fmt": "pretty",
+    "level": "all"
   },
   "publicUrl": "{{ profile_public_url }}",
   "oauth": {
