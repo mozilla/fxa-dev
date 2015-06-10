@@ -1,13 +1,6 @@
-  {
-    "logLevel": "info",
-    "port": {{ customs_private_port }},
-    "memcached": "{{ customs_memcached_addr_port }}",
-    "recordLifetimeSeconds": 900,
-    "blockIntervalSeconds": 900,
-    "maxEmails": 3,
-    "maxBadLogins": 10,
-    "bans": {
-      "region": "{{ region }}",
-      "queueUrl": "{{ customs_ban_queue_url }}"
-    }
+{
+  "bans": {
+    "region": "{{ region }}",
+    "queueUrl": "{{ customs_ban_queue_url }}"
   }
+}
