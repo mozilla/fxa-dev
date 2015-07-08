@@ -1,0 +1,7 @@
+location /open_id/ {
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header Host $http_host;
+  proxy_redirect off;
+  rewrite ^/open_id(.*)$ $1 break;
+  proxy_pass http://upstream_openid_server;
+}

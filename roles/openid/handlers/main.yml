@@ -1,0 +1,10 @@
+---
+
+- name: install fxa-openid-bridge dependencies
+  sudo: true
+  sudo_user: app
+  npm: path=/data/fxa-openid-bridge production=true
+
+- name: restart fxa-openid-bridge
+  sudo: true
+  supervisorctl: name=fxa-openid-bridge state=restarted
