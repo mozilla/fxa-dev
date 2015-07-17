@@ -10,12 +10,12 @@ cron_time:
   month: 1
   day: 1
 
-content_git_version: v0.40.0
-auth_git_version: v1.40.0
-authdb_git_version: v0.40.0
+content_git_version: v0.41.1
+auth_git_version: v1.41.0
+authdb_git_version: v0.41.0
 customs_git_version: v0.39.0
-auth_mailer_git_version: 31612d4a28ebd3be4a91245e9b0614cafbf9323f
-oauth_git_version: 0.39.0
+auth_mailer_git_version: b4cd257ed6f1659da95029695d2f277546b3f1da
+oauth_git_version: 0.41.0
 profile_git_version: 0.39.0
 rp_git_version: 72e99f2e71bb7f39e2102446a68f1595f1514b6d
 oauth_console_git_version: 0.3.8
