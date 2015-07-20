@@ -1,7 +1,0 @@
-[hekad]
-max_timer_inject = 100
-base_dir = "/data/hekad"
-
-[StatAccumInput]
-ticker_interval = 5
-emit_in_payload = true

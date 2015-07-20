@@ -11,7 +11,3 @@
 - name: update supervisor
   sudo: true
   command: supervisorctl update
-
-- name: restart heka
-  sudo: true
-  supervisorctl: name=hekad state=restarted

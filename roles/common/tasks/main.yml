@@ -77,23 +77,6 @@
   sudo: true
   service: name=supervisor state=started
 
-- name: install heka
-  sudo: true
-  yum: name=https://dl.dropboxusercontent.com/u/3684283/heka-0_6_0-linux-amd64.rpm state=present
-
-- file: path=/etc/heka.d state=directory
-  sudo: true
-
-- name: supervise heka
-  sudo: true
-  copy: src=hekad.conf dest=/etc/supervisor.d/hekad.conf
-  notify: update supervisor
-
-- name: configure heka
-  sudo: true
-  copy: src=hekad.toml dest=/etc/heka.d/!hekad.toml
-  notify: restart heka
-
 - name: configure ntp
   sudo: true
   copy: src=ntp.conf dest=/etc/ntp.conf
