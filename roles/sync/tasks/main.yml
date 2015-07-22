@@ -22,6 +22,10 @@
   sudo: true
   pip: name=virtualenv state=present
 
+- name: symlink virtualenv
+  sudo: true
+  file: src=/usr/local/bin/virtualenv dest=/usr/bin/virtualenv state=link
+
 - name: create syncserver database
   sudo: true
   command: mysql --host={{ sync_db_host }} --user=root --password={{ sync_db_password }} -e "CREATE DATABASE IF NOT EXISTS sync"
