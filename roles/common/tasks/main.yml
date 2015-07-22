@@ -45,6 +45,10 @@
   sudo: true
   pip: name=supervisor version=3.0 state=present
 
+- name: symlink supervisorctl
+  sudo: true
+  file: src=/usr/local/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
+
 - file: path=/etc/supervisor.d state=directory
   sudo: true
 
