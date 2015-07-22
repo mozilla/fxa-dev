@@ -1,8 +1,0 @@
----
-
-- name: configure heka
-  sudo: true
-  template: src=hekad.toml.j2 dest=/etc/heka.d/leaf.toml
-  notify: restart heka
-
-- meta: flush_handlers

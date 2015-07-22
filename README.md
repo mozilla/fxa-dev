@@ -74,7 +74,6 @@ You can ssh into the EC2 instance with `ssh ec2-user@{{ whatever you configured 
 ## Example urls
 
 - logs: https://latest.dev.lcip.org/logs/
-- heka: https://latest.dev.lcip.org/heka/
 - content server: https://latest.dev.lcip.org
 - auth server: https://latest.dev.lcip.org/auth/
 - oauth server: https://oauth-latest.dev.lcip.org

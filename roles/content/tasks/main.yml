@@ -14,11 +14,6 @@
   template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_content.conf
   notify: reload nginx config
 
-- name: configure heka
-  sudo: true
-  template: src=heka.toml.j2 dest=/etc/heka.d/fxa-content-server.toml
-  notify: restart heka
-
 - name: install nonsense
   sudo: true
   npm: name={{ item }} global=yes state=present

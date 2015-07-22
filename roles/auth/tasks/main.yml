@@ -14,16 +14,6 @@
   template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_auth.conf
   notify: reload nginx config
 
-- name: create fxa-auth-server heka decoder
-  sudo: true
-  copy: src=fxa_auth_server.lua dest=/usr/share/heka/lua_decoders/fxa_auth_server.lua
-  notify: restart heka
-
-- name: configure heka
-  sudo: true
-  template: src=heka.toml.j2 dest=/etc/heka.d/fxa-auth-server.toml
-  notify: restart heka
-
 - name: install fxa-auth-server
   tags: code
   sudo: true
