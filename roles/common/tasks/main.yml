@@ -47,7 +47,7 @@
 
 - name: symlink supervisorctl
   sudo: true
-  file: src=/usr/local/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
+  file: src=/usr/bin/supervisorctl dest=/usr/local/bin/supervisorctl state=link
 
 - file: path=/etc/supervisor.d state=directory
   sudo: true
