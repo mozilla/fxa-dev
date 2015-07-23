@@ -29,6 +29,7 @@
 - name: create syncserver database
   sudo: true
   command: mysql --host={{ sync_db_host }} --user=root --password={{ sync_db_password }} -e "CREATE DATABASE IF NOT EXISTS sync"
+  changed_when: false
 
 - name: install syncserver
   tags: code
