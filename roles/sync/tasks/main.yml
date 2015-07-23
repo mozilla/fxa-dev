@@ -24,7 +24,7 @@
 
 - name: symlink virtualenv
   sudo: true
-  file: src=/usr/local/bin/virtualenv dest=/usr/bin/virtualenv state=link
+  file: src=/usr/bin/virtualenv dest=/usr/local/bin/virtualenv state=link
 
 - name: create syncserver database
   sudo: true
