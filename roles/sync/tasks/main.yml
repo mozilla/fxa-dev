@@ -20,11 +20,7 @@
 
 - name: install syncserver build dependencies
   sudo: true
-  pip: name=virtualenv state=present
-
-- name: symlink virtualenv
-  sudo: true
-  file: src=/usr/local/bin/virtualenv dest=/usr/bin/virtualenv state=link
+  pip: name=virtualenv state=present extra_args='--install-option="--install-scripts=/usr/bin"'
 
 - name: create syncserver database
   sudo: true
