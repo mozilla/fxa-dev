@@ -22,8 +22,16 @@
   sudo: true
   pip: name=virtualenv state=present
 
+#
+# "legacy" boxes (e.g., 'latest', 'stable', other) have installed `virtualenv`
+# in `/usr/bin` Newer boxes put `virtualenv` in `/usr/local/bin`, but other code
+# wants to find `virtualenv` in `/usr/bin`. So attempt to symlink but ignore
+# failures.
+#
 - name: symlink virtualenv
   sudo: true
+  failed_when: false
+  changed_when: false
   file: src=/usr/local/bin/virtualenv dest=/usr/bin/virtualenv state=link
 
 - name: create syncserver database
