@@ -33,6 +33,8 @@
     - install fxa-content-server dependencies
     - build fxa-content-server assets
     - restart fxa-content-server
+    - restart fxa-basket-proxy
+    - restart fxa-null-basket
 
 - name: configure fxa-content-server
   sudo: true
