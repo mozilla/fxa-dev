@@ -15,7 +15,7 @@ auth_git_version: v1.42.0
 authdb_git_version: v0.42.0
 customs_git_version: v0.39.0
 auth_mailer_git_version: 6aac195ff6d1692b239c7906fd1becd95ee85ebf
-oauth_git_version: 0.42.1
-profile_git_version: 0.42.0
+oauth_git_version: v0.42.1
+profile_git_version: v0.42.0
 rp_git_version: 72e99f2e71bb7f39e2102446a68f1595f1514b6d
 oauth_console_git_version: 0.3.8
