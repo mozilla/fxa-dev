@@ -59,7 +59,7 @@ cd aws
 
 To updated the stack just run `make foo` again.
 
-You can ssh into the EC2 instance with `ssh ec2-user@{{ whatever you configured in foo.yml }}`
+You can ssh into the EC2 instance with `ssh ec2-user@meta-{{ whatever you configured in foo.yml }}`
 
 ## Layout Notes
 
