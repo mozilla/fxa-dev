@@ -1,0 +1,18 @@
+---
+
+- name: install fxa-basket-proxy dependencies
+  sudo: true
+  sudo_user: app
+  command: npm install --production chdir=/data/fxa-basket-proxy
+
+- name: restart fxa-basket-proxy
+  sudo: true
+  supervisorctl: name=fxa-basket-proxy state=restarted
+
+- name: restart basket-event-handler
+  sudo: true
+  supervisorctl: name=basket-event-handler state=restarted
+
+- name: restart fxa-fake-basket
+  sudo: true
+  supervisorctl: name=fxa-fake-basket state=restarted

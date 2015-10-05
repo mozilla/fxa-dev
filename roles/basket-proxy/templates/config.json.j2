@@ -1,0 +1,13 @@
+{
+  "oauth_url": "{{ oauth_public_url }}",
+  "env": "production",
+  "basket": {
+    "proxy_url": "http://127.0.0.1:{{ basket_private_port }}",
+    "api_url": "http://127.0.0.1:10140",
+    "api_key": "good enough for use with localhost null server",
+    "sqs": {
+      "region": "{{ region }}",
+      "queue_url": "{{ basket_queue_url }}"
+    }
+  }
+}

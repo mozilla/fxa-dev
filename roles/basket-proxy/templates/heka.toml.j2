@@ -1,0 +1,11 @@
+[FxaBasket]
+type = "LogstreamerInput"
+log_directory = "/var/log"
+file_match = 'fxa-basket\.err'
+decoder = "FxaBasketDecoder"
+
+[FxaBasketDecoder]
+type = "SandboxDecoder"
+script_type = "lua"
+filename = "lua_decoders/fxa_auth_server.lua"
+
