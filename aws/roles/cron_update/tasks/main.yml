@@ -8,9 +8,10 @@
   sudo: true
   service: name=crond state=started enabled=true
 
+# use extra_args to ensure ansible-playbook in in /usr/bin so cron can find it
 - name: install ansible
   sudo: true
-  pip: name=ansible version=1.6.1 state=present
+  pip: name=ansible version=1.6.1 state=present extra_args='--install-option="--install-scripts=/usr/bin"'
 
 - name: install fxa-dev
   sudo: true
