@@ -46,4 +46,10 @@
   copy: src=fxa-content-server.conf dest=/etc/supervisor.d/fxa-content-server.conf
   notify: update supervisor
 
+# this task is obsolete; remove it
+- name: unsupervise fxa-null-basket
+  sudo: true
+  file: path=/etc/supervisor.d/fxa-null-basket.conf state=absent
+  notify: update supervisor
+
 - meta: flush_handlers
