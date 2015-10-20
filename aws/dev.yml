@@ -66,6 +66,7 @@
     - authdb
     - auth
     - content
+    - basket-proxy
     - oauth
     - oauth-console
     - notifications

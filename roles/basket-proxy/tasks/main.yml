@@ -1,0 +1,49 @@
+---
+
+- name: configure nginx upstream
+  sudo: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_basket_proxy.conf
+  notify: reload nginx config
+
+- name: configure nginx location
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_basket_proxy.conf
+  notify: reload nginx config
+
+- name: install fxa-basket-proxy
+  tags: code
+  sudo: true
+  sudo_user: app
+  git: repo={{ basket_proxy_git_repo }}
+       dest=/data/fxa-basket-proxy
+       version={{ basket_proxy_git_version }}
+       force=true
+  notify:
+    - install fxa-basket-proxy dependencies
+    - restart fxa-basket-proxy
+    - restart basket-event-handler
+    - restart fxa-fake-basket
+
+- name: configure fxa-basket-proxy
+  sudo: true
+  sudo_user: app
+  template: src=config.json.j2 dest=/data/fxa-basket-proxy/config/local.json
+  notify:
+    - restart fxa-basket-proxy
+
+- name: supervise fxa-basket-proxy
+  sudo: true
+  copy: src=fxa-basket-proxy.conf dest=/etc/supervisor.d/fxa-basket-proxy.conf
+  notify: update supervisor
+
+- name: supervise basket-event-handler
+  sudo: true
+  copy: src=basket-event-handler.conf dest=/etc/supervisor.d/basket-event-handler.conf
+  notify: update supervisor
+
+- name: supervise fxa-fake-basket
+  sudo: true
+  copy: src=fxa-fake-basket.conf dest=/etc/supervisor.d/fxa-fake-basket.conf
+  notify: update supervisor
+
+- meta: flush_handlers

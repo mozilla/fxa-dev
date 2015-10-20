@@ -33,8 +33,6 @@
     - install fxa-content-server dependencies
     - build fxa-content-server assets
     - restart fxa-content-server
-    - restart fxa-basket-proxy
-    - restart fxa-null-basket
 
 - name: configure fxa-content-server
   sudo: true
@@ -42,22 +40,10 @@
   template: src=config.json.j2 dest=/data/fxa-content-server/server/config/local.json
   notify:
     - restart fxa-content-server
-    - restart fxa-basket-proxy
-    - restart fxa-null-basket
 
 - name: supervise fxa-content-server
   sudo: true
   copy: src=fxa-content-server.conf dest=/etc/supervisor.d/fxa-content-server.conf
-  notify: update supervisor
-
-- name: supervise fxa-basket-proxy
-  sudo: true
-  copy: src=fxa-basket-proxy.conf dest=/etc/supervisor.d/fxa-basket-proxy.conf
-  notify: update supervisor
-
-- name: supervise fxa-null-basket
-  sudo: true
-  copy: src=fxa-null-basket.conf dest=/etc/supervisor.d/fxa-null-basket.conf
   notify: update supervisor
 
 - meta: flush_handlers
