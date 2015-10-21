@@ -30,6 +30,8 @@
   template: src=config.json.j2 dest=/data/fxa-basket-proxy/config/local.json
   notify:
     - restart fxa-basket-proxy
+    - restart basket-event-handler
+    - restart fxa-fake-basket
 
 - name: supervise fxa-basket-proxy
   sudo: true
