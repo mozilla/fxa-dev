@@ -219,15 +219,25 @@
        }
     },
 
-    "FxaBasketQueue": {
+    "FxaOAuthAccountChangeQueue": {
       "Type": "AWS::SQS::Queue"
     },
 
-    "FxaSNSTopic": {
+    "FxaProfileAccountChangeQueue": {
+      "Type": "AWS::SQS::Queue"
+    },
+
+    "FxaBasketAccountChangeQueue": {
+      "Type": "AWS::SQS::Queue"
+    },
+
+    "FxaAccountChangeSNSTopic": {
       "Type" : "AWS::SNS::Topic",
       "Properties" : {
         "Subscription" : [
-           { "Endpoint" : { "Fn::GetAtt" : [ "FxaBasketQueue", "Arn" ] }, "Protocol" : "sqs" }
+          { "Endpoint" : { "Fn::GetAtt" : [ "FxaBasketAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" },
+          { "Endpoint" : { "Fn::GetAtt" : [ "FxaOAuthAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" },
+          { "Endpoint" : { "Fn::GetAtt" : [ "FxaProfileAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" }
         ]
       }
     },
@@ -247,25 +257,25 @@
               "Resource" : "*"
            } ]
         },
-        "Topics" : [ { "Ref" : "FxaSNSTopic" } ]
+        "Topics" : [ { "Ref" : "FxaAccountChangeSNSTopic" } ]
       }
     },
 
-    "FxaBasketQueuePolicy": {
+    "FxaOAuthAccountChangeQueuePolicy": {
       "Type": "AWS::SQS::QueuePolicy",
       "Properties": {
         "PolicyDocument": {
-          "Id": "FxaBasketQueuePolicy",
+          "Id": "FxaOAuthAccountChangeQueuePolicy",
           "Statement": [
             {
-              "Sid": "Allow-SendMessage-To-BasketQueue-From-SNS",
+              "Sid": "Allow-SendMessage-To-OAuthAccountChangeQueue-From-SNS",
               "Effect": "Allow",
               "Principal": {"AWS": "*"},
               "Action":["sqs:SendMessage"],
               "Resource": "*",
               "Condition": {
                 "ArnEquals": {
-                  "aws:SourceArn": { "Ref": "FxaSNSTopic" }
+                  "aws:SourceArn": { "Ref": "FxaAccountChangeSNSTopic" }
                 }
               }
             },
@@ -277,7 +287,67 @@
             }
           ]
         },
-        "Queues": [{ "Ref" : "FxaBasketQueue" }]
+        "Queues": [{ "Ref" : "FxaOAuthAccountChangeQueue" }]
+      }
+    },
+
+    "FxaBasketAccountChangeQueuePolicy": {
+      "Type": "AWS::SQS::QueuePolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Id": "FxaBasketAccountChangeQueuePolicy",
+          "Statement": [
+            {
+              "Sid": "Allow-SendMessage-To-BasketAccountChangeQueue-From-SNS",
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:SendMessage"],
+              "Resource": "*",
+              "Condition": {
+                "ArnEquals": {
+                  "aws:SourceArn": { "Ref": "FxaAccountChangeSNSTopic" }
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:ReceiveMessage", "sqs:DeleteMessage"],
+              "Resource": "*"
+            }
+          ]
+        },
+        "Queues": [{ "Ref" : "FxaBasketAccountChangeQueue" }]
+      }
+    },
+
+    "FxaProfileAccountChangeQueuePolicy": {
+      "Type": "AWS::SQS::QueuePolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Id": "FxaProfileAccountChangeQueuePolicy",
+          "Statement": [
+            {
+              "Sid": "Allow-SendMessage-To-ProfileAccountChangeQueue-From-SNS",
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:SendMessage"],
+              "Resource": "*",
+              "Condition": {
+                "ArnEquals": {
+                  "aws:SourceArn": { "Ref": "FxaAccountChangeSNSTopic" }
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:ReceiveMessage", "sqs:DeleteMessage"],
+              "Resource": "*"
+            }
+          ]
+        },
+        "Queues": [{ "Ref" : "FxaProfileAccountChangeQueue" }]
       }
     },
 
@@ -392,9 +462,17 @@
       "Description": "RDS Endpoint",
       "Value": {"Fn::GetAtt":[ "FxaRDSInstance", "Endpoint.Address" ]}
     },
-    "BasketQueueURL": {
+    "BasketAccountChangeQueueURL": {
       "Description": "Fxa Account Changes for the Basket API consumer",
-      "Value": { "Ref": "FxaBasketQueue" }
+      "Value": { "Ref": "FxaBasketAccountChangeQueue" }
+    },
+    "OAuthAccountChangeQueueURL": {
+      "Description": "Fxa Account Changes for the OAuth consumer",
+      "Value": { "Ref": "FxaOAuthAccountChangeQueue" }
+    },
+    "ProfileAccountChangeQueueURL": {
+      "Description": "Fxa Account Changes for the Profile consumer",
+      "Value": { "Ref": "FxaProfileAccountChangeQueue" }
     },
     "CustomsBanQueueURL": {
       "Description": "Fxa customs ban queue for use by mozdef",
@@ -402,7 +480,7 @@
     },
     "SNS": {
       "Description": "Fxa Account Changes ARN",
-      "Value": { "Ref": "FxaSNSTopic" }
+      "Value": { "Ref": "FxaAccountChangeSNSTopic" }
     },
     "Redis": {
       "Description": "Fxa Notifications Redis",
