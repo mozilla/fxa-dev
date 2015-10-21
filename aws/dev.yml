@@ -43,7 +43,9 @@
   vars:
     rds_host: "{{ hostvars['localhost']['stack']['stack_outputs']['RDSEndpoint'] }}"
     auth_sns_arn: "{{ hostvars['localhost']['stack']['stack_outputs']['SNS'] }}"
-    basket_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['BasketQueueURL'] }}"
+    basket_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['BasketAccountChangeQueueURL'] }}"
+    oauth_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['OAuthAccountChangeQueueURL'] }}"
+    profile_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['ProfileAccountChangeQueueURL'] }}"
     customs_ban_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['CustomsBanQueueURL'] }}"
     redis_id: "{{ hostvars['localhost']['stack']['stack_outputs']['Redis'] }}"
     authdb_primary_host: "{{ rds_host }}"
