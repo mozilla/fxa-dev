@@ -29,19 +29,47 @@
       "NoEcho": "true",
       "MinLength": "8",
       "Description": "RDS password"
+    },
+    "EC2InstanceType": {
+      "Description": "EC2 instance type",
+      "Type": "String",
+      "Default": "t2.small",
+      "AllowedValues": [
+        "t2.micro",
+        "t2.small",
+        "t2.medium",
+        "t2.large",
+        "m3.medium",
+        "m3.large",
+        "m3.xlarge"
+      ],
+      "ConstraintDescription": "must be a valid EC2 instance type."
+    },
+    "EC2VolumeSize": {
+      "Description": "EC2 volume size (GB)",
+      "Type": "String",
+      "Default": "8",
+      "AllowedValues": [
+        "8",
+        "16",
+        "24",
+        "32",
+        "40"
+      ]
     }
   },
 
   "Mappings" : {
     "RegionMap" : {
-      "us-east-1"      : { "AMI" : "ami-fb8e9292" },
-      "us-west-1"      : { "AMI" : "ami-7aba833f" },
-      "us-west-2"      : { "AMI" : "ami-043a5034" },
-      "eu-west-1"      : { "AMI" : "ami-2918e35e" },
-      "sa-east-1"      : { "AMI" : "ami-215dff3c" },
-      "ap-southeast-1" : { "AMI" : "ami-b40d5ee6" },
-      "ap-southeast-2" : { "AMI" : "ami-3b4bd301" },
-      "ap-northeast-1" : { "AMI" : "ami-c9562fc8" }
+      "us-east-1"      : { "AMI" : "ami-60b6c60a" },
+      "us-west-2"      : { "AMI" : "ami-f0091d91" },
+      "us-west-1"      : { "AMI" : "ami-d5ea86b5" },
+      "eu-west-1"      : { "AMI" : "ami-bff32ccc" },
+      "eu-central-1"   : { "AMI" : "ami-bc5b48d0" },
+      "ap-southeast-1" : { "AMI" : "ami-c9b572aa" },
+      "ap-northeast-1" : { "AMI" : "ami-383c1956" },
+      "ap-southeast-2" : { "AMI" : "ami-48d38c2b" },
+      "sa-east-1"      : { "AMI" : "ami-6817af04" }
     }
   },
 
@@ -154,12 +182,21 @@
         "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
         "KeyName" : { "Ref" : "KeyName" },
         "IamInstanceProfile": { "Ref": "FxaInstanceProfile" },
-        "InstanceType" : "m3.medium",
+        "InstanceType" : { "Ref": "EC2InstanceType" },
         "SecurityGroups" : [{ "Ref" : "FxaDevSecurityGroup" }],
         "UserData": { "Fn::Base64": { "Fn::Join": ["",
           ["#!/bin/bash -ex","\n",
           "echo Defaults:ec2-user \\!requiretty >> /etc/sudoers;", "\n"]
-        ]}}
+        ]}},
+        "BlockDeviceMappings" : [
+          {
+            "DeviceName" : "/dev/xvda",
+            "Ebs" : {
+              "VolumeSize" : { "Ref": "EC2VolumeSize" },
+              "VolumeType" : "gp2"
+            }
+          }
+        ]
       }
     },
 

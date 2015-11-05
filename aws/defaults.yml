@@ -1,0 +1,3 @@
+---
+ec2_instance_type: t2.small
+ec2_volume_size: 8
