@@ -18,3 +18,7 @@
 - name: restart fxa-auth-db-server
   sudo: true
   supervisorctl: name=fxa-auth-db-server state=restarted
+
+- name: restart fxa-auth-server
+  sudo: true
+  supervisorctl: name=fxa-auth-server state=restarted

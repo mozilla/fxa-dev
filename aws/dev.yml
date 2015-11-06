@@ -71,8 +71,8 @@
     - memcached
     - datadog
     - customs
-    - authdb
     - auth
+    - authdb
     - content
     - basket-proxy
     - oauth
