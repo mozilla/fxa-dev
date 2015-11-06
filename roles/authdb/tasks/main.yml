@@ -13,12 +13,15 @@
     - install fxa-auth-db-mysql mysql-patcher devDependency
     - run db patcher
     - restart fxa-auth-db-server
+    - restart fxa-auth-server
 
 - name: configure fxa-auth-db-server
   sudo: true
   sudo_user: app
   template: src=config.json.j2 dest=/data/fxa-auth-db-mysql/config/stage.json
-  notify: restart fxa-auth-db-server
+  notify: 
+    - restart fxa-auth-db-server
+    - restart fxa-auth-server
 
 - name: supervise fxa-auth-db-server
   sudo: true
