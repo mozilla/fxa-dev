@@ -55,6 +55,7 @@ cd aws
 1. Set the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables
 3. create a `environments/foo.yml` file ('foo' can be anything)
   a) see `environments/EXAMPLE.yml` for a base reference
+  b) it is recommended that you set values for `owner` and `reaper_spare_me`
 4. run `make foo`
 
 To updated the stack just run `make foo` again.
