@@ -19,3 +19,6 @@ oauth_git_version: v0.48.1
 profile_git_version: v0.48.0
 rp_git_version: 99a806c3ced0990caf91fed051582f5b2512a498
 oauth_console_git_version: 0.3.8
+
+owner: "dev-fxacct@mozilla.org"
+reaper_spare_me: "true"

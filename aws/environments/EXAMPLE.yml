@@ -23,3 +23,11 @@ cron_time:
   hour: 0
   day: 1
   month: 1
+
+# The "Reaper" is a service which will shut down long-running instances that
+# have accidentally been left running (but will attempt to notify you and give
+# you lead time before taking any action). To exempt your stack from being
+# someday terminated, set these values. Note: `owner` will default to 
+# "nobody@mozilla.com" reaper_spare_me will default to "false".
+owner: "your.address@mozilla.com"
+reaper_spare_me: "true"

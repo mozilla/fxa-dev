@@ -29,6 +29,9 @@
           Subdomain: "{{ subdomain }}"
           SSLCertificateName: "{{ ssl_certificate_name }}"
           RDSPassword: "{{ rds_password }}"
+        tags:
+          Owner: "{{ owner | default('nobody@mozilla.com') }}"
+          REAPER_SPARE_ME: "{{ reaper_spare_me | default('false') }}"
       register: stack
 
     - debug: var=stack
