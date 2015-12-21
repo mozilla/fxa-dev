@@ -4,3 +4,15 @@ location / {
     proxy_redirect off;
     proxy_pass http://upstream_content_server;
 }
+
+# Note: /.well-known/ default route is defined in
+# ./roles/auth/templates/nginx.conf.j2. Most specific route wins, so
+# /.well-known/openid-configuration is handled by the content server, and any
+# other route under /.well-known is handled by the auth server.
+
+location /.well-known/openid-configuration {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_pass http://upstream_content_server;
+}
