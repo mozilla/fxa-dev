@@ -1,4 +1,3 @@
-.vagrant
 node_modules
 aws/my_vars.yml
 *.swp
