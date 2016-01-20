@@ -10,14 +10,14 @@ cron_time:
   month: 1
   day: 1
 
-content_git_version: v0.51.0
-auth_git_version: v1.51.1
-authdb_git_version: v0.51.0
+content_git_version: v0.54.0
+auth_git_version: v1.53.0
+authdb_git_version: v0.53.0
 customs_git_version: v0.45.0
-auth_mailer_git_version: 0687df0ab8380df47797f78a6573b1fc4e30a54e
-oauth_git_version: v0.50.0
-profile_git_version: v0.50.1
-rp_git_version: bbf0deb5e70358a0e7df17c03265ae2c7ce4d477
+auth_mailer_git_version: 26ced35d881466fb4b38b093445b18c0c2db9281
+oauth_git_version: v0.53.1
+profile_git_version: v0.53.1
+rp_git_version: 00222bb3270c214cb90e7856fdc4df0479da8c00
 oauth_console_git_version: 0.3.8
 
 owner: "dev-fxacct@mozilla.org"
