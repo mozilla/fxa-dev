@@ -18,7 +18,7 @@
      option=calling_format
      value=boto.s3.connection.OrdinaryCallingFormat
      owner=root
-     mode=u=rw,g=r,o=r
+     mode=0644
 
 - name: get s3 secrets
   sudo: true
