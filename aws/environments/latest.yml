@@ -5,5 +5,8 @@ hosted_zone: lcip.org
 ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
 rds_password: 33yJ(Lv)hr6&=N7t
 
+ec2_instance_type: t2.medium
+ec2_volume_size: 24
+
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
