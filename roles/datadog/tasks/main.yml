@@ -11,5 +11,8 @@
   notify: restart datadog
   sudo: true
 
-- service: name=datadog-agent state=started
+# use command not service to workaround; fixed in ansible 2.x maybe
+# https://github.com/ansible/ansible-modules-core/issues/1298
+- name: start datadog-agent
+  command: service datadog-agent start
   sudo: true

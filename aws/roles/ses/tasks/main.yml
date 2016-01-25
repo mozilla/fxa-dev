@@ -8,6 +8,18 @@
     owner=root group=root mode=0644
   notify: reload postfix
 
+# workaround for python/boto suckage with dotted bucket names
+# https://github.com/boto/boto/issues/2836. Fixed in Ansible > 1.9.
+- name: ensure boto.s3 uses OrdinaryCallingFormat()
+  sudo: true
+  ini_file: dest=/etc/boto.cfg
+     state=present
+     section=s3
+     option=calling_format
+     value=boto.s3.connection.OrdinaryCallingFormat
+     owner=root
+     mode=u=rw,g=r,o=r
+
 - name: get s3 secrets
   sudo: true
   s3: bucket=net.mozaws.ops.hiera-secrets

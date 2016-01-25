@@ -4,6 +4,7 @@
   connection: local
   gather_facts: false
   vars_files:
+    - "defaults.yml"
     - "environments/{{ stack_name }}.yml"
   vars:
     key_name: "{{ stack_name }}-fxadev"
@@ -29,6 +30,8 @@
           Subdomain: "{{ subdomain }}"
           SSLCertificateName: "{{ ssl_certificate_name }}"
           RDSPassword: "{{ rds_password }}"
+          EC2InstanceType: "{{ ec2_instance_type }}"
+          EC2VolumeSize: "{{ ec2_volume_size }}"
         tags:
           Owner: "{{ owner | default('nobody@mozilla.com') }}"
           REAPER_SPARE_ME: "{{ reaper_spare_me | default('false') }}"
@@ -68,8 +71,8 @@
     - memcached
     - datadog
     - customs
-    - authdb
     - auth
+    - authdb
     - content
     - basket-proxy
     - oauth
