@@ -10,13 +10,13 @@ cron_time:
   month: 1
   day: 1
 
-content_git_version: v0.54.0
-auth_git_version: v1.53.0
-authdb_git_version: v0.53.0
-customs_git_version: v0.45.0
-auth_mailer_git_version: 26ced35d881466fb4b38b093445b18c0c2db9281
+content_git_version: v0.55.2
+auth_git_version: v1.55.1
+authdb_git_version: v0.55.0
+customs_git_version: v0.55.0
+auth_mailer_git_version: ca69b7f26c67b2e302aa4e65c6e4a8c8db2bf268
 oauth_git_version: v0.53.1
-profile_git_version: master
+profile_git_version: v0.53.1
 rp_git_version: 00222bb3270c214cb90e7856fdc4df0479da8c00
 oauth_console_git_version: 0.3.8
 
