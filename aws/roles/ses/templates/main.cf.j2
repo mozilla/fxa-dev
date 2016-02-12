@@ -689,3 +689,11 @@ smtp_use_tls = yes
 smtp_tls_security_level = encrypt
 smtp_tls_note_starttls_offer = yes
 smtp_tls_CAfile = /etc/ssl/certs/ca-bundle.crt
+
+#
+# additional settings used in stage/production
+#
+# allow an address to have `-' as the first character.
+allow_min_user = yes
+# do not append ".localdomain" to non-FQDN addresses
+append_dot_mydomain = no
