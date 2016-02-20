@@ -1,0 +1,15 @@
+---
+region: us-west-2
+subdomain: latest4.dev
+hosted_zone: lcip.org
+ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
+rds_password: 33yJ(Lv)hr6&=N7t
+
+owner: "dev-fxacct@mozilla.org"
+reaper_spare_me: "true"
+
+node_version: "4.3"
+npm_version: "2.14.18"
+
+fxadev_git_repo: https://github.com/mozilla/fxa-dev.git
+fxadev_git_version: build_with_nodejs_4x
