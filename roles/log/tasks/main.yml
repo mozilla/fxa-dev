@@ -20,9 +20,9 @@
 - name: install kibana
   sudo: true
   sudo_user: app
-  git: repo=https://github.com/elasticsearch/kibana.git
+  git: repo=https://github.com/jrgm/kibana.git
        dest=/data/kibana
-       version=v3.1.1
+       version=v3.1.3-plus-uglify-patch-for-node4.x
        force=true
   notify:
     - install kibana dependencies
