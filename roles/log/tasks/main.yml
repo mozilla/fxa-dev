@@ -4,6 +4,34 @@
   sudo: true
   yum: name=java-1.7.0-openjdk state=present
 
+# Pre-install `phantomjs`, so npm doesn't try to do this, and fail,
+# leaving `kibana` with a broken mess in ./node_modules. Partially based
+# on https://github.com/nicolai86/ansible-phantomjs.git
+- name: install libfontconfig for phantomjs
+  sudo: true
+  yum: name=fontconfig state=present
+
+- name: check if phantomjs is already installed
+  command: which phantomjs
+  failed_when: false
+  changed_when: false
+  register: has_phantomjs
+
+# In ansible 2.x, you can add 'checksum: "{{ phantomjs_checksum }}"'
+# to ensure tarball integrity. XXX FIXME_WHEN_ANSIBLE_2.0_IS_COMMON
+- name: download phantomjs if necessary
+  get_url: url="{{ phantomjs_url }}" dest="/tmp/phantomjs.tar.bz2"
+  when: has_phantomjs.rc != 0
+
+- name: extract phantomjs into /usr/bin
+  shell: "tar xvjf /tmp/phantomjs.tar.bz2 -C /usr/bin/ --overwrite --wildcards '**/bin/phantomjs' --strip-components=2"
+  sudo: true
+  when: has_phantomjs.rc != 0
+
+- name: ensure /usr/bin/phantomjs is executable
+  file: path=/usr/bin/phantomjs state=file mode=0755
+  when: has_phantomjs.rc != 0
+
 - name: install elasticsearch
   sudo: true
   yum: name=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.1.noarch.rpm state=present
@@ -20,9 +48,9 @@
 - name: install kibana
   sudo: true
   sudo_user: app
-  git: repo=https://github.com/elasticsearch/kibana.git
+  git: repo=https://github.com/jrgm/kibana.git
        dest=/data/kibana
-       version=v3.1.1
+       version=v3.1.3-plus-uglify-patch-for-node4.x
        force=true
   notify:
     - install kibana dependencies
