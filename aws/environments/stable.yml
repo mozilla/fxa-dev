@@ -10,7 +10,7 @@ cron_time:
   month: 1
   day: 1
 
-content_git_version: v0.56.1
+content_git_version: v0.56.3
 auth_git_version: v1.56.0
 authdb_git_version: v0.55.0
 customs_git_version: v0.55.0
