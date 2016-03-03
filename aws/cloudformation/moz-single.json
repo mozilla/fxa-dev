@@ -487,7 +487,37 @@
           }
         ]
       }
+    },
+
+    "FxaCloudfrontPolicy" : {
+      "Type" : "AWS::CloudFront::Distribution",
+      "Properties" : {
+          "DistributionConfig" : {
+              "DefaultCacheBehavior" : {
+                  "AllowedMethods" : [ "GET", "HEAD", "OPTIONS" ],
+                  "TargetOriginId" : "FxaCloudfrontCDN",
+                  "ForwardedValues" : {
+                      "QueryString" : "false",
+                      "Cookies" : { "Forward" : "none" }
+                  },
+                  "ViewerProtocolPolicy" : "allow-all"
+              },
+              "Enabled" : "true",
+              "Origins" : [ {
+                  "DomainName" : { "Fn::Join" : [ "", [{"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
+                  "Id" : "FxaCloudfrontCDN",
+                  "CustomOriginConfig": {
+                    "HTTPPort": "80",
+                    "HTTPSPort": "443",
+                    "OriginProtocolPolicy": "https-only"
+                  }
+              }],
+             "PriceClass" : "PriceClass_All",
+             "ViewerCertificate" : { "CloudFrontDefaultCertificate" : "true" }
+          }
+      }
     }
+
   },
 
   "Outputs" : {
@@ -522,6 +552,14 @@
     "Redis": {
       "Description": "Fxa Notifications Redis",
       "Value": { "Ref": "FxaNotificationsRedisCluster" }
+    },
+    "CloudfrontId": {
+      "Description": "Fxa CDN Cloudfront instance ID",
+      "Value": {"Ref": "FxaCloudfrontPolicy" }
+    },
+    "StaticResourceHost": {
+      "Description": "Fxa Static Resource Host",
+      "Value": {"Fn::GetAtt":[ "FxaCloudfrontPolicy", "DomainName" ]}
     }
   }
 }

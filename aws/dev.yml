@@ -54,6 +54,7 @@
     profile_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['ProfileAccountChangeQueueURL'] }}"
     customs_ban_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['CustomsBanQueueURL'] }}"
     redis_id: "{{ hostvars['localhost']['stack']['stack_outputs']['Redis'] }}"
+    content_static_resource_url: "https://{{ hostvars['localhost']['stack']['stack_outputs']['StaticResourceHost'] }}"
     authdb_primary_host: "{{ rds_host }}"
     authdb_primary_password: "{{ rds_password }}"
     authdb_replica_host: "{{ rds_host }}"

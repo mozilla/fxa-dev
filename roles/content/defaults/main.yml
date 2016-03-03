@@ -7,7 +7,7 @@ oauth_domain_name: "oauth-{{ domain_name }}"
 oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
 profile_public_url: "{{ public_protocol }}://{{ domain_name }}/profile"
 content_public_url: "{{ public_protocol }}://{{ domain_name }}"
-content_cdn_url: "{{ public_protocol }}://{{ domain_name }}"
+content_static_resource_url: "{{ public_protocol }}://{{ domain_name }}"
 content_public_port: 80
 content_private_port: 3030
 content_git_repo: https://github.com/mozilla/fxa-content-server.git
