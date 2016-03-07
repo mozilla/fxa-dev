@@ -30,8 +30,12 @@
        version={{ content_git_version }}
        force=true
   notify:
+    - begin install fxa-content-server by removing any leftover in /var/tmp
+    - begin install fxa-content-server dependencies with a copy
     - install fxa-content-server dependencies
     - build fxa-content-server assets
+    - remove original /data/fxa-content-server
+    - move updated fxa-content-server back into /data
     - restart fxa-content-server
 
 - name: configure fxa-content-server
