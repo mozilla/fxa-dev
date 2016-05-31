@@ -18,7 +18,7 @@ auth_mailer_git_version: 062508e2ff3c900bb40b2212f375609c05628497
 oauth_git_version: v0.61.0
 profile_git_version: v0.61.0
 rp_git_version: 75446c77ff8f42549ef80302776d4961feabb330
-oauth_console_git_version: 0.4.1
+oauth_console_git_version: v0.4.1
 
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
