@@ -13,12 +13,15 @@
     "contentServer": {
         "url": "{{ content_public_url }}"
     },
-    "smtp":{
+    "smtp": {
         "host": "{{ auth_mail_host }}",
         "port": {{ auth_mail_port }},
         "secure": false,
         "sender":"{{ auth_mail_sender }}",
         "redirectDomain": "firefox.com"
+    },
+    "verificationReminders": {
+      "rate": 1
     },
     "listen": {
         "port": {{ auth_private_port }}
