@@ -2,6 +2,9 @@
   "port": {{ auth_mailer_port }},
   "logLevel": "info",
   "locales": ["en_US", "de"],
+  "contentServer": {
+    "url": "{{ content_public_url }}"
+  },
   "mail": {
     "host": "{{ auth_mailer_smtp_host }}",
     "port": {{ auth_mailer_smtp_port }},
