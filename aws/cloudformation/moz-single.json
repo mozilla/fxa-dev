@@ -560,7 +560,8 @@
               "TargetOriginId" : { "Fn::Join" : [ "", ["FxaCloudfrontCDN-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]},
               "ForwardedValues" : {
                   "QueryString" : "false",
-                  "Cookies" : { "Forward" : "none" }
+                  "Cookies" : { "Forward" : "none" },
+                  "Headers": []
               },
               "ViewerProtocolPolicy" : "https-only"
           },
