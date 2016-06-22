@@ -23,6 +23,11 @@
     "verificationReminders": {
       "rate": 1
     },
+    "signinConfirmation": {
+      "enabled": true,
+      "sample_rate": 0,
+      "forceEmailRegex": ["^sync.*@restmail.net$", "@mozilla.com$"]
+    },
     "listen": {
         "port": {{ auth_private_port }}
     },
