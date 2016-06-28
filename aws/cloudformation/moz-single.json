@@ -561,7 +561,7 @@
               "ForwardedValues" : {
                   "QueryString" : "false",
                   "Cookies" : { "Forward" : "none" },
-                  "Headers": []
+                  "Headers": ["Origin"]
               },
               "ViewerProtocolPolicy" : "https-only"
           },
