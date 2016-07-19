@@ -6,6 +6,7 @@ auth_public_url: "{{ public_protocol }}://{{ domain_name }}/auth"
 oauth_domain_name: "oauth-{{ domain_name }}"
 oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
 profile_public_url: "{{ public_protocol }}://{{ domain_name }}/profile"
+sync_tokenserver_url: "{{ public_protocol }}://{{ domain_name }}/syncserver/token"
 content_public_url: "{{ public_protocol }}://{{ domain_name }}"
 content_static_resource_url: "{{ public_protocol }}://{{ domain_name }}"
 content_public_port: 80
