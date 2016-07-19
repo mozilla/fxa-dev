@@ -5,10 +5,11 @@ location /auth/ {
   proxy_pass http://upstream_auth_server;
 }
 
-# Note: /.well-known/openid-configuration route is defined in
-# ./roles/content/templates/nginx.conf.j2. Most specific route wins, so
-# /.well-known/openid-configuration is handled by the content server, and any
-# other route under /.well-known is handled by the auth server.
+# Note: the following routes are defined in ./roles/content/templates/nginx.conf.j2:
+#  * /.well-known/openid-configuration
+#  * /.well-known/fxa-client-configuration
+# Most specific route wins, so those are handled by the content server,
+# and any other route under /.well-known is handled by the auth server.
 
 location /.well-known/ {
   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
