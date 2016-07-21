@@ -1,0 +1,17 @@
+---
+region: us-west-2
+subdomain: content.dev
+hosted_zone: lcip.org
+ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
+rds_password: 33yJ(Lv)hr6&=N7t
+
+ec2_instance_type: t2.medium
+ec2_volume_size: 24
+
+node_version: "4.4"
+npm_version: "2.15.6"
+
+owner: "dev-fxacct@mozilla.org"
+reaper_spare_me: "true"
+
+content_public_url: "http://127.0.0.1:3030"
