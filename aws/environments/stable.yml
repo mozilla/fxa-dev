@@ -23,6 +23,7 @@ oauth_console_git_version: v0.4.1
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 
+ec2_instance_type: t2.medium
 ec2_volume_size: 24
 
 cdn_ssl_certificate_id: ASCAIAYDJPL5OT7LFEZSE
