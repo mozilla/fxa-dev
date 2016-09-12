@@ -13,3 +13,6 @@ reaper_spare_me: "true"
 
 cdn_ssl_certificate_id: ASCAIAYDJPL5OT7LFEZSE
 content_static_resource_url: https://static-latest.dev.lcip.org
+
+# If this is not set, no notifications will happen
+notification_publish_url: ""
