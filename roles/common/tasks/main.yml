@@ -37,10 +37,6 @@
   # TODO detect actual changes
   changed_when: false
 
-- name: upgrade npm to npm@2.x
-  sudo: true
-  npm: name=npm global=true state=present version={{ npm_version }}
-
 - name: install supervisord
   sudo: true
   pip: name=supervisor version=3.1.3 state=present extra_args='--install-option="--install-scripts=/usr/bin"'
