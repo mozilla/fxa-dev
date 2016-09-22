@@ -8,9 +8,6 @@ rds_password: 33yJ(Lv)hr6&=N7t
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
 
-node_version: "4.4"
-npm_version: "2.15.6"
-
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 

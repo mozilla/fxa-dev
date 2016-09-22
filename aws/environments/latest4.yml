@@ -11,9 +11,6 @@ reaper_spare_me: "true"
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
 
-node_version: "4.4"
-npm_version: "2.15.6"
-
 fxadev_git_repo: https://github.com/mozilla/fxa-dev.git
 fxadev_git_version: master
 
