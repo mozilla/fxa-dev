@@ -10,6 +10,11 @@
   sudo_user: app
   command: node /data/fxa-auth-server/scripts/gen_keys.js
 
+- name: gen VAPID key-pair
+  sudo: true
+  sudo_user: app
+  command: node /data/fxa-auth-server/scripts/gen_vapid_keys.js
+
 - name: restart fxa-auth-server
   sudo: true
   supervisorctl: name=fxa-auth-server state=restarted

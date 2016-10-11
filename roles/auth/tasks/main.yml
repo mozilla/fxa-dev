@@ -21,6 +21,7 @@
   notify:
     - install fxa-auth-server dependencies
     - gen dev key-pair
+    - gen VAPID key-pair
     - restart fxa-auth-server
 
 - name: configure fxa-auth-server
