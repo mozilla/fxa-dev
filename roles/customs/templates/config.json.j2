@@ -2,5 +2,16 @@
   "bans": {
     "region": "{{ region }}",
     "queueUrl": "{{ customs_ban_queue_url }}"
+  },
+  "limits": {
+    "maxEmails": 2000,
+    "maxBadLogins": 2000,
+    "maxBadLoginsPerIp": 2000,
+    "uidRateLimit": {
+      "maxChecks": 2000
+    },
+    "maxAccountStatusCheck": 2000,
+    "maxVerifyCodes": 2000,
+    "maxUnblockAttempts": 2000
   }
 }
