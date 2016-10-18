@@ -27,7 +27,6 @@
     - basket-proxy
     - oauth
     - oauth-console
-    - notifications
     - profile
     - sync
     - rp

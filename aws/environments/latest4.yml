@@ -16,6 +16,3 @@ fxadev_git_version: master
 
 cdn_ssl_certificate_id: ASCAIAYDJPL5OT7LFEZSE
 content_static_resource_url: https://static-latest4.dev.lcip.org
-
-# If this is not set, no notifications will happen
-notification_publish_url: ""

@@ -10,6 +10,3 @@ authdb_primary_password: foobarbaz
 authdb_replica_host: 127.0.0.1
 authdb_replica_user: root
 authdb_replica_password: foobarbaz
-notification_public_port: 7879
-notification_publish_url: "http://127.0.0.1:{{ notification_public_port }}/v0/publish"
-auth_public_jku: "{{ public_protocol }}://{{ domain_name }}/.well-known/public-keys"
