@@ -13,7 +13,7 @@ cron_time:
 content_git_version: v0.71.0
 auth_git_version: v1.71.2
 authdb_git_version: v0.71.0
-customs_git_version: v0.71.2
+customs_git_version: v0.71.0
 auth_mailer_git_version: v1.71.0
 oauth_git_version: v0.71.0
 profile_git_version: v0.71.0
