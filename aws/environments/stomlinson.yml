@@ -1,0 +1,32 @@
+---
+
+# The following variables should be put into a new yml file in this directory.
+# Any variables used by ansible roles may also be set here.
+
+#region: us-west-1
+region: us-east-1
+
+# The {{ subdomain }}.{{ host_zone }} will be added to route53
+subdomain: stomlinson.dev
+hosted_zone: lcip.org
+
+# the name of the ssl cert in IAM to use in the ELB
+# this must be compatible with your stack_name and hosted_zone
+# see http://docs.aws.amazon.com/IAM/latest/UserGuide/ManagingServerCerts.html
+ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
+cdn_ssl_certificate_id: ASCAIAYDJPL5OT7LFEZSE
+
+content_git_version: issue-4095-show-pwd-hide-show
+
+rds_password: 3s,hE2;QDw?6)t8e
+
+# how often to auto-update (defaults to every 10 minutes)
+# the example below will set it to only update on January 1, 00:00 UTC
+cron_time:
+  minute: 0
+  hour: 0
+  day: 1
+  month: 1
+
+owner: "stomlinson@mozilla.com"
+reaper_spare_me: false
