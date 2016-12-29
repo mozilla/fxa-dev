@@ -10,7 +10,6 @@
   "content_uri": "{{ content_public_url }}",
   "scopes": "profile:email profile:uid profile:display_name",
   "port": {{ rp_untrusted_private_port }},
-  "preverify_email_audience": "{{ domain_name }}",
   "preverify_email_jku": "{{ rp_untrusted_public_url }}/.well-known/public-keys",
   "kv_uri": "{{ kv_public_url }}/v1/data"
 }
