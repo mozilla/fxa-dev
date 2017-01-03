@@ -16,7 +16,7 @@ hosted_zone: lcip.org
 ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
 cdn_ssl_certificate_id: ASCAIAYDJPL5OT7LFEZSE
 
-content_git_version: issue-4095-show-pwd-hide-show
+content_git_version: shane-tomlinson/complete-on-fennec
 
 rds_password: 3s,hE2;QDw?6)t8e
 
