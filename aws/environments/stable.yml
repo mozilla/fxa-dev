@@ -17,7 +17,7 @@ customs_git_version: master
 auth_mailer_git_version: master
 oauth_git_version: master
 profile_git_version: master
-rp_git_version: fa8e07520566ae363ee7f6f8d071661b7fa81e69
+rp_git_version: oauth
 oauth_console_git_version: v0.4.1
 
 owner: "dev-fxacct@mozilla.org"
