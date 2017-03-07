@@ -19,3 +19,16 @@
   sudo: true
   supervisorctl: name=fxa-auth-server state=restarted
 
+- name: set MTA to postfix
+  sudo: true
+  # the alternatives module isn't working
+  # alternatives: name=mta path=/usr/sbin/sendmail.postfix
+  command: alternatives --set mta /usr/sbin/sendmail.postfix
+
+- name: reload postfix
+  sudo: true
+  service: name=postfix state=reloaded
+
+- name: restart fxa-auth-mailer
+  sudo: true
+  supervisorctl: name=fxa-auth-mailer state=restarted

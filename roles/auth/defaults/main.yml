@@ -15,3 +15,5 @@ auth_mail_port: 25
 auth_mail_sender: "Firefox Accounts <verification@{{ domain_name }}>"
 trusted_jku_123done: "{{ public_protocol }}://123done-{{ domain_name }}/.well-known/public-keys"
 trusted_jku_321done: "{{ public_protocol }}://321done-{{ domain_name }}/.well-known/public-keys"
+auth_mailer_verify_url: "{{ content_public_url }}/v1/verify_email"
+auth_mailer_recovery_url: "{{ content_public_url }}/v1/complete_reset_password"

@@ -35,4 +35,32 @@
   copy: src=fxa-auth-server.conf dest=/etc/supervisor.d/fxa-auth-server.conf
   notify: update supervisor
 
+- name: no sendmail
+  sudo: true
+  yum: name=sendmail state=absent
+
+- name: install postfix
+  sudo: true
+  yum: name=postfix state=present
+  notify: set MTA to postfix
+
+- name: start postfix
+  sudo: true
+  service: name=postfix state=started enabled=true
+
+# fedora 20 doesn't include rsyslog by default
+- name: install rsyslog
+  sudo: true
+  yum: name=rsyslog state=present
+
+- name: start rsyslog
+  sudo: true
+  service: name=rsyslog state=started enabled=true
+
+- name: configure fxa-auth-mailer
+  sudo: true
+  sudo_user: app
+  template: src=config_mailer.json.j2 dest=/data/fxa-auth-server/mailer/config/stage.json
+  notify: restart fxa-auth-mailer
+
 - meta: flush_handlers
