@@ -3,3 +3,14 @@
 - name: postmap sasl_passwd
   sudo: true
   command: /usr/sbin/postmap /etc/postfix/sasl_passwd
+
+- name: set MTA to postfix
+  sudo: true
+  # the alternatives module isn't working
+  # alternatives: name=mta path=/usr/sbin/sendmail.postfix
+  command: alternatives --set mta /usr/sbin/sendmail.postfix
+
+- name: reload postfix
+  sudo: true
+  service: name=postfix state=reloaded
+

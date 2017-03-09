@@ -1,5 +1,14 @@
 ---
 
+- name: no sendmail
+  sudo: true
+  yum: name=sendmail state=absent
+
+- name: install postfix
+  sudo: true
+  yum: name=postfix state=present
+  notify: set MTA to postfix
+
 - name: install postfix main.cf
   sudo: true
   template:
@@ -7,6 +16,19 @@
     dest=/etc/postfix/main.cf
     owner=root group=root mode=0644
   notify: reload postfix
+
+- name: start postfix
+  sudo: true
+  service: name=postfix state=started enabled=true
+
+# fedora 20 doesn't include rsyslog by default
+- name: install rsyslog
+  sudo: true
+  yum: name=rsyslog state=present
+
+- name: start rsyslog
+  sudo: true
+  service: name=rsyslog state=started enabled=true
 
 # workaround for python/boto suckage with dotted bucket names
 # https://github.com/boto/boto/issues/2836. Fixed in Ansible > 1.9.

@@ -35,4 +35,10 @@
   copy: src=fxa-auth-server.conf dest=/etc/supervisor.d/fxa-auth-server.conf
   notify: update supervisor
 
+- name: configure fxa-auth-mailer
+  sudo: true
+  sudo_user: app
+  template: src=config_mailer.json.j2 dest=/data/fxa-auth-server/mailer/config/stage.json
+  notify: restart fxa-auth-mailer
+
 - meta: flush_handlers
