@@ -465,101 +465,10 @@
             "Type": "A",
             "TTL": "30",
             "ResourceRecords" : [ { "Fn::GetAtt" : [ "FxaEc2Instance", "PublicIp" ] } ]
-          },
-          {
-            "Name" : { "Fn::Join" : [ "", ["static-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
-            "Type": "A",
-            "AliasTarget" : {
-              "HostedZoneId" : "Z2FDTNDATAQYW2",
-              "DNSName" : { "Fn::GetAtt" : [ "FxaCloudfrontPolicy", "DomainName" ] }
-            }
           }
         ]
       }
     },
-
-    "FxaCloudfrontPolicy" : {
-      "Type" : "AWS::CloudFront::Distribution",
-      "Properties" : {
-        "DistributionConfig" : {
-          "Aliases" : [
-              { "Fn::Join" : [ "", ["static-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]}
-          ],
-          "CustomErrorResponses": [
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 400
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 403
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 404
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 405
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 414
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 416
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 500
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 501
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 502
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 503
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 504
-            }
-          ],
-          "DefaultCacheBehavior" : {
-              "AllowedMethods" : [ "GET", "HEAD", "OPTIONS" ],
-              "Compress" : "true",
-              "TargetOriginId" : { "Fn::Join" : [ "", ["FxaCloudfrontCDN-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]},
-              "ForwardedValues" : {
-                  "QueryString" : "false",
-                  "Cookies" : { "Forward" : "none" },
-                  "Headers": ["Origin"]
-              },
-              "ViewerProtocolPolicy" : "https-only"
-          },
-          "Enabled" : "true",
-          "Origins" : [ {
-              "DomainName" : { "Fn::Join" : [ "", [{"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]},
-              "Id" : { "Fn::Join" : [ "", ["FxaCloudfrontCDN-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]},
-              "CustomOriginConfig": {
-                "HTTPSPort": "443",
-                "OriginProtocolPolicy": "https-only"
-              }
-          }],
-          "PriceClass" : "PriceClass_All",
-          "ViewerCertificate" : {
-            "IamCertificateId" : {"Ref" : "CDNSSLCertificateId"},
-            "MinimumProtocolVersion": "TLSv1",
-            "SslSupportMethod": "sni-only"
-          }
-        }
-      }
-    }
 
   },
 
