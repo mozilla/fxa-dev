@@ -50,10 +50,18 @@
   sudo: true
   pip: name=supervisor version=3.1.3 state=present extra_args='--install-option="--install-scripts=/usr/bin"'
 
+- name: install docker-py module
+  sudo: true
+  pip: name=docker-py state=present
+
 - file: path=/etc/supervisor.d state=directory
   sudo: true
 
 - file: path=/data state=directory owner=app group=app mode=0777
+  sudo: true
+
+# for mounting configuration information in subdirectoris under /data/config
+- file: path=/data/config state=directory owner=app group=app mode=0777
   sudo: true
 
 - name: upstart or systemd?

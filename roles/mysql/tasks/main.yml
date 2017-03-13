@@ -5,10 +5,6 @@
   #XXX fix file mode
   file: state=directory path=/var/data/mysql owner=app group=app mode=0777
 
-- name: install docker-py module
-  sudo: true
-  pip: name=docker-py state=present
-
 - name: pull mysql docker image
   sudo: true
   docker_image:
