@@ -20,10 +20,19 @@
   sudo: true
   yum: name={{ item }} state=present
   with_items:
+    - docker
     - gcc-c++
     - git
     - ntp
     - python-pip
+
+- name: ensure a docker group is created to allow running without sudo
+  become: true
+  group: name=docker state=present
+
+- name: add ec2-user to the docker group
+  become: true
+  user: name=ec2-user append=yes groups=docker
 
 - name: install nave
   sudo: true
@@ -81,5 +90,9 @@
 - name: start ntp
   sudo: true
   service: name=ntpd state=started enabled=true
+
+- name: start docker
+  become: true
+  service: name=docker state=started enabled=true
 
 - meta: flush_handlers
