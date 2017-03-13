@@ -12,3 +12,7 @@ owner: jrgm@mozilla.com
 reaper_spare_me: "true"
 
 fxadev_git_version: docker-changes
+
+# bleh
+cdn_ssl_certificate_id: ASCAIAYDJPL5OT7LFEZSE
+content_static_resource_url: https://static-latest.dev.lcip.org
