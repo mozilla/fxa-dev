@@ -30,7 +30,6 @@
           Subdomain: "{{ subdomain }}"
           SSLCertificateName: "{{ ssl_certificate_name }}"
           CDNSSLCertificateId: "{{ cdn_ssl_certificate_id }}"
-          RDSPassword: "{{ rds_password }}"
           EC2InstanceType: "{{ ec2_instance_type }}"
           EC2VolumeSize: "{{ ec2_volume_size }}"
         tags:
@@ -48,7 +47,6 @@
   remote_user: ec2-user
   gather_facts: true
   vars:
-    rds_host: "{{ hostvars['localhost']['stack']['stack_outputs']['RDSEndpoint'] }}"
     auth_sns_arn: "{{ hostvars['localhost']['stack']['stack_outputs']['SNS'] }}"
     basket_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['BasketAccountChangeQueueURL'] }}"
     oauth_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['OAuthAccountChangeQueueURL'] }}"
