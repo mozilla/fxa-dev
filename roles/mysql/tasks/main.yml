@@ -1,9 +1,37 @@
 ---
 
-- name: install mysql
+- name: create mysql data volume directory
   sudo: true
-  yum: name=mysql-server state=present
+  #XXX fix permissions
+  file: state=directory path=/var/data/mysql owner=app group=app mode=0777
 
-- name: start mysql
+- name: install docker-py module
   sudo: true
-  service: name=mysqld state=started enabled=true
+  pip: name=docker-py state=present
+
+- name: pull mysql docker image
+  sudo: true
+  docker_image:
+    # do not force update the mysql server
+    state: present
+    name: mysql
+    tag: 5.6.35
+  register: image
+
+- debug: var=image
+
+- name: Start mysql container
+  sudo: true
+  docker_container:
+    name: mysql
+    image: mysql
+    state: started
+    ports:
+      - 3306:3306
+    env:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - /var/data/mysql:/var/lib/mysql
+  register: container
+
+- debug: var=container
