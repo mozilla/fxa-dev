@@ -23,6 +23,11 @@
   },
   "img": {
     "driver": "local",
+    "uploads": {
+      "dest": {
+        "public": "/config/public"
+      }
+    },
     "providers": {
       "gravatar": "^http(://www|s://secure)\\.gravatar\\.com/avatar/[0-9a-f]{32}(\\?s=\\d+)?$",
       "fxa": "^{{ profile_public_url }}/a/[0-9a-f]{32}$"
