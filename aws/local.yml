@@ -17,8 +17,11 @@
     sync_db_host: "127.0.0.1"
     sync_db_password: ""
   roles:
+    - common
+    - simplehttp
     - ses
     - memcached
+    - mysql
     - datadog
     - customs
     - auth
@@ -28,10 +31,7 @@
     - oauth
     - oauth-console
     - profile
-    - sync
     - rp
     - rp-untrusted
-    - able
-    - log
     - cron_update
     - team
