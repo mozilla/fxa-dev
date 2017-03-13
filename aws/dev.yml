@@ -67,7 +67,6 @@
     - "environments/{{ stack_name }}.yml"
   roles:
     - common
-    - simplehttp
     - ses
     - memcached
     - mysql
