@@ -18,7 +18,6 @@
     sync_db_password: ""
   roles:
     - common
-    - simplehttp
     - ses
     - memcached
     - mysql
