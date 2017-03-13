@@ -28,12 +28,6 @@
       "Type": "String",
       "Description": "Cloudfront CDN SSL Cert ID from IAM"
     },
-    "RDSPassword": {
-      "Type": "String",
-      "NoEcho": "true",
-      "MinLength": "8",
-      "Description": "RDS password"
-    },
     "EC2InstanceType": {
       "Description": "EC2 instance type",
       "Type": "String",
@@ -235,31 +229,6 @@
       }
     },
 
-    "FxaRDSSecurityGroup":{
-       "Type":"AWS::RDS::DBSecurityGroup",
-       "DependsOn" : "FxaDevSecurityGroup",
-       "Properties":{
-          "GroupDescription":"SG to Allow access to FXA RDS",
-          "DBSecurityGroupIngress":{
-             "EC2SecurityGroupName": { "Ref":"FxaDevSecurityGroup" }
-          }
-       }
-    },
-
-    "FxaRDSInstance":{
-       "Type":"AWS::RDS::DBInstance",
-       "DependsOn" : "FxaRDSSecurityGroup",
-       "Properties":{
-          "AllocatedStorage": "10",
-          "DBInstanceClass": "db.t1.micro",
-          "DBSecurityGroups":[ { "Ref":"FxaRDSSecurityGroup" } ],
-          "Engine":"MySQL",
-          "EngineVersion":"5.6",
-          "MasterUsername":"root",
-          "MasterUserPassword":{ "Ref" : "RDSPassword" }
-       }
-    },
-
     "FxaOAuthAccountChangeQueue": {
       "Type": "AWS::SQS::Queue"
     },
@@ -424,7 +393,7 @@
 
     "FxaDNS": {
       "Type": "AWS::Route53::RecordSetGroup",
-      "DependsOn" : [ "FxaEc2Instance", "FxaELB", "FxaRDSInstance" ],
+      "DependsOn" : [ "FxaEc2Instance", "FxaELB" ],
       "Properties": {
         "HostedZoneName" : { "Fn::Join" : [ "", [{"Ref" : "HostedZone"}, "." ]]},
         "RecordSets": [
@@ -476,10 +445,6 @@
     "Instance" : {
       "Value" : { "Fn::GetAtt" : [ "FxaEc2Instance", "PublicDnsName" ] },
       "Description" : "DNS Name of the newly created EC2 instance"
-    },
-    "RDSEndpoint": {
-      "Description": "RDS Endpoint",
-      "Value": {"Fn::GetAtt":[ "FxaRDSInstance", "Endpoint.Address" ]}
     },
     "BasketAccountChangeQueueURL": {
       "Description": "Fxa Account Changes for the Basket API consumer",
