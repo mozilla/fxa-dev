@@ -21,7 +21,6 @@
     - ses
     - memcached
     - mysql
-    - datadog
     - customs
     - auth
     - authdb
