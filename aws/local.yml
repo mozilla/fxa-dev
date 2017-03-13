@@ -20,6 +20,7 @@
     - common
     - ses
     - memcached
+    - mysql
     - datadog
     - customs
     - auth
@@ -29,10 +30,7 @@
     - oauth
     - oauth-console
     - profile
-    - sync
     - rp
     - rp-untrusted
-    - able
-    - log
     - cron_update
     - team
