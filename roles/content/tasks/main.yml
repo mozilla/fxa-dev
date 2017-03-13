@@ -1,9 +1,5 @@
 ---
 
-- name: install gmp-devel
-  sudo: true
-  yum: name=gmp-devel state=present
-
 - name: configure nginx upstream
   sudo: true
   template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_content.conf
