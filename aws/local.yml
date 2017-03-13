@@ -28,7 +28,6 @@
     - content
     - basket-proxy
     - oauth
-    - oauth-console
     - profile
     - rp
     - rp-untrusted
