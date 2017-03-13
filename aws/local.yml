@@ -6,16 +6,16 @@
   vars_files:
     - "environments/{{ stack_name }}.yml"
   vars:
-    authdb_primary_host: "{{ rds_host }}"
-    authdb_primary_password: "{{ rds_password }}"
-    authdb_replica_host: "{{ rds_host }}"
-    authdb_replica_password: "{{ rds_password }}"
-    oauth_db_host: "{{ rds_host }}"
-    oauth_db_password: "{{ rds_password }}"
-    profile_db_host: "{{ rds_host }}"
-    profile_db_password: "{{ rds_password }}"
-    sync_db_host: "{{ rds_host }}"
-    sync_db_password: "{{ rds_password }}"
+    authdb_primary_host: "127.0.0.1"
+    authdb_primary_password: ""
+    authdb_replica_host: "127.0.0.1"
+    authdb_replica_password: ""
+    oauth_db_host: "127.0.0.1"
+    oauth_db_password: ""
+    profile_db_host: "127.0.0.1"
+    profile_db_password: ""
+    sync_db_host: "127.0.0.1"
+    sync_db_password: ""
   roles:
     - ses
     - memcached
