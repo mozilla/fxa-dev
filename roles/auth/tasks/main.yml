@@ -10,35 +10,87 @@
   template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_auth.conf
   notify: reload nginx config
 
-- name: install fxa-auth-server
-  tags: code
+- name: create shared mount point for auth-server configuration info
+  file: path=/data/config/auth state=directory owner=app group=app mode=0777
   sudo: true
-  sudo_user: app
-  git: repo={{ auth_git_repo }}
-       dest=/data/fxa-auth-server
-       version={{ auth_git_version }}
-       force=true
-  notify:
-    - install fxa-auth-server dependencies
-    - gen dev key-pair
-    - gen VAPID key-pair
-    - restart fxa-auth-server
 
 - name: configure fxa-auth-server
   sudo: true
   sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-auth-server/config/stage.json
-  notify: restart fxa-auth-server
+  template: src=config.json.j2 dest=/data/config/auth/stage.json owner=app group=app mode=0777
 
-- name: supervise fxa-auth-server
+- name: create shared mount point for auth-mailer configuration info
+  file: path=/data/config/mailer state=directory owner=app group=app mode=0777
   sudo: true
-  copy: src=fxa-auth-server.conf dest=/etc/supervisor.d/fxa-auth-server.conf
-  notify: update supervisor
 
 - name: configure fxa-auth-mailer
   sudo: true
   sudo_user: app
-  template: src=config_mailer.json.j2 dest=/data/fxa-auth-server/mailer/config/stage.json
-  notify: restart fxa-auth-mailer
+  template: src=config_mailer.json.j2 dest=/data/config/mailer/stage.json
+
+- name: pull auth-server docker image
+  sudo: true
+  docker_image:
+    # pull image always. In a pending update to ansible, it will only set
+    # changed:true if the image has actually changed. However, docker_container
+    # `state:started` will only re-start if image of configuration has
+    # changed.
+    force: true
+    state: present
+    name: mozilla/fxa-auth-server
+    tag: latest
+  register: image
+
+- debug: var=image
+
+- name: generate public key pair
+  sudo: true
+  command: >
+    docker run --rm --net=host -v /data/config/auth:/config -e CONFIG_FILES=/config/stage.json 
+      mozilla/fxa-auth-server node scripts/gen_keys.js creates=/data/config/auth/secret-key.json 
+
+- name: generate vapid keys
+  sudo: true
+  command: >
+    docker run --rm --net=host -v /data/config/auth:/config -e CONFIG_FILES=/config/stage.json 
+      mozilla/fxa-auth-server node scripts/gen_vapid_keys.js creates=/data/config/auth/vapid-keys.json 
+
+- name: Start auth-server docker container
+  sudo: true
+  docker_container:
+    name: auth-server
+    image: mozilla/fxa-auth-server
+    state: started
+    network_mode: host
+    ports:
+      - 9000:9000
+    command: sh scripts/start-server.sh
+    env:
+      CONFIG_FILES: "/config/stage.json"
+      NODE_ENV: "stage"
+    volumes:
+      - /data/config/auth:/config
+  register: container
+
+- debug: var=container
+
+- name: Start auth-mailer docker container
+  sudo: true
+  docker_container:
+    name: auth-mailer
+    image: mozilla/fxa-auth-server
+    state: started
+    network_mode: host
+    ports:
+      - 10136:10136
+    command: node bin/mailer_server.js
+    env:
+      CONFIG_FILES: "/config/stage.json"
+      NODE_ENV: "stage"
+    volumes:
+      - /data/config/mailer:/config
+  register: container
+
+- debug: var=container
 
 - meta: flush_handlers
