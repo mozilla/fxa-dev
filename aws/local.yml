@@ -22,8 +22,8 @@
     - memcached
     - mysql
     - customs
-    - auth
     - authdb
+    - auth
     - content
     - basket-proxy
     - oauth
