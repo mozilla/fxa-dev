@@ -3,11 +3,3 @@
 - name: restart ntp
   sudo: true
   service: name=ntpd state=restarted
-
-- name: restart supervisor
-  sudo: true
-  service: name=supervisor state=restarted
-
-- name: update supervisor
-  sudo: true
-  command: supervisorctl update
