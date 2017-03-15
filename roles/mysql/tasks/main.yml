@@ -2,7 +2,8 @@
 
 - name: create mysql data volume directory
   sudo: true
-  file: state=directory path=/var/data/mysql owner=app group=app
+  #XXX quick hack
+  file: state=directory path=/var/data/mysql owner=app group=app mode=0777
 
 - name: pull mysql docker image
   sudo: true
