@@ -175,7 +175,6 @@
 
     "FxaEc2Instance" : {
       "Type" : "AWS::EC2::Instance",
-      "DependsOn" : ["FxaInstanceProfile", "FxaDevSecurityGroup"],
       "Properties" : {
         "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
         "KeyName" : { "Ref" : "KeyName" },
@@ -200,7 +199,6 @@
 
     "FxaELB":{
       "Type":"AWS::ElasticLoadBalancing::LoadBalancer",
-      "DependsOn" : "FxaEc2Instance",
       "Properties":{
         "AvailabilityZones" : { "Fn::GetAZs" : "" },
         "ConnectionDrainingPolicy":{ "Enabled" : true, "Timeout" : 15 },
@@ -393,7 +391,6 @@
 
     "FxaDNS": {
       "Type": "AWS::Route53::RecordSetGroup",
-      "DependsOn" : [ "FxaEc2Instance", "FxaELB" ],
       "Properties": {
         "HostedZoneName" : { "Fn::Join" : [ "", [{"Ref" : "HostedZone"}, "." ]]},
         "RecordSets": [
