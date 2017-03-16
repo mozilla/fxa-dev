@@ -40,7 +40,7 @@
 
 - name: install docker-py module
   sudo: true
-  yum: enablerepo=epel name=python-docker-py state=present
+  pip: name=docker-py state=present
 
 # for mounting configuration information in subdirectoris under /data/config
 # XXX fix mode/ownership
