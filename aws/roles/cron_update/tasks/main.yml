@@ -11,7 +11,7 @@
 # use extra_args to ensure ansible-playbook in in /usr/bin so cron can find it
 - name: install ansible
   sudo: true
-  pip: name=ansible version=2.2.1 state=present extra_args='--install-option="--install-scripts=/usr/bin"'
+  yum: enablerepo=epel name=ansible state=present
 
 - name: install fxa-dev
   sudo: true

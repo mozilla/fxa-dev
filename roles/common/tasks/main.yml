@@ -43,6 +43,7 @@
   pip: name=docker-py state=present
 
 # for mounting configuration information in subdirectoris under /data/config
+# XXX fix mode/ownership
 - file: path=/data/config state=directory owner=app group=app mode=0777
   sudo: true
 
