@@ -1,0 +1,14 @@
+---
+region: us-west-2
+subdomain: test2.dev
+hosted_zone: lcip.org
+ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
+rds_password: ab4b6475c68a8734
+
+ec2_instance_type: t2.medium
+ec2_volume_size: 24
+
+fxadev_git_version: docker-changes
+
+cdn_ssl_certificate_id: bleh
+content_static_resource_url: https://static-latest.dev.lcip.org
