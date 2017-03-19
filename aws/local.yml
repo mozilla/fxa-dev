@@ -18,9 +18,9 @@
     sync_db_password: ""
   roles:
     - common
+    - mysql
     - ses
     - memcached
-    - mysql
     - customs
     - authdb
     - auth
