@@ -8,6 +8,7 @@
     - "environments/{{ stack_name }}.yml"
   vars:
     key_name: "{{ stack_name }}-fxadev"
+    config_name: "{{ stack_name }}"
   tasks:
     - name: create key pair
       local_action:
@@ -26,6 +27,8 @@
       args:
         template_parameters:
           KeyName: "{{ key_name }}"
+          ConfigName: "{{ config_name }}"
+          BranchName: "{{ fxadev_git_version }}"
           HostedZone: "{{ hosted_zone }}"
           Subdomain: "{{ subdomain }}"
           SSLCertificateName: "{{ ssl_certificate_name }}"
@@ -65,19 +68,3 @@
     sync_db_password: ""
   vars_files:
     - "environments/{{ stack_name }}.yml"
-  roles:
-    - common
-    - ses
-    - memcached
-    - mysql
-    - customs
-    - authdb
-    - auth
-    - content
-    - basket-proxy
-    - oauth
-    - profile
-    - rp
-    - rp-untrusted
-    - cron_update
-    - team
