@@ -12,6 +12,19 @@
       "AllowedPattern" : "[\\x20-\\x7E]*",
       "ConstraintDescription" : "can contain only ASCII characters."
     },
+    "ConfigName": {
+      "Description" : "Original input argument for stack_name",
+      "Type": "String",
+      "AllowedPattern" : "[\\x20-\\x7E]*",
+      "ConstraintDescription" : "can contain only ASCII characters."
+    },
+    "BranchName": {
+      "Description" : "Git branch of fxa-dev to use",
+      "Type": "String",
+      "Default": "master",
+      "AllowedPattern" : "[\\x20-\\x7E]*",
+      "ConstraintDescription" : "can contain only ASCII characters."
+    },
     "HostedZone" : {
       "Type": "String",
       "Description" : "The DNS name of an existing Amazon Route 53 hosted zone"
@@ -182,8 +195,31 @@
         "InstanceType" : { "Ref": "EC2InstanceType" },
         "SecurityGroups" : [{ "Ref" : "FxaDevSecurityGroup" }],
         "UserData": { "Fn::Base64": { "Fn::Join": ["",
-          ["#!/bin/bash -ex","\n",
-          "echo Defaults:ec2-user \\!requiretty >> /etc/sudoers;", "\n"]
+          [
+            "#!/bin/bash -ex", 
+            "\n", "echo Defaults:ec2-user \\!requiretty >> /etc/sudoers;",
+            "\n", "time yum -y --security update",
+            "\n", "time yum -y erase sendmail",
+            "\n", "time yum -y install cronie docker emacs-nox gcc-c++ git lsof memcached mysql nginx ntp postfix python-pip rsyslog strace tmux",
+            "\n", "time yum -y --enablerepo=epel install ansible moreutils",
+            "\n", "mkdir -p /data",
+            "\n", "chmod 777 /data",
+            "\n", "time git clone -b ", { "Ref": "BranchName"  }, " git://github.com/mozilla/fxa-dev.git /data/fxa-dev",
+            "\n", "time service docker start",
+            "\n", "date",
+            "\n", "cd /data/fxa-dev/aws",
+            "\n", "time ./docker-pull.sh",
+            "\n", "PYTHONUNBUFFERED=1 time ansible-playbook -i localhost, local.yml",
+            "  -e fxadev_git_version=",    { "Ref": "BranchName" },
+            "  -e stack_name=",            { "Ref": "ConfigName" },
+            "  -e auth_sns_arn=",          { "Ref": "FxaAccountChangeSNSTopic" },
+            "  -e basket_queue_url=",      { "Ref": "FxaBasketAccountChangeQueue" },
+            "  -e oauth_queue_url=",       { "Ref": "FxaOAuthAccountChangeQueue" },
+            "  -e profile_queue_url=",     { "Ref": "FxaProfileAccountChangeQueue" },
+            "  -e customs_ban_queue_url=", { "Ref": "FxaCustomsBanQueue" },
+            "   | /usr/bin/ts %T",
+            "\n"
+          ]
         ]}},
         "BlockDeviceMappings" : [
           {
@@ -202,6 +238,13 @@
       "Properties":{
         "AvailabilityZones" : { "Fn::GetAZs" : "" },
         "ConnectionDrainingPolicy":{ "Enabled" : true, "Timeout" : 15 },
+        "HealthCheck":{
+          "Target":"TCP:80",
+          "HealthyThreshold": "2",
+          "UnhealthyThreshold": "2",
+          "Interval": "15",
+          "Timeout": "3"
+        },
         "Listeners":[
           {
             "InstancePort":"1443",
@@ -434,8 +477,7 @@
           }
         ]
       }
-    },
-
+    }
   },
 
   "Outputs" : {
@@ -466,6 +508,14 @@
     "StaticResourceHost": {
       "Description": "Fxa Static Resource Host",
       "Value": { "Fn::Join" : [ "", ["static-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]}
+    },
+    "ContentHost": {
+      "Description": "Content server hostname",
+      "Value": { "Fn::Join" : [ "", [ {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"} ] ] }
+    },
+    "ELB": {
+      "Description": "The ELB",
+      "Value": { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
     }
   }
 }
