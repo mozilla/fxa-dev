@@ -26,23 +26,11 @@
   become: true
   user: name=ec2-user append=yes groups=docker
 
-- name: install nave
-  sudo: true
-  get_url: url=https://raw.githubusercontent.com/dannycoates/nave/master/nave.sh
-           dest=/usr/bin/nave
-           mode=755
-
-- name: install node
-  sudo: true
-  command: /usr/bin/nave usemain {{ node_version }}
-  # TODO detect actual changes
-  changed_when: false
-
 - name: install docker-py module
   sudo: true
   pip: name=docker-py state=present
 
-# for mounting configuration information in subdirectoris under /data/config
+# for mounting configuration information in subdirectories under /data/config
 # XXX fix mode/ownership
 - file: path=/data/config state=directory owner=app group=app mode=0777
   sudo: true
