@@ -42,29 +42,52 @@
 
     - debug: var=stack
 
-    - name: add new host
-      add_host: hostname={{ stack['stack_outputs']['Instance'] }} groupname=whatevs
+    - debug: msg={{ stack | json_query('stack_resources[?logical_resource_id==`FxaELB`].physical_resource_id | [0]') }}
 
-- name: Configure instance
-  hosts: whatevs
-  remote_user: ec2-user
-  gather_facts: true
-  vars:
-    auth_sns_arn: "{{ hostvars['localhost']['stack']['stack_outputs']['SNS'] }}"
-    basket_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['BasketAccountChangeQueueURL'] }}"
-    oauth_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['OAuthAccountChangeQueueURL'] }}"
-    profile_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['ProfileAccountChangeQueueURL'] }}"
-    customs_ban_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['CustomsBanQueueURL'] }}"
-    content_static_resource_url: "https://{{ hostvars['localhost']['stack']['stack_outputs']['StaticResourceHost'] }}"
-    authdb_primary_host: "127.0.0.1"
-    authdb_primary_password: ""
-    authdb_replica_host: "127.0.0.1"
-    authdb_replica_password: ""
-    oauth_db_host: "127.0.0.1"
-    oauth_db_password: ""
-    profile_db_host: "127.0.0.1"
-    profile_db_password: ""
-    sync_db_host: "127.0.0.1"
-    sync_db_password: ""
-  vars_files:
-    - "environments/{{ stack_name }}.yml"
+    - name: Waiting for instance to join ELB (ignore FAILED RETRYING log messages)
+      ec2_elb_facts:
+        names:
+          - "{{ stack | json_query('stack_resources[?logical_resource_id==`FxaELB`].physical_resource_id | [0]') }}"
+        region: "{{ region }}"
+      ignore_errors: yes
+      register: fxaelb
+      until: >
+        fxaelb and fxaelb['elbs'] and fxaelb['elbs'][0]
+          and fxaelb['elbs'][0]['instances_inservice_count']
+          and fxaelb['elbs'][0]['instances_inservice_count'] == 1
+      retries: 40 # 10 mins
+      delay: 15
+
+    - debug: var=fxaelb['elbs'][0]['instances_inservice_count']
+
+    - name: Assert that last task did not time out
+      assert:
+        that: fxaelb['elbs'][0]['instances_inservice_count'] == 1
+
+    - name: Check that the FxA services are returning a plausible `/__version__`
+      uri:
+        url="{{ item.host }}"
+        return_content=yes
+        follow_redirects=none
+      ignore_errors: yes # guard against early phase failure of DNS lookup or TCP connection
+      register: response
+      until: response and response.json and response.json['version'] is defined
+      retries: 40 # 10 mins
+      delay: 15
+      with_items:
+        # auth-server will start first, followed by content, RPs, oauth, profile
+        - host: "https://{{ stack['stack_outputs']['ContentHost'] }}/auth/__version__"
+        - host: "https://{{ stack['stack_outputs']['ContentHost'] }}/__version__"
+        - host: "https://oauth-{{ stack['stack_outputs']['ContentHost'] }}/__version__"
+        - host: "https://{{ stack['stack_outputs']['ContentHost'] }}/profile/__version__"
+
+    - name: Assert that there are four responses from above
+      assert:
+        that: "(response.results | length) == 4"
+
+    - name: Assert that each response has returned a version correctly
+      assert:
+        that: item['version'] is defined
+      with_items: "{{ response.results | json_query('[][json]') }}"
+
+    - debug: msg="{{ (response.results | json_query('[][json]')) }}"
