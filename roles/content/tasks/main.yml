@@ -49,6 +49,7 @@
       FXA_MARKETING_EMAIL_API_URL: "{{ content_public_url }}/basket"
       FXA_MARKETING_EMAIL_PREFERENCES_URL: "https://www-dev.allizom.org/newsletter/existing/"
       SCOPED_KEYS_ENABLED: 'true'
+      ALLOWED_PARENT_ORIGINS: "{{ content_allowed_parent_origins }}"
   register: container
 
 - debug: var=container

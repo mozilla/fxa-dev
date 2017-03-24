@@ -14,8 +14,10 @@ hosted_zone: lcip.org
 # ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
 ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/675e0ac8-23af-4153-8295-acb28ccc9f0f
 
-content_git_version: master
-fxadev_git_version: docker
+content_docker_tag: feature.firstrun-experiment
+content_allowed_parent_origins: http://127.0.0.1:8111,https://www-demo1.allizom.org,https://www-demo2.allizom.org,https://www-demo3.allizom.org,https://www-demo4.allizom.org,https://www-demo5.allizom.org,https://www-demo6.allizom.org
+
+fxadev_git_version: allowed-parent-origins
 
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
