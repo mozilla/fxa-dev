@@ -26,9 +26,9 @@
     - auth
     - content
     - basket-proxy
-    - oauth
-    - profile
     - rp
     - rp-untrusted
+    - oauth
+    - profile
     - cron_update
     - team
