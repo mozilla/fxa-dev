@@ -15,6 +15,17 @@
 
 - debug: var=image
 
+# The mysql container will have been started prior to this task
+# running. However, on initial startup, the mysql daemon will not be
+# accepting connections for a minute or more. So, we poll the mysql
+# daemon until it has completed startup.
+- name: Check that the mysql daemon has started
+  command: "mysql -uroot -h127.0.0.1 -NBe 'select 1'"
+  register: available
+  until: available.rc == 0
+  retries: 24 # up to 120 seconds
+  delay: 5
+
 - name: run db_patcher
   sudo: true
   command: docker run --rm --net=host -e NODE_ENV=stage mozilla/fxa-auth-db-mysql node bin/db_patcher.js
