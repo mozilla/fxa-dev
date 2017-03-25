@@ -8,6 +8,7 @@
     - "environments/{{ stack_name }}.yml"
   vars:
     key_name: "{{ stack_name }}-fxadev"
+    config_name: "{{ stack_name }}"
   tasks:
     - name: create key pair
       local_action:
@@ -26,11 +27,12 @@
       args:
         template_parameters:
           KeyName: "{{ key_name }}"
+          ConfigName: "{{ config_name }}"
+          BranchName: "{{ fxadev_git_version }}"
           HostedZone: "{{ hosted_zone }}"
           Subdomain: "{{ subdomain }}"
           SSLCertificateName: "{{ ssl_certificate_name }}"
           CDNSSLCertificateId: "{{ cdn_ssl_certificate_id }}"
-          RDSPassword: "{{ rds_password }}"
           EC2InstanceType: "{{ ec2_instance_type }}"
           EC2VolumeSize: "{{ ec2_volume_size }}"
         tags:
@@ -48,42 +50,21 @@
   remote_user: ec2-user
   gather_facts: true
   vars:
-    rds_host: "{{ hostvars['localhost']['stack']['stack_outputs']['RDSEndpoint'] }}"
     auth_sns_arn: "{{ hostvars['localhost']['stack']['stack_outputs']['SNS'] }}"
     basket_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['BasketAccountChangeQueueURL'] }}"
     oauth_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['OAuthAccountChangeQueueURL'] }}"
     profile_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['ProfileAccountChangeQueueURL'] }}"
     customs_ban_queue_url: "{{ hostvars['localhost']['stack']['stack_outputs']['CustomsBanQueueURL'] }}"
     content_static_resource_url: "https://{{ hostvars['localhost']['stack']['stack_outputs']['StaticResourceHost'] }}"
-    authdb_primary_host: "{{ rds_host }}"
-    authdb_primary_password: "{{ rds_password }}"
-    authdb_replica_host: "{{ rds_host }}"
-    authdb_replica_password: "{{ rds_password }}"
-    oauth_db_host: "{{ rds_host }}"
-    oauth_db_password: "{{ rds_password }}"
-    profile_db_host: "{{ rds_host }}"
-    profile_db_password: "{{ rds_password }}"
-    sync_db_host: "{{ rds_host }}"
-    sync_db_password: "{{ rds_password }}"
+    authdb_primary_host: "127.0.0.1"
+    authdb_primary_password: ""
+    authdb_replica_host: "127.0.0.1"
+    authdb_replica_password: ""
+    oauth_db_host: "127.0.0.1"
+    oauth_db_password: ""
+    profile_db_host: "127.0.0.1"
+    profile_db_password: ""
+    sync_db_host: "127.0.0.1"
+    sync_db_password: ""
   vars_files:
     - "environments/{{ stack_name }}.yml"
-  roles:
-    - ses
-    - memcached
-    - datadog
-    - customs
-    - auth
-    - authdb
-    - content
-    - basket-proxy
-    - oauth
-    - oauth-console
-    - profile
-    - kv
-    - sync
-    - rp
-    - rp-untrusted
-    - able
-    - log
-    - cron_update
-    - team

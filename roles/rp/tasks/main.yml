@@ -5,28 +5,50 @@
   template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa-rp.conf
   notify: reload nginx config
 
-- name: install fxa-rp
-  tags: code
+- name: create shared mount point for configuration info
+  file: path=/data/config/rp state=directory owner=app group=app mode=0777
   sudo: true
-  sudo_user: app
-  git: repo={{ rp_git_repo }}
-       dest=/data/fxa-rp
-       version={{ rp_git_version }}
-       force=true
-  notify:
-    - install fxa-rp dependencies
-    - gen preverified token keypair
-    - restart fxa-rp
 
 - name: configure fxa-rp
   sudo: true
   sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-rp/config-dev.json
-  notify: restart fxa-rp
+  template: src=config.json.j2 dest=/data/config/rp/config-dev.json
 
-- name: supervise fxa-rp
+- name: pull 123done docker image
   sudo: true
-  copy: src=fxa-rp.conf dest=/etc/supervisor.d/fxa-rp.conf
-  notify: update supervisor
+  docker_image:
+    # pull image always. In a pending update to ansible, it will only set
+    # changed:true if the image has actually changed. However, docker_container
+    # `state:started` will only re-start if image of configuration has
+    # changed.
+    force: true
+    state: present
+    name: jrgm/123done
+    tag: latest
+  register: image
+
+- debug: var=image
+
+- name: generate rp keys
+  sudo: true
+  command: docker run --rm --net=host -e CONFIG_123DONE=/config/config-dev.json -v /data/config/rp:/config jrgm/123done node scripts/gen_keys.js creates=/data/config/rp/secret-key.json
+
+- name: Start 123done docker container as trusted rp
+  sudo: true
+  docker_container:
+    name: rp
+    image: jrgm/123done
+    state: started
+    network_mode: host
+    ports:
+      - 4900:4900
+    command: node ./server.js
+    env:
+      CONFIG_123DONE: "/config/config-dev.json"
+    volumes:
+      - /data/config/rp:/config
+  register: container
+
+- debug: var=container
 
 - meta: flush_handlers

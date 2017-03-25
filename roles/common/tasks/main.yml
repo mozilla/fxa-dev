@@ -1,16 +1,8 @@
 ---
 
-- name: create supervsr group for using supervisorctl
-  sudo: true
-  group: name=supervsr state=present
-
 - name: create app user
   sudo: true
-  user: name=app state=present append=yes groups=supervsr
-
-- name: add ec2-user to group supervsr
-  sudo: true
-  user: name=ec2-user append=yes groups=supervsr
+  user: name=app state=present append=yes
 
 - name: update installed packages
   sudo: true
@@ -20,58 +12,28 @@
   sudo: true
   yum: name={{ item }} state=present
   with_items:
+    - docker
     - gcc-c++
     - git
     - ntp
     - python-pip
 
-- name: install nave
-  sudo: true
-  get_url: url=https://raw.githubusercontent.com/dannycoates/nave/master/nave.sh
-           dest=/usr/bin/nave
-           mode=755
+- name: ensure a docker group is created to allow running without sudo
+  become: true
+  group: name=docker state=present
 
-- name: install node
-  sudo: true
-  command: /usr/bin/nave usemain {{ node_version }}
-  # TODO detect actual changes
-  changed_when: false
+- name: add ec2-user to the docker group
+  become: true
+  user: name=ec2-user append=yes groups=docker
 
-- name: install supervisord
+- name: install docker-py module
   sudo: true
-  pip: name=supervisor version=3.1.3 state=present extra_args='--install-option="--install-scripts=/usr/bin"'
+  pip: name=docker-py state=present
 
-- file: path=/etc/supervisor.d state=directory
+# for mounting configuration information in subdirectories under /data/config
+# XXX fix mode/ownership
+- file: path=/data/config state=directory owner=app group=app mode=0777
   sudo: true
-
-- file: path=/data state=directory owner=app group=app mode=0777
-  sudo: true
-
-- name: upstart or systemd?
-  sudo: true
-  command: which initctl
-  failed_when: false
-  changed_when: false
-  register: is_upstart
-
-- name: upstart supervisord
-  sudo: true
-  copy: src=supervisor.conf dest=/etc/init/supervisor.conf owner=root group=root
-  when: is_upstart.rc == 0
-
-- name: systemd supervisord
-  sudo: true
-  copy: src=supervisor.systemd dest=/etc/systemd/system/supervisor.service owner=root group=root
-  when: is_upstart.rc != 0
-
-- name: configure supervisord
-  sudo: true
-  copy: src=supervisord.conf dest=/etc/supervisord.conf owner=root group=root
-  notify: restart supervisor
-
-- name: start supervisord
-  sudo: true
-  service: name=supervisor state=started
 
 - name: configure ntp
   sudo: true
@@ -81,5 +43,9 @@
 - name: start ntp
   sudo: true
   service: name=ntpd state=started enabled=true
+
+- name: start docker
+  become: true
+  service: name=docker state=started enabled=true
 
 - meta: flush_handlers

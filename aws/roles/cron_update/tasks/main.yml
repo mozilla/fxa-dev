@@ -11,7 +11,7 @@
 # use extra_args to ensure ansible-playbook in in /usr/bin so cron can find it
 - name: install ansible
   sudo: true
-  pip: name=ansible version=1.6.1 state=present extra_args='--install-option="--install-scripts=/usr/bin"'
+  yum: enablerepo=epel name=ansible state=present
 
 - name: install fxa-dev
   sudo: true
@@ -25,7 +25,8 @@
   lineinfile: dest=/etc/sudoers state=absent regexp='Defaults\s+requiretty' validate='visudo -cf %s'
 
 # TODO make the permissions non-ec2 specific
-- file: path=/var/log/ansible state=directory owner=ec2-user group=ec2-user
+- name: ensure /var/log/ansible directory
+  file: path=/var/log/ansible state=directory owner=ec2-user group=ec2-user
   sudo: true
 
 # TODO the job should be a shell script that can try to recover from errors
@@ -36,4 +37,4 @@
         day={{ cron_time.day | default('*') }}
         hour={{ cron_time.hour | default('*') }}
         minute={{ cron_time.minute | default('*/10') }}
-        job="cd /data/fxa-dev/aws; PYTHONUNBUFFERED=1 ansible-playbook -i localhost, local.yml --extra-vars \"stack_name={{ stack_name }} rds_host={{ rds_host }} auth_sns_arn={{ auth_sns_arn }} basket_queue_url={{ basket_queue_url }} oauth_queue_url={{ oauth_queue_url }} profile_queue_url={{ profile_queue_url }} customs_ban_queue_url={{ customs_ban_queue_url }}\" > /var/log/ansible/update.log"
+        job="cd /data/fxa-dev/aws; PYTHONUNBUFFERED=1 ansible-playbook -i localhost, local.yml --extra-vars \"stack_name={{ stack_name }} auth_sns_arn={{ auth_sns_arn }} basket_queue_url={{ basket_queue_url }} oauth_queue_url={{ oauth_queue_url }} profile_queue_url={{ profile_queue_url }} customs_ban_queue_url={{ customs_ban_queue_url }}\" > /var/log/ansible/update.log"
