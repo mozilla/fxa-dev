@@ -8,7 +8,7 @@ rds_password: ab4b6475c68a8734
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
 
-fxadev_git_version: docker-changes
+fxadev_git_version: docker
 
 cdn_ssl_certificate_id: bleh
 content_static_resource_url: https://static-latest.dev.lcip.org
