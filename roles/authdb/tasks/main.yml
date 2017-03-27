@@ -10,7 +10,7 @@
     force: true
     state: present
     name: mozilla/fxa-auth-db-mysql
-    tag: latest
+    tag: "{{ authdb_docker_tag }}"
   register: image
 
 - debug: var=image
@@ -34,7 +34,7 @@
   sudo: true
   docker_container:
     name: auth-db
-    image: mozilla/fxa-auth-db-mysql 
+    image: mozilla/fxa-auth-db-mysql{{ ':' + authdb_docker_tag }} 
     state: started
     network_mode: host
     ports:

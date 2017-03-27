@@ -20,7 +20,7 @@
     force: true
     state: present
     name: mozilla/fxa-content-server
-    tag: latest
+    tag: "{{ content_docker_tag }}"
   register: image
 
 - debug: var=image
@@ -29,7 +29,7 @@
   sudo: true
   docker_container:
     name: content
-    image: mozilla/fxa-content-server
+    image: mozilla/fxa-content-server{{ ':' + content_docker_tag }}
     state: started
     ports:
       - 3030:3030

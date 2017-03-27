@@ -23,7 +23,7 @@
     force: true
     state: present
     name: mozilla/fxa-oauth-server
-    tag: latest
+    tag: "{{ oauth_docker_tag }}"
   register: image
 
 - debug: var=image
@@ -32,7 +32,7 @@
   sudo: true
   docker_container:
     name: oauth
-    image: mozilla/fxa-oauth-server 
+    image: mozilla/fxa-oauth-server{{ ':' + oauth_docker_tag }} 
     state: started
     network_mode: host
     ports:

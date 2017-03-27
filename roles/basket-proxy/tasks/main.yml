@@ -29,7 +29,7 @@
     force: true
     state: present
     name: mozilla/fxa-basket-proxy
-    tag: latest
+    tag: "{{ basket_proxy_docker_tag }}"
   register: image
 
 - debug: var=image
@@ -38,7 +38,7 @@
   sudo: true
   docker_container:
     name: basket-proxy
-    image: mozilla/fxa-basket-proxy
+    image: mozilla/fxa-basket-proxy{{ ':' + basket_proxy_docker_tag }}
     state: started
     network_mode: host
     ports:
