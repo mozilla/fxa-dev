@@ -37,10 +37,6 @@
       "Type": "String",
       "Description": "SSL Cert name from IAM"
     },
-    "CDNSSLCertificateId": {
-      "Type": "String",
-      "Description": "Cloudfront CDN SSL Cert ID from IAM"
-    },
     "EC2InstanceType": {
       "Description": "EC2 instance type",
       "Type": "String",
