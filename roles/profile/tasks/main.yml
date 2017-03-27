@@ -65,7 +65,7 @@
   sudo: true
   docker_container:
     name: profile-worker
-    image: mozilla/fxa-profile-server 
+    image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }}
     state: started
     network_mode: host
     ports:
@@ -83,7 +83,7 @@
   sudo: true
   docker_container:
     name: profile-static
-    image: mozilla/fxa-profile-server 
+    image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }}
     state: started
     network_mode: host
     ports:

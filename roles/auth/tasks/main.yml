@@ -78,7 +78,7 @@
   sudo: true
   docker_container:
     name: auth-mailer
-    image: mozilla/fxa-auth-server
+    image: mozilla/fxa-auth-server{{ ':' + auth_docker_tag }}
     state: started
     network_mode: host
     ports:

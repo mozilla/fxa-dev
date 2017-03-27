@@ -50,7 +50,7 @@
   sudo: true
   docker_container:
     name: oauth-internal
-    image: mozilla/fxa-oauth-server 
+    image: mozilla/fxa-oauth-server{{ ':' + oauth_docker_tag }}
     state: started
     network_mode: host
     ports:

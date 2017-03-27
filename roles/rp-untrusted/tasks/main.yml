@@ -24,7 +24,7 @@
   sudo: true
   docker_container:
     name: rp-untrusted
-    image: jrgm/123done
+    image: jrgm/123done{{ ':' + rp_docker_tag }}
     state: started
     network_mode: host
     ports:
