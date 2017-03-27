@@ -1,8 +1,0 @@
-# handles all other request to the kv api
-location /kv/ {
-  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-  proxy_set_header Host $http_host;
-  proxy_redirect off;
-  rewrite ^/kv(.*)$ $1 break;
-  proxy_pass http://upstream_kv_server;
-}
