@@ -19,3 +19,4 @@ auth_mailer_port: 10136
 auth_mailer_verify_url: "{{ content_public_url }}/v1/verify_email"
 auth_mailer_recovery_url: "{{ content_public_url }}/v1/complete_reset_password"
 auth_sms_use_mock: "true"
+auth_sms_geo_enabled: "false"
