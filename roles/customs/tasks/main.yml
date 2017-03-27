@@ -10,7 +10,7 @@
     force: true
     state: present
     name: mozilla/fxa-customs-server
-    tag: latest
+    tag: "{{ customs_docker_tag }}"
   register: image
 
 - debug: var=image
@@ -19,7 +19,7 @@
   sudo: true
   docker_container:
     name: customs
-    image: mozilla/fxa-customs-server
+    image: mozilla/fxa-customs-server{{ ':' + customs_docker_tag }}
     state: started
     network_mode: host
     ports:

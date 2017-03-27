@@ -3,3 +3,4 @@ customs_private_port: 7000
 customs_memcached_addr_port: 127.0.0.1:11211
 customs_git_repo: https://github.com/mozilla/fxa-customs-server.git
 customs_git_version: master
+customs_docker_tag: latest

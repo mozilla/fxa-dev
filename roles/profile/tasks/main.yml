@@ -38,7 +38,7 @@
     force: true
     state: present
     name: mozilla/fxa-profile-server
-    tag: latest
+    tag: "{{ profile_docker_tag }}"
   register: image
 
 - debug: var=image
@@ -47,7 +47,7 @@
   sudo: true
   docker_container:
     name: profile
-    image: mozilla/fxa-profile-server 
+    image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }} 
     state: started
     network_mode: host
     ports:

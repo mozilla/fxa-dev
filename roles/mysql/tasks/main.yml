@@ -11,7 +11,7 @@
     # do not force update the mysql server
     state: present
     name: mysql
-    tag: 5.6.35
+    tag: "{{ mysql_docker_tag }}"
   register: image
 
 - debug: var=image
@@ -20,7 +20,7 @@
   sudo: true
   docker_container:
     name: mysql
-    image: mysql:5.6.35
+    image: mysql{{ ':' + mysql_docker_tag }}
     state: started
     ports:
       - 3306:3306
