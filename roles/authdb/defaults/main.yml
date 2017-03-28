@@ -7,7 +7,7 @@ authdb_git_version: master
 authdb_docker_tag: latest
 authdb_primary_host: 127.0.0.1
 authdb_primary_user: root
-authdb_primary_password: foobarbaz
+authdb_primary_password: ""
 authdb_replica_host: 127.0.0.1
 authdb_replica_user: root
-authdb_replica_password: foobarbaz
+authdb_replica_password: ""
