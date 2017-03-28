@@ -11,5 +11,5 @@ ec2_volume_size: 24
 owner: jrgm@mozilla.com
 reaper_spare_me: "true"
 
-fxadev_git_version: docker
+fxadev_git_version: docker-auth-config
 
