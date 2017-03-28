@@ -12,6 +12,19 @@
       "AllowedPattern" : "[\\x20-\\x7E]*",
       "ConstraintDescription" : "can contain only ASCII characters."
     },
+    "ConfigName": {
+      "Description" : "Original input argument for stack_name",
+      "Type": "String",
+      "AllowedPattern" : "[\\x20-\\x7E]*",
+      "ConstraintDescription" : "can contain only ASCII characters."
+    },
+    "BranchName": {
+      "Description" : "Git branch of fxa-dev to use",
+      "Type": "String",
+      "Default": "master",
+      "AllowedPattern" : "[\\x20-\\x7E]*",
+      "ConstraintDescription" : "can contain only ASCII characters."
+    },
     "HostedZone" : {
       "Type": "String",
       "Description" : "The DNS name of an existing Amazon Route 53 hosted zone"
@@ -23,16 +36,6 @@
     "SSLCertificateName": {
       "Type": "String",
       "Description": "SSL Cert name from IAM"
-    },
-    "CDNSSLCertificateId": {
-      "Type": "String",
-      "Description": "Cloudfront CDN SSL Cert ID from IAM"
-    },
-    "RDSPassword": {
-      "Type": "String",
-      "NoEcho": "true",
-      "MinLength": "8",
-      "Description": "RDS password"
     },
     "EC2InstanceType": {
       "Description": "EC2 instance type",
@@ -181,7 +184,6 @@
 
     "FxaEc2Instance" : {
       "Type" : "AWS::EC2::Instance",
-      "DependsOn" : ["FxaInstanceProfile", "FxaDevSecurityGroup"],
       "Properties" : {
         "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
         "KeyName" : { "Ref" : "KeyName" },
@@ -189,8 +191,32 @@
         "InstanceType" : { "Ref": "EC2InstanceType" },
         "SecurityGroups" : [{ "Ref" : "FxaDevSecurityGroup" }],
         "UserData": { "Fn::Base64": { "Fn::Join": ["",
-          ["#!/bin/bash -ex","\n",
-          "echo Defaults:ec2-user \\!requiretty >> /etc/sudoers;", "\n"]
+          [
+            "#!/bin/bash -ex", 
+            "\n", "echo Defaults:ec2-user \\!requiretty >> /etc/sudoers;",
+            "\n", "time yum -y --security update",
+            "\n", "time yum -y erase sendmail",
+            "\n", "time yum -y install cronie docker emacs-nox gcc-c++ git lsof memcached mysql nginx ntp postfix python-pip rsyslog strace tmux",
+            "\n", "time yum -y --enablerepo=epel install ansible moreutils",
+            "\n", "mkdir -p /data",
+            "\n", "chmod 777 /data",
+            "\n", "time git clone -b ", { "Ref": "BranchName"  }, " git://github.com/mozilla/fxa-dev.git /data/fxa-dev",
+            "\n", "time service docker start",
+            "\n", "date",
+            "\n", "time /data/fxa-dev/aws/docker-pull.sh",
+            "\n", "su - ec2-user -c '", 
+            "cd /data/fxa-dev/aws && PYTHONUNBUFFERED=1 time ansible-playbook -i localhost, local.yml",
+            " -e fxadev_git_version=",    { "Ref": "BranchName" },
+            " -e stack_name=",            { "Ref": "ConfigName" },
+            " -e auth_sns_arn=",          { "Ref": "FxaAccountChangeSNSTopic" },
+            " -e basket_queue_url=",      { "Ref": "FxaBasketAccountChangeQueue" },
+            " -e oauth_queue_url=",       { "Ref": "FxaOAuthAccountChangeQueue" },
+            " -e profile_queue_url=",     { "Ref": "FxaProfileAccountChangeQueue" },
+            " -e customs_ban_queue_url=", { "Ref": "FxaCustomsBanQueue" },
+            "  | /usr/bin/ts %T",
+            "'",
+            "\n"
+          ]
         ]}},
         "BlockDeviceMappings" : [
           {
@@ -206,10 +232,16 @@
 
     "FxaELB":{
       "Type":"AWS::ElasticLoadBalancing::LoadBalancer",
-      "DependsOn" : "FxaEc2Instance",
       "Properties":{
         "AvailabilityZones" : { "Fn::GetAZs" : "" },
         "ConnectionDrainingPolicy":{ "Enabled" : true, "Timeout" : 15 },
+        "HealthCheck":{
+          "Target":"TCP:80",
+          "HealthyThreshold": "2",
+          "UnhealthyThreshold": "2",
+          "Interval": "15",
+          "Timeout": "3"
+        },
         "Listeners":[
           {
             "InstancePort":"1443",
@@ -233,31 +265,6 @@
         "Instances": [{ "Ref" : "FxaEc2Instance" }],
         "SecurityGroups": [{ "Fn::GetAtt" : [ "FxaDevELBSecurityGroup", "GroupId" ] }]
       }
-    },
-
-    "FxaRDSSecurityGroup":{
-       "Type":"AWS::RDS::DBSecurityGroup",
-       "DependsOn" : "FxaDevSecurityGroup",
-       "Properties":{
-          "GroupDescription":"SG to Allow access to FXA RDS",
-          "DBSecurityGroupIngress":{
-             "EC2SecurityGroupName": { "Ref":"FxaDevSecurityGroup" }
-          }
-       }
-    },
-
-    "FxaRDSInstance":{
-       "Type":"AWS::RDS::DBInstance",
-       "DependsOn" : "FxaRDSSecurityGroup",
-       "Properties":{
-          "AllocatedStorage": "10",
-          "DBInstanceClass": "db.t1.micro",
-          "DBSecurityGroups":[ { "Ref":"FxaRDSSecurityGroup" } ],
-          "Engine":"MySQL",
-          "EngineVersion":"5.6",
-          "MasterUsername":"root",
-          "MasterUserPassword":{ "Ref" : "RDSPassword" }
-       }
     },
 
     "FxaOAuthAccountChangeQueue": {
@@ -424,7 +431,6 @@
 
     "FxaDNS": {
       "Type": "AWS::Route53::RecordSetGroup",
-      "DependsOn" : [ "FxaEc2Instance", "FxaELB", "FxaRDSInstance" ],
       "Properties": {
         "HostedZoneName" : { "Fn::Join" : [ "", [{"Ref" : "HostedZone"}, "." ]]},
         "RecordSets": [
@@ -465,112 +471,16 @@
             "Type": "A",
             "TTL": "30",
             "ResourceRecords" : [ { "Fn::GetAtt" : [ "FxaEc2Instance", "PublicIp" ] } ]
-          },
-          {
-            "Name" : { "Fn::Join" : [ "", ["static-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
-            "Type": "A",
-            "AliasTarget" : {
-              "HostedZoneId" : "Z2FDTNDATAQYW2",
-              "DNSName" : { "Fn::GetAtt" : [ "FxaCloudfrontPolicy", "DomainName" ] }
-            }
           }
         ]
       }
-    },
-
-    "FxaCloudfrontPolicy" : {
-      "Type" : "AWS::CloudFront::Distribution",
-      "Properties" : {
-        "DistributionConfig" : {
-          "Aliases" : [
-              { "Fn::Join" : [ "", ["static-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]}
-          ],
-          "CustomErrorResponses": [
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 400
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 403
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 404
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 405
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 414
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 416
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 500
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 501
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 502
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 503
-            },
-            {
-              "ErrorCachingMinTTL": 0,
-              "ErrorCode": 504
-            }
-          ],
-          "DefaultCacheBehavior" : {
-              "AllowedMethods" : [ "GET", "HEAD", "OPTIONS" ],
-              "Compress" : "true",
-              "TargetOriginId" : { "Fn::Join" : [ "", ["FxaCloudfrontCDN-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]},
-              "ForwardedValues" : {
-                  "QueryString" : "false",
-                  "Cookies" : { "Forward" : "none" },
-                  "Headers": ["Origin"]
-              },
-              "ViewerProtocolPolicy" : "https-only"
-          },
-          "Enabled" : "true",
-          "Origins" : [ {
-              "DomainName" : { "Fn::Join" : [ "", [{"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]},
-              "Id" : { "Fn::Join" : [ "", ["FxaCloudfrontCDN-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]},
-              "CustomOriginConfig": {
-                "HTTPSPort": "443",
-                "OriginProtocolPolicy": "https-only"
-              }
-          }],
-          "PriceClass" : "PriceClass_All",
-          "ViewerCertificate" : {
-            "IamCertificateId" : {"Ref" : "CDNSSLCertificateId"},
-            "MinimumProtocolVersion": "TLSv1",
-            "SslSupportMethod": "sni-only"
-          }
-        }
-      }
     }
-
   },
 
   "Outputs" : {
     "Instance" : {
       "Value" : { "Fn::GetAtt" : [ "FxaEc2Instance", "PublicDnsName" ] },
       "Description" : "DNS Name of the newly created EC2 instance"
-    },
-    "RDSEndpoint": {
-      "Description": "RDS Endpoint",
-      "Value": {"Fn::GetAtt":[ "FxaRDSInstance", "Endpoint.Address" ]}
     },
     "BasketAccountChangeQueueURL": {
       "Description": "Fxa Account Changes for the Basket API consumer",
@@ -595,6 +505,14 @@
     "StaticResourceHost": {
       "Description": "Fxa Static Resource Host",
       "Value": { "Fn::Join" : [ "", ["static-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}]]}
+    },
+    "ContentHost": {
+      "Description": "Content server hostname",
+      "Value": { "Fn::Join" : [ "", [ {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"} ] ] }
+    },
+    "ELB": {
+      "Description": "The ELB",
+      "Value": { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
     }
   }
 }

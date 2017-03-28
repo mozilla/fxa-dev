@@ -1,5 +1,0 @@
----
-
-- name: restart memcached
-  sudo: true
-  service: name=memcached state=restarted

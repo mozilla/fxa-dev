@@ -5,6 +5,7 @@ domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 rp_private_port: 4900
 rp_git_repo: https://github.com/mozilla/123done.git
 rp_git_version: oauth
+rp_docker_tag: latest
 rp_domain_name: "123done-{{ domain_name }}"
 rp_public_url: "{{ public_protocol }}://{{ rp_domain_name }}"
 oauth_domain_name: "oauth-{{ domain_name }}"

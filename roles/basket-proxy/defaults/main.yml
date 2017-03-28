@@ -1,4 +1,5 @@
 ---
 basket_proxy_git_repo: https://github.com/mozilla/fxa-basket-proxy.git
 basket_proxy_git_version: master
+basket_proxy_docker_tag: latest
 basket_private_port: 1114

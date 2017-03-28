@@ -5,28 +5,37 @@
   template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa-rp-untrusted.conf
   notify: reload nginx config
 
-- name: install fxa-rp-untrusted
-  tags: code
+- name: create shared mount point for configuration info
+  file: path=/data/config/rp-untrusted state=directory owner=app group=app mode=0777
+  sudo: true
+
+- name: configure fxa-rp
   sudo: true
   sudo_user: app
-  git: repo={{ rp_untrusted_git_repo }}
-       dest=/data/fxa-rp-untrusted
-       version={{ rp_untrusted_git_version }}
-       force=true
-  notify:
-    - install fxa-rp-untrusted dependencies
-    - gen preverified token keypair
-    - restart fxa-rp-untrusted
+  template: src=config.json.j2 dest=/data/config/rp-untrusted/config-dev.json
 
-- name: configure fxa-rp-untrusted
-  sudo: true
-  sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-rp-untrusted/config-dev.json
-  notify: restart fxa-rp-untrusted
+# rely on the 123done image having already been pulled by the rp role
 
-- name: supervise fxa-rp-untrusted
+- name: generate rp-untrusted keys
   sudo: true
-  copy: src=fxa-rp-untrusted.conf dest=/etc/supervisor.d/fxa-rp-untrusted.conf
-  notify: update supervisor
+  command: docker run --rm --net=host -e CONFIG_123DONE=/config/config-dev.json -v /data/config/rp-untrusted:/config jrgm/123done node scripts/gen_keys.js creates=/data/config/rp-untrusted/secret-key.json 
+
+- name: Start 123done docker container as untrusted rp
+  sudo: true
+  docker_container:
+    name: rp-untrusted
+    image: jrgm/123done{{ ':' + rp_docker_tag }}
+    state: started
+    network_mode: host
+    ports:
+      - 4902:4902
+    command: node ./server.js
+    env:
+      CONFIG_123DONE: "/config/config-dev.json"
+    volumes:
+      - /data/config/rp-untrusted:/config
+  register: container
+
+- debug: var=container
 
 - meta: flush_handlers

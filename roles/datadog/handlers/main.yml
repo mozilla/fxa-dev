@@ -1,5 +1,0 @@
----
-
-- name: restart datadog
-  action: service name=datadog-agent state=restarted
-  sudo: true

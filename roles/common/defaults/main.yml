@@ -1,4 +1,4 @@
 ---
 # Note: `nave` requires a dot in the version, so for nodejs 4.x, you must
 # specify 4.0 or 4.1 or 4.2 or 4.3 (or what ever minor version in the future)
-node_version: "4.6"
+node_version: "4.8"

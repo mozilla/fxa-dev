@@ -1,9 +1,0 @@
----
-public_protocol: https
-domain_name: "{{ subdomain }}.{{ hosted_zone }}"
-openid_private_port: 7980
-openid_git_repo: https://github.com/dannycoates/fxa-openid-bridge.git
-openid_git_version: master
-openid_public_url: "{{ public_protocol }}://{{ domain_name }}/open_id"
-auth_public_url: "{{ public_protocol }}://{{ domain_name }}/auth"
-content_public_url: "{{ public_protocol }}://{{ domain_name }}"

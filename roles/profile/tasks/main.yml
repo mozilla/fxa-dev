@@ -10,41 +10,91 @@
   template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_profile.conf
   notify: reload nginx config
 
-- name: install GraphicsMagick
+- name: create shared mount point for configuration info
+  file: path=/data/config/profile state=directory owner=app group=app mode=0777
   sudo: true
-  yum: name=GraphicsMagick state=present
 
-- name: install fxa-profile-server
-  tags: code
+- name: create directory for local image storage
+  file: path=/data/config/profile/public state=directory owner=app group=app mode=0777
   sudo: true
-  sudo_user: app
-  git: repo={{ profile_git_repo }}
-       dest=/data/fxa-profile-server
-       version={{ profile_git_version }}
-       force=true
-  notify:
-    - install fxa-profile-server dependencies
-    - restart fxa-profile:* group
-
-- name: create fxa-profile local img upload directory
-  sudo: true
-  file: state=directory path=/data/fxa-profile-server/var/public owner=app group=app
 
 - name: configure fxa-profile-server
   sudo: true
   sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-profile-server/config/local.json
-  notify: restart fxa-profile:* group
+  template: src=config.json.j2 dest=/data/config/profile/local.json owner=app group=app mode=0777
 
 - name: configure fxa-profile worker
   sudo: true
   sudo_user: app
-  template: src=worker.json.j2 dest=/data/fxa-profile-server/config/worker.json
-  notify: restart fxa-profile:* group
+  template: src=worker.json.j2 dest=/data/config/profile/worker.json owner=app group=app mode=0777
 
-- name: supervise fxa-profile-server
+- name: pull profile docker image
   sudo: true
-  copy: src=fxa-profile-server.conf dest=/etc/supervisor.d/fxa-profile-server.conf
-  notify: update supervisor
+  docker_image:
+    # pull image always. In a pending update to ansible, it will only set
+    # changed:true if the image has actually changed. However, docker_container
+    # `state:started` will only re-start if image of configuration has
+    # changed.
+    force: true
+    state: present
+    name: mozilla/fxa-profile-server
+    tag: "{{ profile_docker_tag }}"
+  register: image
+
+- debug: var=image
+
+- name: Start profile server docker container
+  sudo: true
+  docker_container:
+    name: profile
+    image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }} 
+    state: started
+    network_mode: host
+    ports:
+      - 9011:9011
+    command: node bin/server.js
+    env:
+      CONFIG_FILES: "/config/local.json"
+    volumes:
+      - /data/config/profile:/config
+  register: container
+
+- debug: var=container
+
+- name: Start profile worker docker container
+  sudo: true
+  docker_container:
+    name: profile-worker
+    image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }}
+    state: started
+    network_mode: host
+    ports:
+      - 1113:1113
+    command: node bin/worker.js
+    env:
+      CONFIG_FILES: "/config/local.json,/config/worker.json"
+    volumes:
+      - /data/config/profile:/config
+  register: container
+
+- debug: var=container
+
+- name: Start profile static docker container
+  sudo: true
+  docker_container:
+    name: profile-static
+    image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }}
+    state: started
+    network_mode: host
+    ports:
+      - 9012:9012
+    command: node bin/_static.js
+    env:
+      CONFIG_FILES: "/config/local.json"
+    volumes:
+      - /data/config/profile:/config
+  register: container
+
+- debug: var=container
 
 - meta: flush_handlers

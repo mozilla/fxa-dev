@@ -1,31 +1,69 @@
 ---
 
-- name: install fxa-auth-db-mysql
-  tags: code
+- name: pull auth-db docker image
   sudo: true
-  sudo_user: app
-  git: repo={{ authdb_git_repo }}
-       dest=/data/fxa-auth-db-mysql
-       version={{ authdb_git_version }}
-       force=true
-  notify:
-    - install fxa-auth-db-mysql dependencies
-    - install fxa-auth-db-mysql mysql-patcher devDependency
-    - run db patcher
-    - restart fxa-auth-db-server
-    - restart fxa-auth-server
+  docker_image:
+    # pull image always. In a pending update to ansible, it will only set
+    # changed:true if the image has actually changed. However, docker_container
+    # `state:started` will only re-start if image of configuration has
+    # changed.
+    force: true
+    state: present
+    name: mozilla/fxa-auth-db-mysql
+    tag: "{{ authdb_docker_tag }}"
+  register: image
 
-- name: configure fxa-auth-db-server
-  sudo: true
-  sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-auth-db-mysql/config/stage.json
-  notify: 
-    - restart fxa-auth-db-server
-    - restart fxa-auth-server
+- debug: var=image
 
-- name: supervise fxa-auth-db-server
+# The mysql container will have been started prior to this task
+# running. However, on initial startup, the mysql daemon will not be
+# accepting connections for a minute or more. So, we poll the mysql
+# daemon until it has completed startup.
+- name: Check that the mysql daemon has started
+  command: "mysql -uroot -h127.0.0.1 -NBe 'select 1'"
+  register: available
+  until: available.rc == 0
+  retries: 24 # up to 120 seconds
+  delay: 5
+
+- name: run db_patcher
   sudo: true
-  copy: src=fxa-auth-db-server.conf dest=/etc/supervisor.d/fxa-auth-db-server.conf
-  notify: update supervisor
+  command: docker run --rm --net=host -e NODE_ENV=stage mozilla/fxa-auth-db-mysql node bin/db_patcher.js
+
+- name: Start auth-db docker container
+  sudo: true
+  docker_container:
+    name: auth-db
+    image: mozilla/fxa-auth-db-mysql{{ ':' + authdb_docker_tag }} 
+    state: started
+    network_mode: host
+    ports:
+      - 8000:8000
+    command: node bin/server.js
+    env:
+      NODE_ENV: "stage"
+      PORT: 8000
+      SCHEMA_PATCH_KEY: "schema-patch-level"
+      LOG_LEVEL: "info"
+      ENABLE_PRUNING: 1
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: ""
+      MYSQL_DATABASE: "fxa"
+      MYSQL_HOST: "127.0.0.1"
+      MYSQL_PORT: 3306
+      MYSQL_CONNECTION_LIMIT: 10
+      MYSQL_WAIT_FOR_CONNECTIONS: true
+      MYSQL_QUEUE_LIMIT: 100
+      MYSQL_SLAVE_USER: "root"
+      MYSQL_SLAVE_PASSWORD: ""
+      MYSQL_SLAVE_DATABASE: "fxa"
+      MYSQL_SLAVE_HOST: "127.0.0.1"
+      MYSQL_SLAVE_PORT: 3306
+      MYSQL_SLAVE_CONNECTION_LIMIT: 10
+      MYSQL_SLAVE_WAIT_FOR_CONNECTIONS: true
+      MYSQL_SLAVE_QUEUE_LIMIT: 100
+  register: container
+
+- debug: var=container
 
 - meta: flush_handlers

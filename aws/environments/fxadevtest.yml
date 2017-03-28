@@ -1,0 +1,15 @@
+---
+region: us-west-2
+subdomain: fxadevtest.dev
+hosted_zone: lcip.org
+ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
+rds_password: ab4b6475c68a8734
+
+ec2_instance_type: t2.medium
+ec2_volume_size: 24
+
+owner: jrgm@mozilla.com
+reaper_spare_me: "true"
+
+fxadev_git_version: docker
+

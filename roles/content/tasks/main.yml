@@ -1,9 +1,5 @@
 ---
 
-- name: install gmp-devel
-  sudo: true
-  yum: name=gmp-devel state=present
-
 - name: configure nginx upstream
   sudo: true
   template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_content.conf
@@ -14,46 +10,46 @@
   template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_content.conf
   notify: reload nginx config
 
-- name: install nonsense
+- name: pull content-server docker image
   sudo: true
-  npm: name={{ item }} global=yes state=present
-  with_items:
-    - bower
-    - grunt-cli
+  docker_image:
+    # pull image always. In a pending update to ansible, it will only set
+    # changed:true if the image has actually changed. However, docker_container
+    # `state:started` will only re-start if image of configuration has
+    # changed.
+    force: true
+    state: present
+    name: mozilla/fxa-content-server
+    tag: "{{ content_docker_tag }}"
+  register: image
 
-- name: install fxa-content-server
-  tags: code
-  sudo: true
-  sudo_user: app
-  git: repo={{ content_git_repo }}
-       dest=/data/fxa-content-server
-       version={{ content_git_version }}
-       force=true
-  notify:
-    - begin install fxa-content-server by removing any leftover in /var/tmp
-    - begin install fxa-content-server dependencies with a copy
-    - install fxa-content-server dependencies
-    - build fxa-content-server assets
-    - remove original /data/fxa-content-server
-    - move updated fxa-content-server back into /data
-    - restart fxa-content-server
+- debug: var=image
 
-- name: configure fxa-content-server
+- name: Start content-server docker container
   sudo: true
-  sudo_user: app
-  template: src=config.json.j2 dest=/data/fxa-content-server/server/config/local.json
-  notify:
-    - restart fxa-content-server
+  docker_container:
+    name: content
+    image: mozilla/fxa-content-server{{ ':' + content_docker_tag }}
+    state: started
+    ports:
+      - 3030:3030
+    command: node server/bin/fxa-content-server.js
+    env:
+      NODE_ENV: "production"
+      CONFIG_FILES: "/app/server/config/production.json"
+      HOST: "0.0.0.0"
+      EXPERIMENTS_ENABLE_POLLING: 'false'
+      EXPERIMENTS_GIT_REPO: ""
+      EXPERIMENTS_STORAGE_DIR: "/tmp"
+      FXA_URL: "{{ auth_public_url }}"
+      PUBLIC_URL: "{{ content_public_url }}"
+      FXA_OAUTH_URL: "{{ oauth_public_url }}"
+      FXA_PROFILE_URL: "{{ profile_public_url }}"
+      SYNC_TOKENSERVER_URL: "{{ sync_tokenserver_url }}"
+      FXA_MARKETING_EMAIL_API_URL: "{{ content_public_url }}/basket"
+      FXA_MARKETING_EMAIL_PREFERENCES_URL: "https://www-dev.allizom.org/newsletter/existing/"
+  register: container
 
-- name: supervise fxa-content-server
-  sudo: true
-  copy: src=fxa-content-server.conf dest=/etc/supervisor.d/fxa-content-server.conf
-  notify: update supervisor
-
-# this task is obsolete; remove it
-- name: unsupervise fxa-null-basket
-  sudo: true
-  file: path=/etc/supervisor.d/fxa-null-basket.conf state=absent
-  notify: update supervisor
+- debug: var=container
 
 - meta: flush_handlers
