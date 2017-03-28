@@ -51,17 +51,17 @@
       ignore_errors: yes
       register: fxaelb
       until: >
-        fxaelb and fxaelb['elbs'] and fxaelb['elbs'][0]
-          and fxaelb['elbs'][0]['instances_inservice_count']
-          and fxaelb['elbs'][0]['instances_inservice_count'] == 1
+        fxaelb and fxaelb.get('elbs') and (fxaelb.get('elbs') | length) > 0
+          and fxaelb.get('elbs')[0].get('instances_inservice_count')
+          and fxaelb.get('elbs')[0].get('instances_inservice_count') == 1
       retries: 40 # 10 mins
       delay: 15
 
-    - debug: var=fxaelb['elbs'][0]['instances_inservice_count']
+    - debug: var=fxaelb.get('elbs')[0]['instances_inservice_count']
 
     - name: Assert that last task did not time out
       assert:
-        that: fxaelb['elbs'][0]['instances_inservice_count'] == 1
+        that: fxaelb.get('elbs')[0]['instances_inservice_count'] == 1
 
     - name: Check that the FxA services are returning a plausible `/__version__`
       uri:
