@@ -38,29 +38,29 @@
     state: started
     network_mode: host
     ports:
-      - 8000:8000
+      - "{{ authdb_private_port }}:{{ authdb_private_port }}"
     command: node bin/server.js
     env:
       NODE_ENV: "stage"
-      PORT: 8000
+      PORT: "{{ authdb_private_port }}"
       SCHEMA_PATCH_KEY: "schema-patch-level"
       LOG_LEVEL: "info"
       ENABLE_PRUNING: 1
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: ""
+      MYSQL_USER: "{{ authdb_primary_user }}"
+      MYSQL_PASSWORD: "{{ authdb_primary_password }}"
       MYSQL_DATABASE: "fxa"
-      MYSQL_HOST: "127.0.0.1"
+      MYSQL_HOST: "{{ authdb_primary_host }}"
       MYSQL_PORT: 3306
       MYSQL_CONNECTION_LIMIT: 10
-      MYSQL_WAIT_FOR_CONNECTIONS: true
+      MYSQL_WAIT_FOR_CONNECTIONS: "true"
       MYSQL_QUEUE_LIMIT: 100
-      MYSQL_SLAVE_USER: "root"
-      MYSQL_SLAVE_PASSWORD: ""
+      MYSQL_SLAVE_USER: "{{ authdb_replica_user }}"
+      MYSQL_SLAVE_PASSWORD: "{{ authdb_replica_password }}"
       MYSQL_SLAVE_DATABASE: "fxa"
-      MYSQL_SLAVE_HOST: "127.0.0.1"
+      MYSQL_SLAVE_HOST: "{{ authdb_replica_host }}"
       MYSQL_SLAVE_PORT: 3306
       MYSQL_SLAVE_CONNECTION_LIMIT: 10
-      MYSQL_SLAVE_WAIT_FOR_CONNECTIONS: true
+      MYSQL_SLAVE_WAIT_FOR_CONNECTIONS: "true"
       MYSQL_SLAVE_QUEUE_LIMIT: 100
   register: container
 
