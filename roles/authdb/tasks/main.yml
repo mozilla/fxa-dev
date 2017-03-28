@@ -38,7 +38,7 @@
     state: started
     network_mode: host
     ports:
-      - "{{ authdb_private_port }}":"{{ authdb_private_port }}"
+      - "{{ authdb_private_port }}:{{ authdb_private_port }}"
     command: node bin/server.js
     env:
       NODE_ENV: "stage"
@@ -52,7 +52,7 @@
       MYSQL_HOST: "{{ authdb_primary_host }}"
       MYSQL_PORT: 3306
       MYSQL_CONNECTION_LIMIT: 10
-      MYSQL_WAIT_FOR_CONNECTIONS: true
+      MYSQL_WAIT_FOR_CONNECTIONS: "true"
       MYSQL_QUEUE_LIMIT: 100
       MYSQL_SLAVE_USER: "{{ authdb_replica_user }}"
       MYSQL_SLAVE_PASSWORD: "{{ authdb_replica_password }}"
@@ -60,7 +60,7 @@
       MYSQL_SLAVE_HOST: "{{ authdb_replica_host }}"
       MYSQL_SLAVE_PORT: 3306
       MYSQL_SLAVE_CONNECTION_LIMIT: 10
-      MYSQL_SLAVE_WAIT_FOR_CONNECTIONS: true
+      MYSQL_SLAVE_WAIT_FOR_CONNECTIONS: "true"
       MYSQL_SLAVE_QUEUE_LIMIT: 100
   register: container
 
