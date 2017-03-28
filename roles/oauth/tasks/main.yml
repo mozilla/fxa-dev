@@ -60,7 +60,7 @@
       # The oauth and oauth-internal containers can race to create the `oauth`
       # database on first run. So, just tell the oauth-internal container not
       # to bother and just rely on the main oauth server to take care of it.
-      CREATE_MYSQL_SCHEMA: "1",
+      CREATE_MYSQL_SCHEMA: "1"
       CONFIG_FILES: "/config/local.json"
     volumes:
       - /data/config/oauth:/config:ro
