@@ -14,11 +14,6 @@
   file: path=/data/config/auth state=directory owner=app group=app mode=0777
   sudo: true
 
-- name: configure fxa-auth-server
-  sudo: true
-  sudo_user: app
-  template: src=config.json.j2 dest=/data/config/auth/stage.json owner=app group=app mode=0777
-
 - name: create shared mount point for auth-mailer configuration info
   file: path=/data/config/mailer state=directory owner=app group=app mode=0777
   sudo: true
@@ -45,15 +40,20 @@
 
 - name: generate public key pair
   sudo: true
-  command: >
-    docker run --rm --net=host -v /data/config/auth:/config -e CONFIG_FILES=/config/stage.json 
-      mozilla/fxa-auth-server node scripts/gen_keys.js creates=/data/config/auth/secret-key.json 
+  command: >-
+    docker run --rm --net=host -v /data/config/auth:/config
+      -e SECRET_KEY_FILE=/config/secret-key.json
+      -e PUBLIC_KEY_FILE=/config/public-key.json
+    mozilla/fxa-auth-server node scripts/gen_keys.js
+    creates=/data/config/auth/secret-key.json
 
 - name: generate vapid keys
   sudo: true
-  command: >
-    docker run --rm --net=host -v /data/config/auth:/config -e CONFIG_FILES=/config/stage.json 
-      mozilla/fxa-auth-server node scripts/gen_vapid_keys.js creates=/data/config/auth/vapid-keys.json 
+  command: >-
+    docker run --rm --net=host -v /data/config/auth:/config
+      -e VAPID_KEYS_FILE=/config/vapid-keys.json
+    mozilla/fxa-auth-server node scripts/gen_vapid_keys.js
+    creates=/data/config/auth/vapid-keys.json
 
 - name: Start auth-server docker container
   sudo: true
@@ -66,8 +66,27 @@
       - 9000:9000
     command: sh scripts/start-server.sh
     env:
-      CONFIG_FILES: "/config/stage.json"
       NODE_ENV: "stage"
+      PUBLIC_URL: "{{ auth_public_url }}"
+      DB_BACKEND: "httpdb"
+      HTTPDB_URL: "{{ authdb_server_url }}"
+      SECRET_KEY_FILE: "/config/secret-key.json"
+      PUBLIC_KEY_FILE: "/config/public-key.json"
+      VAPID_KEYS_FILE: "/config/vapid-keys.json"
+      CUSTOMS_SERVER_URL: "{{ customs_server_url }}"
+      CONTENT_SERVER_URL: "{{ content_public_url }}"
+      SMTP_HOST: "{{ auth_mail_host }}"
+      SMTP_PORT: "{{ auth_mail_port }}"
+      # This MUST be quoted. Otherwise, it becomes pythonic False,
+      # which node-convict coerces to `true`.
+      SMTP_SECURE: "false"
+      SMTP_SENDER: "{{ auth_mail_sender }}"
+      REDIRECT_DOMAIN: "firefox.com"
+      VERIFICATION_REMINDER_RATE: 1
+      SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^(sync.*@restmail\\.net|.+@mozilla\\.com)$"
+      SIGNIN_UNBLOCK_FORCED_EMAILS: "^(block.*@restmail\\.net|.+@mozilla\\.com)$"
+      PORT: "{{ auth_private_port }}"
+      SNS_TOPIC_ARN:  "{{ auth_sns_arn }}"
     volumes:
       - /data/config/auth:/config
   register: container
