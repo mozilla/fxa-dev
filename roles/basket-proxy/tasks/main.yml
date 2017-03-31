@@ -17,7 +17,9 @@
 - name: configure fxa-basket-proxy
   sudo: true
   sudo_user: app
-  template: src=config.json.j2 dest=/data/config/basket/local.json
+  # Do not quote values (e.g., FOO="BAR"), or have comments, or blank
+  # lines. Which is awkward.
+  template: src=env_file.sh.j2 dest=/data/config/basket/env_file.sh
 
 - name: pull basket docker image
   sudo: true
@@ -42,12 +44,9 @@
     state: started
     network_mode: host
     ports:
-      - 1114:1114
+      - "{{ basket_private_port }}:{{ basket_private_port }}"
     command: node bin/basket-proxy-server.js
-    env:
-      CONFIG_FILES: "/config/local.json"
-    volumes:
-      - /data/config/basket:/config
+    env_file: /data/config/basket/env_file.sh
   register: container
 
 - debug: var=container
@@ -60,10 +59,7 @@
     state: started
     network_mode: host
     command: node bin/basket-event-handler.js
-    env:
-      CONFIG_FILES: "/config/local.json"
-    volumes:
-      - /data/config/basket:/config
+    env_file: /data/config/basket/env_file.sh
   register: container
 
 - debug: var=container
@@ -76,12 +72,9 @@
     state: started
     network_mode: host
     ports:
-      - 10140:10140
+      - "{{ basket_api_port }}:{{ basket_api_port }}"
     command: node bin/fake-basket-server.js
-    env:
-      CONFIG_FILES: "/config/local.json"
-    volumes:
-      - /data/config/basket:/config
+    env_file: /data/config/basket/env_file.sh
   register: container
 
 - debug: var=container
