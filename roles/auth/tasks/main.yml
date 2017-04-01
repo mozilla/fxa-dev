@@ -103,16 +103,14 @@
       NODE_ENV: "stage"
       MAILER_PORT: "{{ auth_mailer_port }}"
       CONTENT_SERVER_URL: "{{ content_public_url }}"
-      CONTENT_SERVER_URL: "{{ public_protocol }}://{{ domain_name }}"
       IP_ADDRESS: "{{ auth_mail_host }}"
       PORT: "{{ auth_mail_port }}"
-      # This MUST be quoted. Otherwise, it becomes pythonic False,
+      # This MUST be quoted. Otherwise, it becomes pythonic `False`,
       # which node-convict coerces to `true`.
       MAIL_HTTPS_SECURE: "false"
       SMTP_SENDER: "{{ auth_mail_sender }}"
       VERIFICATION_REMINDER_TIME_FIRST: 20000
       VERIFICATION_REMINDER_TIME_SECOND: 40000
-      PORT: "{{ auth_private_port }}"
     volumes:
       - /data/config/mailer:/config
   register: container
