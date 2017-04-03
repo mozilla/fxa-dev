@@ -70,7 +70,7 @@
         follow_redirects=none
       ignore_errors: yes # guard against early phase failure of DNS lookup or TCP connection
       register: response
-      until: response and response.json and response.json['version'] is defined
+      until: response and response.get('json') and response.get('json')['version'] is defined
       retries: 40 # 10 mins
       delay: 15
       with_items:
