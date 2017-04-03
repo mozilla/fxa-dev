@@ -1,7 +1,7 @@
 ---
 
 - name: pull customs-server docker image
-  sudo: true
+  become: true
   docker_image:
     # pull image always. In a pending update to ansible, it will only set
     # changed:true if the image has actually changed. However, docker_container
@@ -16,7 +16,7 @@
 - debug: var=image
 
 - name: Start customs-server docker container
-  sudo: true
+  become: true
   docker_container:
     name: customs
     image: mozilla/fxa-customs-server{{ ':' + customs_docker_tag }}
