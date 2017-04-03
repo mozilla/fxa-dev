@@ -1,35 +1,35 @@
 ---
 
 - name: configure nginx upstream
-  sudo: true
+  become: true
   template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_profile.conf
   notify: reload nginx config
 
 - name: configure nginx location
-  sudo: true
+  become: true
   template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_fxa_profile.conf
   notify: reload nginx config
 
 - name: create shared mount point for configuration info
   file: path=/data/config/profile state=directory owner=app group=app mode=0777
-  sudo: true
+  become: true
 
 - name: create directory for local image storage
   file: path=/data/config/profile/public state=directory owner=app group=app mode=0777
-  sudo: true
+  become: true
 
 - name: configure fxa-profile-server
-  sudo: true
-  sudo_user: app
+  become: true
+  become_user: app
   template: src=config.json.j2 dest=/data/config/profile/local.json owner=app group=app mode=0777
 
 - name: configure fxa-profile worker
-  sudo: true
-  sudo_user: app
+  become: true
+  become_user: app
   template: src=worker.json.j2 dest=/data/config/profile/worker.json owner=app group=app mode=0777
 
 - name: pull profile docker image
-  sudo: true
+  become: true
   docker_image:
     # pull image always. In a pending update to ansible, it will only set
     # changed:true if the image has actually changed. However, docker_container
@@ -44,7 +44,7 @@
 - debug: var=image
 
 - name: Start profile server docker container
-  sudo: true
+  become: true
   docker_container:
     name: profile
     image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }} 
@@ -62,7 +62,7 @@
 - debug: var=container
 
 - name: Start profile worker docker container
-  sudo: true
+  become: true
   docker_container:
     name: profile-worker
     image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }}
@@ -80,7 +80,7 @@
 - debug: var=container
 
 - name: Start profile static docker container
-  sudo: true
+  become: true
   docker_container:
     name: profile-static
     image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }}

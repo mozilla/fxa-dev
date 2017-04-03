@@ -1,15 +1,15 @@
 ---
 
 - name: create app user
-  sudo: true
+  become: true
   user: name=app state=present append=yes
 
 - name: update installed packages
-  sudo: true
+  become: true
   yum: name=* state=latest
 
 - name: install base packages
-  sudo: true
+  become: true
   yum: name={{ item }} state=present
   with_items:
     - docker
@@ -27,21 +27,21 @@
   user: name=ec2-user append=yes groups=docker
 
 - name: install docker-py module
-  sudo: true
+  become: true
   pip: name=docker-py state=present
 
 # for mounting configuration information in subdirectories under /data/config
 # XXX fix mode/ownership
 - file: path=/data/config state=directory owner=app group=app mode=0777
-  sudo: true
+  become: true
 
 - name: configure ntp
-  sudo: true
+  become: true
   copy: src=ntp.conf dest=/etc/ntp.conf
   notify: restart ntp
 
 - name: start ntp
-  sudo: true
+  become: true
   service: name=ntpd state=started enabled=true
 
 - name: start docker

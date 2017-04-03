@@ -1,7 +1,7 @@
 ---
 
 - name: pull auth-db docker image
-  sudo: true
+  become: true
   docker_image:
     # pull image always. In a pending update to ansible, it will only set
     # changed:true if the image has actually changed. However, docker_container
@@ -27,11 +27,11 @@
   delay: 5
 
 - name: run db_patcher
-  sudo: true
+  become: true
   command: docker run --rm --net=host -e NODE_ENV=stage mozilla/fxa-auth-db-mysql node bin/db_patcher.js
 
 - name: Start auth-db docker container
-  sudo: true
+  become: true
   docker_container:
     name: auth-db
     image: mozilla/fxa-auth-db-mysql{{ ':' + authdb_docker_tag }} 

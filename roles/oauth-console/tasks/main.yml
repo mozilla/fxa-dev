@@ -1,25 +1,25 @@
 ---
 
 - file: path=/etc/nginx/conf.d/oauth_console/upstream state=directory
-  sudo: true
+  become: true
 
 - name: configure nginx upstream
-  sudo: true
+  become: true
   template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/oauth_console/upstream/http_fxa_oauth_console.conf
   notify: reload nginx config
 
 - file: path=/etc/nginx/conf.d/oauth_console/location state=directory
-  sudo: true
+  become: true
 
 - name: configure nginx location
-  sudo: true
+  become: true
   template: src=location.conf.j2 dest=/etc/nginx/conf.d/oauth_console/location/http_fxa_oauth_console.conf
   notify: reload nginx config
 
 - name: install fxa-oauth-console
   tags: code
-  sudo: true
-  sudo_user: app
+  become: true
+  become_user: app
   git: repo={{ oauth_console_git_repo }}
        dest=/data/fxa-oauth-console
        version={{ oauth_console_git_version }}
@@ -30,13 +30,13 @@
     - restart fxa-oauth-console
 
 - name: configure fxa-oauth-console
-  sudo: true
-  sudo_user: app
+  become: true
+  become_user: app
   template: src=config.json.j2 dest=/data/fxa-oauth-console/config/local.json
   notify: restart fxa-oauth-console
 
 - name: supervise fxa-oauth-console
-  sudo: true
+  become: true
   copy: src=fxa-oauth-console.conf dest=/etc/supervisor.d/fxa-oauth-console.conf
   notify: update supervisor
 

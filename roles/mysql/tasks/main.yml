@@ -1,12 +1,12 @@
 ---
 
 - name: create mysql data volume directory
-  sudo: true
+  become: true
   #XXX fix file mode
   file: state=directory path=/var/data/mysql owner=app group=app mode=0777
 
 - name: pull mysql docker image
-  sudo: true
+  become: true
   docker_image:
     # do not force update the mysql server
     state: present
@@ -17,7 +17,7 @@
 - debug: var=image
 
 - name: Start mysql container
-  sudo: true
+  become: true
   docker_container:
     name: mysql
     image: mysql{{ ':' + mysql_docker_tag }}

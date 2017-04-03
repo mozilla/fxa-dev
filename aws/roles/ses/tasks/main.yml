@@ -1,16 +1,16 @@
 ---
 
 - name: no sendmail
-  sudo: true
+  become: true
   yum: name=sendmail state=absent
 
 - name: install postfix
-  sudo: true
+  become: true
   yum: name=postfix state=present
   notify: set MTA to postfix
 
 - name: install postfix main.cf
-  sudo: true
+  become: true
   template:
     src=main.cf.j2
     dest=/etc/postfix/main.cf
@@ -18,22 +18,22 @@
   notify: reload postfix
 
 - name: start postfix
-  sudo: true
+  become: true
   service: name=postfix state=started enabled=true
 
 # fedora 20 doesn't include rsyslog by default
 - name: install rsyslog
-  sudo: true
+  become: true
   yum: name=rsyslog state=present
 
 - name: start rsyslog
-  sudo: true
+  become: true
   service: name=rsyslog state=started enabled=true
 
 # workaround for python/boto suckage with dotted bucket names
 # https://github.com/boto/boto/issues/2836. Fixed in Ansible > 1.9.
 - name: ensure boto.s3 uses OrdinaryCallingFormat()
-  sudo: true
+  become: true
   ini_file: dest=/etc/boto.cfg
      state=present
      section=s3
@@ -43,7 +43,7 @@
      mode=0644
 
 - name: get s3 secrets
-  sudo: true
+  become: true
   s3: bucket=net.mozaws.ops.hiera-secrets
       object=/app/fxa.dev.yaml
       dest=/data/fxa.dev.yml
@@ -52,18 +52,18 @@
 
 - name: read smtp_user
   shell: 'grep -e "fxa::smtp::user" /data/fxa.dev.yml | sed "s/^fxa::smtp::user: ''\([^'']\+\)''/\1/"'
-  sudo: true
+  become: true
   changed_when: false
   register: smtp_user
 
 - name: read smtp_pass
   shell: 'grep -e "fxa::smtp::pass" /data/fxa.dev.yml | sed "s/^fxa::smtp::pass: ''\([^'']\+\)''/\1/"'
-  sudo: true
+  become: true
   changed_when: false
   register: smtp_pass
 
 - name: install postfix sasl_passwd
-  sudo: true
+  become: true
   template:
     src=sasl_passwd.j2
     dest=/etc/postfix/sasl_passwd
