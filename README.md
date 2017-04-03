@@ -1,4 +1,4 @@
-# AWS Ansible-based development environment for Firefox Accounts
+# AWS Ansible-based docker development environment for Firefox Accounts
 
 ## Prerequisites
 
