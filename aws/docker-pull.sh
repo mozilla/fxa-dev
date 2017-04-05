@@ -12,7 +12,7 @@ IMAGES=(
   mozilla/fxa-customs-server
   mozilla/fxa-oauth-server
   mozilla/fxa-profile-server
-  mysql
+  mysql:5.6.35
 )
 
 for f in ${IMAGES[*]}; do
