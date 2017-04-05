@@ -1,6 +1,6 @@
 ---
 region: us-west-2
-subdomain: test55.dev
+subdomain: test62.dev
 hosted_zone: lcip.org
 ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
 rds_password: ab4b6475c68a8734
