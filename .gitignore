@@ -1,4 +1,5 @@
 node_modules
 aws/my_vars.yml
+aws/dev.retry
 *.swp
 *~
