@@ -32,5 +32,9 @@
     "listen": {
         "port": {{ auth_private_port }}
     },
-    "snsTopicArn": "{{ auth_sns_arn }}"
+    "snsTopicArn": "{{ auth_sns_arn }}",
+    "sms": {
+      "useMock": {{ auth_sms_use_mock }},
+      "isStatusGeoEnabled": {{ auth_sms_geo_enabled }}
+    }
 }
