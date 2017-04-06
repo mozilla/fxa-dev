@@ -70,7 +70,7 @@
     "RegionMap" : {
       "us-east-1"      : { "AMI" : "ami-0b33d91d" },
       "us-west-1"      : { "AMI" : "ami-165a0876" },
-      "us-west-2"      : { "AMI" : "ami-ccae38ac" },
+      "us-west-2"      : { "AMI" : "ami-c9a335a9" },
       "eu-west-1"      : { "AMI" : "ami-70edb016" },
       "eu-central-1"   : { "AMI" : "ami-af0fc0c0" },
       "ap-southeast-1" : { "AMI" : "ami-dc9339bf" },
