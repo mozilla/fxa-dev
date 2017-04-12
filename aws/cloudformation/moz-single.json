@@ -20,13 +20,8 @@
       "Type": "String",
       "Description" : "subdomain"
     },
-    "SSLCertificateName": {
-      "Type": "String",
-      "Description": "SSL Cert name from IAM"
-    },
-    "CDNSSLCertificateId": {
-      "Type": "String",
-      "Description": "Cloudfront CDN SSL Cert ID from IAM"
+    "SSLCertificateArn": {
+      "Type": "String"
     },
     "RDSPassword": {
       "Type": "String",
@@ -214,14 +209,9 @@
           {
             "InstancePort":"1443",
             "LoadBalancerPort":"443",
-            "PolicyNames" : ["ELBSecurityPolicy-2016-08"],
             "Protocol":"HTTPS",
             "SSLCertificateId":{
-               "Fn::Join":[ "",
-                  [
-                    "arn:aws:iam::", { "Ref":"AWS::AccountId" }, ":server-certificate/", {"Ref" : "SSLCertificateName"}
-                  ]
-               ]
+               "Ref" : "SSLCertificateArn"
             }
           },
           {
@@ -553,7 +543,7 @@
           }],
           "PriceClass" : "PriceClass_All",
           "ViewerCertificate" : {
-            "IamCertificateId" : {"Ref" : "CDNSSLCertificateId"},
+            "AcmCertificateArn" : {"Ref" : "SSLCertificateArn"},
             "MinimumProtocolVersion": "TLSv1",
             "SslSupportMethod": "sni-only"
           }

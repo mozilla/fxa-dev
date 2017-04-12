@@ -2,7 +2,7 @@
 region: us-west-2
 subdomain: nightly.dev
 hosted_zone: lcip.org
-ssl_certificate_name: exp20170412_wildcard_dev_lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
 rds_password: QK4L6(8ZXoT$y{2&
 cron_time:
   minute: 5
