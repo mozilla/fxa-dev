@@ -31,7 +31,7 @@
           BranchName: "{{ fxadev_git_version }}"
           HostedZone: "{{ hosted_zone }}"
           Subdomain: "{{ subdomain }}"
-          SSLCertificateName: "{{ ssl_certificate_name }}"
+          SSLCertificateArn: "{{ ssl_certificate_arn }}"
           EC2InstanceType: "{{ ec2_instance_type }}"
           EC2VolumeSize: "{{ ec2_volume_size }}"
         tags:

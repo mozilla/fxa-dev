@@ -33,9 +33,8 @@
       "Type": "String",
       "Description" : "subdomain"
     },
-    "SSLCertificateName": {
-      "Type": "String",
-      "Description": "SSL Cert name from IAM"
+    "SSLCertificateArn": {
+      "Type": "String"
     },
     "EC2InstanceType": {
       "Description": "EC2 instance type",
@@ -192,7 +191,7 @@
         "SecurityGroups" : [{ "Ref" : "FxaDevSecurityGroup" }],
         "UserData": { "Fn::Base64": { "Fn::Join": ["",
           [
-            "#!/bin/bash -ex", 
+            "#!/bin/bash -ex",
             "\n", "echo Defaults:ec2-user \\!requiretty >> /etc/sudoers;",
             "\n", "time yum -y --security update",
             "\n", "time yum -y erase sendmail",
@@ -205,7 +204,7 @@
             "\n", "time service docker start",
             "\n", "date",
             "\n", "time /data/fxa-dev/aws/docker-pull.sh",
-            "\n", "su - ec2-user -c '", 
+            "\n", "su - ec2-user -c '",
             "cd /data/fxa-dev/aws && PYTHONUNBUFFERED=1 time ansible-playbook -i localhost, local.yml",
             " -e fxadev_git_version=",    { "Ref": "BranchName" },
             " -e stack_name=",            { "Ref": "ConfigName" },
@@ -247,14 +246,9 @@
           {
             "InstancePort":"1443",
             "LoadBalancerPort":"443",
-            "PolicyNames" : ["ELBSecurityPolicy-2016-08"],
             "Protocol":"HTTPS",
             "SSLCertificateId":{
-               "Fn::Join":[ "",
-                  [
-                    "arn:aws:iam::", { "Ref":"AWS::AccountId" }, ":server-certificate/", {"Ref" : "SSLCertificateName"}
-                  ]
-               ]
+               "Ref" : "SSLCertificateArn"
             }
           },
           {
