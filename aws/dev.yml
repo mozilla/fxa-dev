@@ -29,6 +29,7 @@
           HostedZone: "{{ hosted_zone }}"
           Subdomain: "{{ subdomain }}"
           SSLCertificateArn: "{{ ssl_certificate_arn }}"
+          CDNSSLCertificateArn: "{{ cdn_ssl_certificate_arn }}"
           RDSPassword: "{{ rds_password }}"
           EC2InstanceType: "{{ ec2_instance_type }}"
           EC2VolumeSize: "{{ ec2_volume_size }}"

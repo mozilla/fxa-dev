@@ -23,6 +23,9 @@
     "SSLCertificateArn": {
       "Type": "String"
     },
+    "CDNSSLCertificateArn": {
+      "Type": "String"
+    },
     "RDSPassword": {
       "Type": "String",
       "NoEcho": "true",
@@ -543,7 +546,7 @@
           }],
           "PriceClass" : "PriceClass_All",
           "ViewerCertificate" : {
-            "AcmCertificateArn" : {"Ref" : "SSLCertificateArn"},
+            "AcmCertificateArn" : {"Ref" : "CDNSSLCertificateArn"},
             "MinimumProtocolVersion": "TLSv1",
             "SslSupportMethod": "sni-only"
           }
