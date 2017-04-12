@@ -26,5 +26,6 @@ reaper_spare_me: "true"
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
 
+cdn_ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/675e0ac8-23af-4153-8295-acb28ccc9f0f
 content_static_resource_url: https://static-stable.dev.lcip.org
 
