@@ -1,0 +1,24 @@
+#!/bin/bash
+
+export GRACE_PERIOD_SECONDS=14440
+export STATE_DIR="${HOME}/docker-gc"
+export FORCE_CONTAINER_REMOVAL=0
+export FORCE_IMAGE_REMOVAL=0
+export DOCKER=docker
+export PID_DIR="${STATE_DIR}/run"
+export LOG_TO_SYSLOG=0
+export SYSLOG_FACILITY=user
+export SYSLOG_LEVEL=info
+export SYSLOG_TAG=docker-gc
+export DRY_RUN=0
+export EXCLUDE_DEAD=0
+
+export EXCLUDE_FROM_GC="${STATE_DIR}/docker-gc-exclude"
+export EXCLUDE_CONTAINERS_FROM_GC="${STATE_DIR}/docker-gc-exclude-containers"
+
+cd "${STATE_DIR}"
+sudo du -s -k /var/lib/docker/devicemapper/devicemapper | /usr/bin/ts %T
+df -h            | /usr/bin/ts %T
+docker ps -a     | /usr/bin/ts %T
+docker images -a | /usr/bin/ts %T
+/home/ec2-user/docker-gc/docker-gc

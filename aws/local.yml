@@ -31,4 +31,5 @@
     - oauth
     - profile
     - cron_update
+    - docker-gc
     - team
