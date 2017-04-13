@@ -17,6 +17,8 @@ export EXCLUDE_FROM_GC="${STATE_DIR}/docker-gc-exclude"
 export EXCLUDE_CONTAINERS_FROM_GC="${STATE_DIR}/docker-gc-exclude-containers"
 
 cd "${STATE_DIR}"
+sudo du -s -k /var/lib/docker/devicemapper/devicemapper | /usr/bin/ts %T
+df -h            | /usr/bin/ts %T
 docker ps -a     | /usr/bin/ts %T
 docker images -a | /usr/bin/ts %T
 /home/ec2-user/docker-gc/docker-gc
