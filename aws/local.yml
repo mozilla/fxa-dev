@@ -30,5 +30,6 @@
     - rp-untrusted
     - oauth
     - profile
+    - docker-gc
     - cron_update
     - team
