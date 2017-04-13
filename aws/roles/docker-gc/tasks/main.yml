@@ -14,13 +14,13 @@
     - docker-gc-exclude-containers
     - run-docker-gc
 
+# offset by 5 minutes from ansible */10 update job
 - name: cron update docker-gc
   cron: name="docker-gc"
         weekday='*'
         month='*'
         day='*'
         hour='*'
-        # offset by 5 minutes from ansible */10 update job
         minute='5,15,25,35,45,55'
         job="/home/ec2-user/docker-gc/run-docker-gc >> /var/log/ansible/docker-gc.log"
 
