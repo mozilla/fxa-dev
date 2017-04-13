@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export GRACE_PERIOD_SECONDS=300
+export GRACE_PERIOD_SECONDS=14440
 export STATE_DIR="${HOME}/docker-gc"
 export FORCE_CONTAINER_REMOVAL=0
 export FORCE_IMAGE_REMOVAL=0

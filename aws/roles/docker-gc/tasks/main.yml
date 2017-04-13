@@ -20,7 +20,7 @@
         month='*'
         day='*'
         hour='*'
-        minute='*/2'
+        minute='5,15,25,35,45,55'
         job="/home/ec2-user/docker-gc/run-docker-gc >> /var/log/ansible/docker-gc.log"
 
 - meta: flush_handlers
