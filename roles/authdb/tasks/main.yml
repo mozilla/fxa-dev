@@ -14,7 +14,6 @@
     - run db patcher
     - restart fxa-auth-db-server
     - restart fxa-auth-server
-    - restart fxa-auth-mailer
 
 - name: configure fxa-auth-db-server
   sudo: true
@@ -23,7 +22,6 @@
   notify: 
     - restart fxa-auth-db-server
     - restart fxa-auth-server
-    - restart fxa-auth-mailer
 
 - name: supervise fxa-auth-db-server
   sudo: true
