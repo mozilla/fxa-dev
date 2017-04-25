@@ -84,6 +84,8 @@
       SIGNIN_UNBLOCK_FORCED_EMAILS: "^(block.*@restmail\\.net|.+@mozilla\\.com)$"
       PORT: "{{ auth_private_port }}"
       SNS_TOPIC_ARN:  "{{ auth_sns_arn }}"
+      PROFILE_MESSAGING_REGION: "{{ region }}"
+      PROFILE_UPDATES_QUEUE_URL: "{{ profile_update_queue_url }}"
     volumes:
       - /data/config/auth:/config
   register: container

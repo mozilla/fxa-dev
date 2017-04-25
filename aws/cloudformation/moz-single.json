@@ -165,7 +165,17 @@
                   ]
                },
                { "Effect":"Allow", "Action": [ "ec2:DescribeTags" ], "Resource": "*" },
-               { "Effect":"Allow", "Action": [ "elasticache:DescribeCacheClusters" ], "Resource": "*" }
+               { "Effect":"Allow", "Action": [ "elasticache:DescribeCacheClusters" ], "Resource": "*" },
+               { 
+                 "Effect":"Allow",
+                 "Action": [ 
+                   "sqs:SendMessage",
+                   "sqs:SendMessageBatch",
+                   "sqs:ReceiveMessage",
+                   "sqs:DeleteMessage"
+                 ],
+                 "Resource": { "Fn::GetAtt" : [ "FxaProfileUpdateQueue", "Arn" ] }
+               }
              ]
             }
           }
@@ -206,13 +216,14 @@
             "\n", "time /data/fxa-dev/aws/docker-pull.sh",
             "\n", "su - ec2-user -c '",
             "cd /data/fxa-dev/aws && PYTHONUNBUFFERED=1 time ansible-playbook -i localhost, local.yml",
-            " -e fxadev_git_version=",    { "Ref": "BranchName" },
-            " -e stack_name=",            { "Ref": "ConfigName" },
-            " -e auth_sns_arn=",          { "Ref": "FxaAccountChangeSNSTopic" },
-            " -e basket_queue_url=",      { "Ref": "FxaBasketAccountChangeQueue" },
-            " -e oauth_queue_url=",       { "Ref": "FxaOAuthAccountChangeQueue" },
-            " -e profile_queue_url=",     { "Ref": "FxaProfileAccountChangeQueue" },
-            " -e customs_ban_queue_url=", { "Ref": "FxaCustomsBanQueue" },
+            " -e fxadev_git_version=",       { "Ref": "BranchName" },
+            " -e stack_name=",               { "Ref": "ConfigName" },
+            " -e auth_sns_arn=",             { "Ref": "FxaAccountChangeSNSTopic" },
+            " -e basket_queue_url=",         { "Ref": "FxaBasketAccountChangeQueue" },
+            " -e oauth_queue_url=",          { "Ref": "FxaOAuthAccountChangeQueue" },
+            " -e profile_queue_url=",        { "Ref": "FxaProfileAccountChangeQueue" },
+            " -e profile_update_queue_url=", { "Ref": "FxaProfileUpdateQueue" },
+            " -e customs_ban_queue_url=",    { "Ref": "FxaCustomsBanQueue" },
             "  | /usr/bin/ts %T",
             "'",
             "\n"
@@ -267,6 +278,10 @@
     },
 
     "FxaProfileAccountChangeQueue": {
+      "Type": "AWS::SQS::Queue"
+    },
+
+    "FxaProfileUpdateQueue": {
       "Type": "AWS::SQS::Queue"
     },
 
@@ -488,6 +503,10 @@
     "ProfileAccountChangeQueueURL": {
       "Description": "Fxa Account Changes for the Profile consumer",
       "Value": { "Ref": "FxaProfileAccountChangeQueue" }
+    },
+    "ProfileUpdateQueueURL": {
+      "Description": "Fxa Account Changes for the Profile consumer",
+      "Value": { "Ref": "FxaProfileUpdateQueue" }
     },
     "CustomsBanQueueURL": {
       "Description": "Fxa customs ban queue for use by mozdef",
