@@ -6,4 +6,4 @@ cron_time:
   month: '*'
   day: '*'
   hour: '*'
-  minute: '*/10'
+  minute: '*/5'
