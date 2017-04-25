@@ -4,6 +4,7 @@
   hosts: localhost
   connection: local
   vars_files:
+    - "defaults.yml"
     - "environments/{{ stack_name }}.yml"
   vars:
     authdb_primary_host: "127.0.0.1"
