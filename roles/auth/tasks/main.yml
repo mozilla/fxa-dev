@@ -108,6 +108,7 @@
       # This MUST be quoted. Otherwise, it becomes pythonic `False`,
       # which node-convict coerces to `true`.
       MAIL_HTTPS_SECURE: "false"
+      SECONDARY_EMAIL_ENABLED: "true"
       SMTP_SENDER: "{{ auth_mail_sender }}"
       VERIFICATION_REMINDER_TIME_FIRST: 20000
       VERIFICATION_REMINDER_TIME_SECOND: 40000
