@@ -10,7 +10,7 @@ cron_time:
   month: 1
   day: 1
 
-content_git_version: add-additional-email
+content_git_version: feature.add-additional-email
 auth_git_version: master
 authdb_git_version: master
 customs_git_version: master
