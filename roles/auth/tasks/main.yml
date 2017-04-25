@@ -84,6 +84,8 @@
       SIGNIN_UNBLOCK_FORCED_EMAILS: "^(block.*@restmail\\.net|.+@mozilla\\.com)$"
       PORT: "{{ auth_private_port }}"
       SNS_TOPIC_ARN:  "{{ auth_sns_arn }}"
+      PROFILE_MESSAGING_REGION: "{{ region }}"
+      PROFILE_UPDATES_QUEUE_URL: "{{ profile_update_queue_url | default('') }}"
     volumes:
       - /data/config/auth:/config
   register: container
@@ -114,6 +116,47 @@
       VERIFICATION_REMINDER_TIME_SECOND: 40000
     volumes:
       - /data/config/mailer:/config
+  register: container
+
+- debug: var=container
+
+- name: Start auth-server profile updates notification container
+  become: true
+  docker_container:
+    name: auth-profile-update
+    image: mozilla/fxa-auth-server{{ ':' + auth_docker_tag }}
+    state: started
+    network_mode: host
+    ports:
+      - 9000:9000
+    command: node bin/profile_server_messaging.js
+    env:
+      NODE_ENV: "stage"
+      PUBLIC_URL: "{{ auth_public_url }}"
+      DB_BACKEND: "httpdb"
+      HTTPDB_URL: "{{ authdb_server_url }}"
+      SECRET_KEY_FILE: "/config/secret-key.json"
+      PUBLIC_KEY_FILE: "/config/public-key.json"
+      VAPID_KEYS_FILE: "/config/vapid-keys.json"
+      CUSTOMS_SERVER_URL: "{{ customs_server_url }}"
+      CONTENT_SERVER_URL: "{{ content_public_url }}"
+      SMTP_HOST: "{{ auth_mail_host }}"
+      SMTP_PORT: "{{ auth_mail_port }}"
+      # This MUST be quoted. Otherwise, it becomes pythonic False,
+      # which node-convict coerces to `true`.
+      SMTP_SECURE: "false"
+      SMTP_SENDER: "{{ auth_mail_sender }}"
+      SECONDARY_EMAIL_ENABLED: "true"
+      REDIRECT_DOMAIN: "firefox.com"
+      VERIFICATION_REMINDER_RATE: 1
+      SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^(sync.*@restmail\\.net|.+@mozilla\\.com)$"
+      SIGNIN_UNBLOCK_FORCED_EMAILS: "^(block.*@restmail\\.net|.+@mozilla\\.com)$"
+      PORT: "{{ auth_private_port }}"
+      SNS_TOPIC_ARN:  "{{ auth_sns_arn }}"
+      PROFILE_MESSAGING_REGION: "{{ region }}"
+      PROFILE_UPDATES_QUEUE_URL: "{{ profile_update_queue_url | default('') }}"
+    volumes:
+      - /data/config/auth:/config
   register: container
 
 - debug: var=container
