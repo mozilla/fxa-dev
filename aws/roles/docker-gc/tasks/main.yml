@@ -1,7 +1,21 @@
 ---
 
-- name: cleanup old docker images
+- name: cleanup dangling docker images
   command: |
     /bin/bash -c "docker images -f 'dangling=true' -q | xargs --no-run-if-empty docker rmi"
+
+- name: install docker-gc-images.py
+  copy:
+    src: docker-gc-images.py
+    dest: /home/ec2-user
+    owner: ec2-user
+    group: ec2-user
+    mode: 0755
+
+- name: cleanup docker images unused by any containers
+  command: /home/ec2-user/docker-gc-images.py
+  register: result
+
+- debug: var=result.stdout_lines
 
 - meta: flush_handlers
