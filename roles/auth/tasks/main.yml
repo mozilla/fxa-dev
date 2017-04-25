@@ -77,6 +77,7 @@
       # which node-convict coerces to `true`.
       SMTP_SECURE: "false"
       SMTP_SENDER: "{{ auth_mail_sender }}"
+      SECONDARY_EMAIL_ENABLED: "true"
       REDIRECT_DOMAIN: "firefox.com"
       VERIFICATION_REMINDER_RATE: 1
       SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^(sync.*@restmail\\.net|.+@mozilla\\.com)$"
@@ -108,7 +109,6 @@
       # This MUST be quoted. Otherwise, it becomes pythonic `False`,
       # which node-convict coerces to `true`.
       MAIL_HTTPS_SECURE: "false"
-      SECONDARY_EMAIL_ENABLED: "true"
       SMTP_SENDER: "{{ auth_mail_sender }}"
       VERIFICATION_REMINDER_TIME_FIRST: 20000
       VERIFICATION_REMINDER_TIME_SECOND: 40000
