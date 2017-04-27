@@ -132,6 +132,7 @@
     command: node bin/profile_server_messaging.js
     env:
       NODE_ENV: "stage"
+      LOG_LEVEL: "trace"
       PUBLIC_URL: "{{ auth_public_url }}"
       DB_BACKEND: "httpdb"
       HTTPDB_URL: "{{ authdb_server_url }}"
