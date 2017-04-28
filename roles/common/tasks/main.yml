@@ -16,7 +16,6 @@
     - gcc-c++
     - git
     - ntp
-    - python-pip
 
 - name: ensure a docker group is created to allow running without sudo
   become: true
@@ -25,6 +24,11 @@
 - name: add ec2-user to the docker group
   become: true
   user: name=ec2-user append=yes groups=docker
+
+# use extra_args to ensure ansible-playbook in in /usr/bin so cron can find it
+- name: install ansible
+  become: true
+  pip: name=ansible state=present extra_args='--install-option="--install-scripts=/usr/bin"'
 
 - name: install docker-py module
   become: true

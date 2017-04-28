@@ -8,11 +8,6 @@
   become: true
   service: name=crond state=started enabled=true
 
-# use extra_args to ensure ansible-playbook in in /usr/bin so cron can find it
-- name: install ansible
-  become: true
-  yum: enablerepo=epel name=ansible state=present
-
 - name: install fxa-dev
   become: true
   git: repo={{ fxadev_git_repo }}
