@@ -10,6 +10,6 @@ ec2_volume_size: 24
 
 fxadev_git_version: docker
 content_docker_tag: feature.add-additional-email
-
+auth_docker_tag: feature.add-additional-emails
 
 
