@@ -35,8 +35,8 @@ changes to that file to affect an existing EC2 instance).
 
 Docker stopped|started: By default, all docker containers are 'started'. If
 you want to selectively keep a service 'stopped', you can set any of
-`{auth_docker_tag, authdb_docker_tag, basket_docker_tag, content_docker_tag,
-customs_docker_tag, oauth_docker_tag, profile_docker_tag, rp_docker_tag}` in
+`{auth_docker_state, authdb_docker_state, basket_docker_state, content_docker_state,
+customs_docker_state, oauth_docker_state, profile_docker_state, rp_docker_state}` in
 your environments/foo.yml configuration file. (NOTE: you must commit and push
 changes to that file to affect an existing EC2 instance).
 
