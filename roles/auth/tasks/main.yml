@@ -56,7 +56,7 @@
   docker_container:
     name: auth-server
     image: mozilla/fxa-auth-server{{ ':' + auth_docker_tag }}
-    state: started
+    state: "{{ auth_docker_state }}"
     network_mode: host
     ports:
       - 9000:9000
@@ -95,7 +95,7 @@
   docker_container:
     name: auth-mailer
     image: mozilla/fxa-auth-server{{ ':' + auth_docker_tag }}
-    state: started
+    state: "{{ auth_docker_state }}"
     network_mode: host
     ports:
       - "{{ auth_mailer_port }}:{{ auth_mailer_port }}"

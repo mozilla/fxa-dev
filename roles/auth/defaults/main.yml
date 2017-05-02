@@ -11,6 +11,7 @@ auth_private_port: 9000
 auth_git_repo: https://github.com/mozilla/fxa-auth-server.git
 auth_git_version: master
 auth_docker_tag: latest
+auth_docker_state: started
 auth_mail_host: 127.0.0.1
 auth_mail_port: 25
 auth_mail_sender: "Firefox Accounts <verification@{{ domain_name }}>"

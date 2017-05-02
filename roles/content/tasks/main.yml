@@ -30,7 +30,7 @@
   docker_container:
     name: content
     image: mozilla/fxa-content-server{{ ':' + content_docker_tag }}
-    state: started
+    state: "{{ content_docker_state }}"
     ports:
       - 3030:3030
     command: node server/bin/fxa-content-server.js

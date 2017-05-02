@@ -25,7 +25,7 @@
   docker_container:
     name: rp-untrusted
     image: jrgm/123done{{ ':' + rp_docker_tag }}
-    state: started
+    state: "{{ rp_docker_state }}"
     network_mode: host
     ports:
       - 4902:4902

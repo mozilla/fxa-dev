@@ -33,7 +33,7 @@
   docker_container:
     name: oauth
     image: mozilla/fxa-oauth-server{{ ':' + oauth_docker_tag }} 
-    state: started
+    state: "{{ oauth_docker_state }}"
     network_mode: host
     ports:
       - 9010:9010
@@ -51,7 +51,7 @@
   docker_container:
     name: oauth-internal
     image: mozilla/fxa-oauth-server{{ ':' + oauth_docker_tag }}
-    state: started
+    state: "{{ oauth_docker_state }}"
     network_mode: host
     ports:
       - 9111:9111
