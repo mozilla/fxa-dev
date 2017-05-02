@@ -38,7 +38,7 @@
   docker_container:
     name: rp
     image: jrgm/123done{{ ':' + rp_docker_tag }}
-    state: started
+    state: "{{ rp_docker_state }}"
     network_mode: host
     ports:
       - 4900:4900

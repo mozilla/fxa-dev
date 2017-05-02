@@ -35,7 +35,7 @@
   docker_container:
     name: auth-db
     image: mozilla/fxa-auth-db-mysql{{ ':' + authdb_docker_tag }} 
-    state: started
+    state: "{{ authdb_docker_state }}"
     network_mode: host
     ports:
       - "{{ authdb_private_port }}:{{ authdb_private_port }}"

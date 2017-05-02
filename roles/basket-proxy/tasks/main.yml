@@ -41,7 +41,7 @@
   docker_container:
     name: basket-proxy
     image: mozilla/fxa-basket-proxy{{ ':' + basket_proxy_docker_tag }}
-    state: started
+    state: "{{ basket_docker_state }}"
     network_mode: host
     ports:
       - "{{ basket_private_port }}:{{ basket_private_port }}"
@@ -56,7 +56,7 @@
   docker_container:
     name: basket-event-handler
     image: mozilla/fxa-basket-proxy{{ ':' + basket_proxy_docker_tag }}
-    state: started
+    state: "{{ basket_docker_state }}"
     network_mode: host
     command: node bin/basket-event-handler.js
     env_file: /data/config/basket/env_file.sh
@@ -69,7 +69,7 @@
   docker_container:
     name: basket-fake
     image: mozilla/fxa-basket-proxy{{ ':' + basket_proxy_docker_tag }}
-    state: started
+    state: "{{ basket_docker_state }}"
     network_mode: host
     ports:
       - "{{ basket_api_port }}:{{ basket_api_port }}"

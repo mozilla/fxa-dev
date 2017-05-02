@@ -21,7 +21,7 @@
   docker_container:
     name: mysql
     image: mysql{{ ':' + mysql_docker_tag }}
-    state: started
+    state: "{{ mysql_docker_state }}"
     ports:
       - 3306:3306
     env:

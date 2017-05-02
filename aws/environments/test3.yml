@@ -9,7 +9,8 @@ ec2_instance_type: t2.medium
 ec2_volume_size: 24
 
 fxadev_git_version: docker
-content_docker_tag: docker-branch-deploy
+customs_docker_state: started
+
 
 
 

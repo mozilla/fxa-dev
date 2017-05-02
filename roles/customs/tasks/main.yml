@@ -20,7 +20,7 @@
   docker_container:
     name: customs
     image: mozilla/fxa-customs-server{{ ':' + customs_docker_tag }}
-    state: started
+    state: "{{ customs_docker_state }}"
     network_mode: host
     ports:
       - 7000:7000
