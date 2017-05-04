@@ -24,21 +24,34 @@ will pick up changes as needed. The logs for the initial playbook run are in
 `/var/log/cloud-init-output.log`. If the cloudformation was created OK, but
 the services do not come up, check that log output for why.
 
-You can ssh into the EC2 instance with `ssh ec2-user@meta-{{ whatever you configured in foo.yml }}`.
+### SSH
 
-Docker tags: By default, the `latest` tag will be used. This can be adjusted
+You can ssh into the EC2 instance with `ssh ec2-user@meta-{{ whatever you configured in foo.yml }}`. 
+
+### Custom Docker tags
+
+By default, the `latest` tag will be used. This can be adjusted
 to use other image tags by setting any of `{auth_docker_tag,
 authdb_docker_tag, basket_proxy_docker_tag, content_docker_tag,
 customs_docker_tag, oauth_docker_tag, profile_docker_tag, rp_docker_tag}` in
-your environments/foo.yml configuration file. (NOTE: you must commit and push
-changes to that file to affect an existing EC2 instance).
+your environments/foo.yml configuration file. 
 
-Docker stopped|started: By default, all docker containers are 'started'. If
+> NOTE: you must commit and push changes to that file to affect an existing EC2 instance.
+
+### Docker stopped|started:
+
+By default, all docker containers are 'started'. If
 you want to selectively keep a service 'stopped', you can set any of
 `{auth_docker_state, authdb_docker_state, basket_docker_state, content_docker_state,
 customs_docker_state, oauth_docker_state, profile_docker_state, rp_docker_state}` in
-your environments/foo.yml configuration file. (NOTE: you must commit and push
-changes to that file to affect an existing EC2 instance).
+your environments/foo.yml configuration file. 
+
+> NOTE: you must commit and push changes to that file to affect an existing EC2 instance.
+
+### Custom fxa-dev branch
+
+You can control the branch for each environment by changing the `{fxadev_git_version}` value in the environment configuration file.
+
 
 ## Layout Notes
 
