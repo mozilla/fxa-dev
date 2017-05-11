@@ -23,7 +23,7 @@
     # changed.
     force: true
     state: present
-    name: jrgm/123done
+    name: vladikoff/123done
     tag: "{{ rp_docker_tag }}"
   register: image
 
@@ -31,7 +31,7 @@
 
 - name: generate rp keys
   become: true
-  command: docker run --rm --net=host -e CONFIG_123DONE=/config/config-dev.json -v /data/config/rp:/config jrgm/123done node scripts/gen_keys.js creates=/data/config/rp/secret-key.json
+  command: docker run --rm --net=host -e CONFIG_123DONE=/config/config-dev.json -v /data/config/rp:/config vladikoff/123done node scripts/gen_keys.js creates=/data/config/rp/secret-key.json
 
 - name: Start 123done docker container as trusted rp
   become: true
