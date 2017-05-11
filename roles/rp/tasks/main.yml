@@ -24,7 +24,7 @@
     force: true
     state: present
     name: vladikoff/123done
-    tag: "{{ rp_docker_tag }}"
+    tag: "oauth-keys"
   register: image
 
 - debug: var=image
