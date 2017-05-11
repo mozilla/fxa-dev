@@ -37,7 +37,7 @@
   become: true
   docker_container:
     name: rp
-    image: jrgm/123done{{ ':' + rp_docker_tag }}
+    image: vladikoff/123done:oauth-keys
     state: "{{ rp_docker_state }}"
     network_mode: host
     ports:
