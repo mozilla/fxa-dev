@@ -71,6 +71,8 @@
       VAPID_KEYS_FILE: "/config/vapid-keys.json"
       CUSTOMS_SERVER_URL: "{{ customs_server_url }}"
       CONTENT_SERVER_URL: "{{ content_public_url }}"
+      SMS_USE_MOCK: "true",
+      SMS_STATUS_GEO_ENABLED: "false",
       SMTP_HOST: "{{ auth_mail_host }}"
       SMTP_PORT: "{{ auth_mail_port }}"
       # This MUST be quoted. Otherwise, it becomes pythonic False,
