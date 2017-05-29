@@ -1,43 +1,47 @@
 ---
 
-- file: path=/etc/nginx/conf.d/oauth_console/upstream state=directory
+- name: configure nginx
   become: true
-
-- name: configure nginx upstream
-  become: true
-  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/oauth_console/upstream/http_fxa_oauth_console.conf
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_oauth_console.conf
   notify: reload nginx config
 
-- file: path=/etc/nginx/conf.d/oauth_console/location state=directory
+- name: create shared mount point for configuration info
+  file: path=/data/config/oauth state=directory owner=app group=app mode=0777
   become: true
-
-- name: configure nginx location
-  become: true
-  template: src=location.conf.j2 dest=/etc/nginx/conf.d/oauth_console/location/http_fxa_oauth_console.conf
-  notify: reload nginx config
-
-- name: install fxa-oauth-console
-  tags: code
-  become: true
-  become_user: app
-  git: repo={{ oauth_console_git_repo }}
-       dest=/data/fxa-oauth-console
-       version={{ oauth_console_git_version }}
-       force=true
-  notify:
-    - install fxa-oauth-console dependencies
-    - build fxa-oauth-console assets
-    - restart fxa-oauth-console
 
 - name: configure fxa-oauth-console
   become: true
   become_user: app
-  template: src=config.json.j2 dest=/data/fxa-oauth-console/config/local.json
-  notify: restart fxa-oauth-console
+  template: src=config.json.j2 dest=/data/oauth-console/config/local.json
 
-- name: supervise fxa-oauth-console
+- name: pull oauth-console docker image
   become: true
-  copy: src=fxa-oauth-console.conf dest=/etc/supervisor.d/fxa-oauth-console.conf
-  notify: update supervisor
+  docker_image:
+    # pull image always. In a pending update to ansible, it will only set
+    # changed:true if the image has actually changed. However, docker_container
+    # `state:started` will only re-start if image of configuration has
+    # changed.
+    force: true
+    state: present
+    name: mozilla/fxa-oauth-console
+    tag: "{{ oauth_console_docker_tag }}"
+  register: image
 
+- name: start oauth-console docker container
+  become: true
+  docker_container:
+      name: oauth-console
+      image: mozilla/fxa-oauth-console{{ ':' + oauth_console_docker_tag }}
+      state: "{{ oauth_console_docker_state }}"
+      network_mode: host
+      environment:
+        PROFILE_URI: "{{ profile_public_uri }}"
+        OAUTH_URI: "{{ oauth_public_uri }}"
+        OAUTH_INTERNAL_URI: "{{ oauth_internal_uri }}"
+      ports:
+        - 10137:10137
+      command: node bin/server.js
+    register: container
+
+- debug: var=container
 - meta: flush_handlers

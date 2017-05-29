@@ -11,6 +11,7 @@ IMAGES=(
   mozilla/fxa-content-server
   mozilla/fxa-customs-server
   mozilla/fxa-oauth-server
+  mozilla/fxa-oauth-console
   mozilla/fxa-profile-server
   mysql:5.6.35
 )
