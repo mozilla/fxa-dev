@@ -40,4 +40,18 @@
   copy: src=fxa-oauth-console.conf dest=/etc/supervisor.d/fxa-oauth-console.conf
   notify: update supervisor
 
+- name: start oauth-console docker container
+  become: true
+  docker_container:
+      name: oauth-console
+      image: mozilla/fxa-oauth-console{{ ':' + oauth_docker_tag }}
+      state: "{{ oauth_console_docker_state }}"
+      network_mode: host
+      ports:
+        - 10137:10137
+      command: node bin/server.js
+      volumes:
+        - /data/config/oauth:/config:ro
+    register: container
+
 - meta: flush_handlers
