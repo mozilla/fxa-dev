@@ -41,6 +41,11 @@
         PROFILE_URI: "{{ profile_public_uri }}"
         OAUTH_URI: "{{ oauth_public_uri }}"
         OAUTH_INTERNAL_URI: "{{ oauth_internal_uri }}"
+        BASE_URL: "/console/"
+        COOKIE_SECRET: "2be80db1d3cf5ddef69d"
+        FXA_OAUTH_CLIENT_ID: "24bdbfa45cd300c5"
+        FXA_OAUTH_CLIENT_SECRET: "2be80db1d3cf5ddef69d5e23d7d1885e3bbc09f53781d44a8e2f3507a8d6a62c"
+        FXA_OAUTH_REDIRECT_URI: "{{ oauth_public_url }}/console/oauth/redirect"
       ports:
         - 10137:10137
       command: node bin/server.js
