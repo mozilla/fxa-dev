@@ -9,11 +9,6 @@
   file: path=/data/config/oauth state=directory owner=app group=app mode=0777
   become: true
 
-- name: configure fxa-oauth-console
-  become: true
-  become_user: app
-  template: src=config.json.j2 dest=/data/oauth-console/config/local.json
-
 - name: pull oauth-console docker image
   become: true
   docker_image:
