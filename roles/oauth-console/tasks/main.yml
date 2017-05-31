@@ -29,7 +29,7 @@
       image: mozilla/fxa-oauth-console{{ ':' + oauth_console_docker_tag }}
       state: "{{ oauth_console_docker_state }}"
       network_mode: host
-      environment:
+      env:
         PROFILE_URI: "{{ profile_public_uri }}"
         OAUTH_URI: "{{ oauth_public_uri }}"
         OAUTH_INTERNAL_URI: "{{ oauth_internal_uri }}"
