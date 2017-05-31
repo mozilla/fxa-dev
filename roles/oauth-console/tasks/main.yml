@@ -41,7 +41,7 @@
       ports:
         - 10137:10137
       command: node bin/server.js
-    register: container
+  register: container
 
 - debug: var=container
 - meta: flush_handlers
