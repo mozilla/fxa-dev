@@ -5,6 +5,9 @@
   template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_oauth_console.conf
   notify: reload nginx config
 
+- file: path=/etc/nginx/conf.d/oauth_console/location state=directory
+  become: true
+
 - name: configure nginx location
   become: true
   template: src=location.conf.j2 dest=/etc/nginx/conf.d/oauth_console/location/http_fxa_oauth_console.conf
