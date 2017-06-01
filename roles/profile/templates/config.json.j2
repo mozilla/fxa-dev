@@ -37,6 +37,10 @@
     },
     "url": "{{ profile_public_url }}/a/{id}"
   },
+  "events": {
+    "region": "{{ region }}",
+    "queueUrl": "{{ profile_queue_url }}"
+  },
   "authServerMessaging": {
     "region": "{{ region }}",
     "profileUpdatesQueueUrl": "{{ profile_update_queue_url | default('') }}"
