@@ -30,6 +30,7 @@
     - rp
     - rp-untrusted
     - oauth
+    - oauth-console
     - profile
     - docker-gc
     - cron_update

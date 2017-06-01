@@ -1,7 +1,24 @@
 ---
+oauth_console_git_repo: https://github.com/mozilla/fxa-oauth-console.git
+
 public_protocol: https
 private_protocol: http
 domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+
 oauth_console_private_port: 10137
+oauth_private_port: 9010
+oauth_internal_private_port: 9111
+profile_public_port: 1111
+
+oauth_domain_name: "oauth-{{ domain_name }}"
+oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
+oauth_private_url: "{{ private_protocol }}://{{ oauth_domain_name }}"
+
+oauth_public_uri: "{{ oauth_public_url }}/v1"
+oauth_internal_uri:  "{{ oauth_public_url }}/v1"
+profile_public_uri: "{{ public_protocol }}://{{ domain_name }}/profile/v1"
+
 oauth_console_git_repo: https://github.com/mozilla/fxa-oauth-console.git
 oauth_console_git_version: master
+oauth_console_docker_tag: latest
+oauth_console_docker_state: started
