@@ -14,8 +14,8 @@ oauth_domain_name: "oauth-{{ domain_name }}"
 oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
 oauth_private_url: "{{ private_protocol }}://{{ oauth_domain_name }}"
 
-oauth_public_uri: "{{ oauth_public_url }}:{{ oauth_private_port }}/v1"
-oauth_internal_uri:  "{{ oauth_private_url }}:{{ oauth_internal_private_port }}/v1"
+oauth_public_uri: "{{ oauth_public_url }}/v1"
+oauth_internal_uri:  "{{ oauth_private_url }}/v1"
 profile_public_uri: "{{ public_protocol }}://{{ domain_name }}/profile/v1"
 
 oauth_console_git_repo: https://github.com/mozilla/fxa-oauth-console.git
