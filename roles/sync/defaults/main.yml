@@ -1,0 +1,18 @@
+---
+public_protocol: https
+private_protocol: http
+domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+sync_private_port: 5000
+
+sync_git_repo: https://github.com/mozilla-services/syncserver.git
+sync_git_version: master
+
+sync_docker_tag: latest
+sync_docker_state: started
+
+sync_public_url: "{{ public_protocol }}://{{ domain_name }}/syncserver"
+sync_server_secret: 5382b775a2bdbe0a65ea6cce55f49c4d466bfd7e
+sync_db_host: 127.0.0.1
+sync_db_password:
+
+sync_sqluri: sqlite:////tmp/syncserver.db
