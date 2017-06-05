@@ -1,0 +1,49 @@
+---
+
+- name: configure nginx upstream
+  sudo: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_syncserver.conf
+  notify: reload nginx config
+
+- file: path=/etc/nginx/conf.d/sync/location state=directory
+  become: true
+
+- name: configure nginx location
+  sudo: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_syncserver.conf
+  notify: reload nginx config
+
+- debug: var=image
+
+- name: pull sync docker image
+  become: true
+  docker_image:
+    # pull image always. In a pending update to ansible, it will only set
+    # changed:true if the image has actually changed. However, docker_container
+    # `state:started` will only re-start if image of configuration has
+    # changed.
+    force: true
+    state: present
+    name: mozilla/syncserver
+    tag: "{{ sync_docker_tag }}"
+  register: image
+
+- name: Start sync docker container
+  become: true
+  docker_container:
+    name: syncserver
+    image: mozilla/syncserver{{ ':' + sync_docker_tag }}
+    state: "{{sync_docker_state}}"
+    network_mode: host
+    env:
+      SYNCSERVER_PUBLIC_URL: "{{ sync_public_url }}"
+      SYNCSERVER_SECRET: "{{ sync_server_secret }}"
+      SYNCSERVER_SQLURI: "{{ sync_sqluri }}"
+      SYNCSERVER_BATCH_UPLOAD_ENABLED: true
+    ports:
+      - 5000:5000
+
+    command: /usr/local/bin/gunicorn --bind localhost:5000 syncserver.wsgi_app
+
+- debug: var=container
+- meta: flush_handlers

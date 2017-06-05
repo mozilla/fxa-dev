@@ -1,0 +1,35 @@
+[server:main]
+use = egg:Paste#http
+host = 0.0.0.0
+port = {{ sync_private_port }}
+
+[app:main]
+use = egg:syncserver
+
+[syncserver]
+# This must be edited to point to the public URL of your server,
+# i.e. the URL as seen by Firefox.
+public_url = {{ sync_public_url }}
+
+# This defines the database in which to store all server data.
+sqluri = "pymysql://root:{{ sync_db_password | replace("$", "$$") }}@{{ sync_db_host }}/sync"
+
+# This is a secret key used for signing authentication tokens.
+# It should be long and randomly-generated.
+# The following command will give a suitable value on *nix systems:
+#
+#    head -c 20 /dev/urandom | sha1sum
+#
+# If not specified then the server will generate a temporary one at startup.
+secret = {{ sync_master_secret }}
+
+# Set this to "false" to disable new-user signups on the server.
+# Only request by existing accounts will be honoured.
+# allow_new_users = false
+
+# Uncomment and edit the following to use a local BrowserID verifier
+# rather than posing assertions to the mozilla-hosted verifier.
+# Audiences should be set to your public_url without a trailing slash.
+#[browserid]
+#backend = tokenserver.verifiers.LocalVerifier
+#audiences = https://localhost:5000
