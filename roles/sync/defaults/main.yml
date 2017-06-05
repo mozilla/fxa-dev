@@ -13,6 +13,5 @@ sync_docker_state: started
 sync_public_url: "{{ public_protocol }}://{{ domain_name }}/syncserver"
 sync_server_secret: 5382b775a2bdbe0a65ea6cce55f49c4d466bfd7e
 sync_db_host: 127.0.0.1
-sync_db_password:
 
 sync_sqluri: sqlite:////tmp/syncserver.db
