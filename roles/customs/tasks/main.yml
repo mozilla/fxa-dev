@@ -28,6 +28,7 @@
     env:
       NODE_ENV: "stage"
       IP_ADDRESS: "0.0.0.0"
+      MAX_ACCOUNT_ACCESS: "1000"
       MAX_ACCOUNT_STATUS_CHECK: "1000"
       UID_RATE_LIMIT: "1000"
       BANS_REGION: "us-west-2"
