@@ -21,6 +21,7 @@
     - common
     - mysql
     - ses
+    - redis
     - memcached
     - customs
     - authdb

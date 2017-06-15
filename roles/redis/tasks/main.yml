@@ -1,0 +1,31 @@
+---
+- name: pull redis docker image
+  become: true
+  docker_image:
+    # pull image always. In a pending update to ansible, it will only set
+    # changed:true if the image has actually changed. However, docker_container
+    # `state:started` will only re-start if image of configuration has
+    # changed.
+    force: true
+    state: present
+    name: mozilla/fxa-profile-server
+    tag: "{{ profile_docker_tag }}"
+  register: image
+
+- debug: var=image
+
+- name: Start redis server docker container
+  become: true
+  docker_container:
+    name: redis
+    image: redis{{ ':' + redis_docker_tag }}
+    state: "{{ redis_docker_state }}"
+    network_mode: host
+    ports:
+      - 6379:6379
+    command: redis-server
+  register: container
+
+- debug: var=container
+
+- meta: flush_handlers

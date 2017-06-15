@@ -1,0 +1,4 @@
+---
+redis_docker_tag: 3.2-alpine
+redis_docker_state: started
+profile_docker_tag: latest
