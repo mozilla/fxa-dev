@@ -1,6 +1,4 @@
 ---
-oauth_console_git_repo: https://github.com/mozilla/fxa-oauth-console.git
-
 public_protocol: https
 private_protocol: http
 domain_name: "{{ subdomain }}.{{ hosted_zone }}"
