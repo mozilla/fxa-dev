@@ -1,0 +1,16 @@
+---
+- name: Start redis server docker container
+  become: true
+  docker_container:
+    name: redis
+    image: redis{{ ':' + redis_docker_tag }}
+    state: "{{ redis_docker_state }}"
+    network_mode: host
+    ports:
+      - 6379:6379
+    command: redis-server
+  register: container
+
+- debug: var=container
+
+- meta: flush_handlers

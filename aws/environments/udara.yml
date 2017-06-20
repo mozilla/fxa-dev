@@ -8,4 +8,5 @@ rds_password: ab4b6475c68a8734
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
 
-fxadev_git_version: docker-fx-sync
+fxadev_git_version: docker-profile-request-cache
+profile_docker_tag: feature.request-cache
