@@ -10,5 +10,5 @@ ec2_volume_size: 24
 
 fxadev_git_version: docker
 
-content_docker_tag: v1.88.0
+content_docker_tag: v1.88.1
 content_docker_state: stopped
