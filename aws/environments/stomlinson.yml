@@ -31,4 +31,4 @@ cron_time:
   month: 1
 
 owner: "stomlinson@mozilla.com"
-reaper_spare_me: false
+reaper_spare_me: "false"
