@@ -153,8 +153,8 @@
       SECONDARY_EMAIL_ENABLED: "true"
       REDIRECT_DOMAIN: "firefox.com"
       VERIFICATION_REMINDER_RATE: 1
-      SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^(sync.*@restmail\\.net|.+@mozilla\\.com)$"
-      SIGNIN_UNBLOCK_FORCED_EMAILS: "^(block.*@restmail\\.net|.+@mozilla\\.com)$"
+      SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^sync.*@restmail\\.net$"
+      SIGNIN_UNBLOCK_FORCED_EMAILS: "^block.*@restmail\\.net$"
       PORT: "{{ auth_private_port }}"
       SNS_TOPIC_ARN:  "{{ auth_sns_arn }}"
       PROFILE_MESSAGING_REGION: "{{ region }}"
