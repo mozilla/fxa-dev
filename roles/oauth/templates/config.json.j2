@@ -1,13 +1,5 @@
 {
   "contentUrl": "{{ content_public_url }}/oauth/",
-  "db": {
-    "driver": "mysql"
-  },
-  "mysql": {
-    "password": "{{ oauth_db_password }}",
-    "host": "{{ oauth_db_host }}",
-    "connectionLimit": 5
-  },
   "browserid": {
     "issuer": "{{ browserid_issuer }}"
   },
@@ -22,6 +14,28 @@
       "redirectUri": "{{ rp_public_url }}/api/oauth",
       "trusted": true,
       "canGrant": false
+    },
+    {
+      "id": "3a7d05df0d8db810",
+      "name": "Firefox Notes",
+      "hashedSecret": "8182f4df9274c32c08f61f26ad0e003ca8b9755314b9467f069f84b8c14252c6",
+      "redirectUri": "https://716070611e535cc1608605bb18a26acf3c33d06a.extensions.allizom.org/",
+      "imageUri": "",
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true
+    },
+    {
+      "id": "c6d74070a481bc10",
+      "name": "Firefox Notes",
+      "hashedSecret": "9c716ed2927c96cdc0fb7efe57d5f124fb4161066c1ff7f4263069822256ec3f",
+      "redirectUri": "https://dee85c67bd72f3de1f0a0fb62a8fe9b9b1a166d7.extensions.allizom.org",
+      "imageUri": "",
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true
     },
     {
       "id": "325b4083e32fe8e7",
