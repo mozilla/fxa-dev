@@ -90,6 +90,7 @@
       SNS_TOPIC_ARN:  "{{ auth_sns_arn }}"
       PROFILE_MESSAGING_REGION: "{{ region }}"
       PROFILE_UPDATES_QUEUE_URL: "{{ profile_update_queue_url | default('') }}"
+      LASTACCESSTIME_UPDATES_SAMPLE_RATE: 1
     volumes:
       - /data/config/auth:/config
   register: container
