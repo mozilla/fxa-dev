@@ -8,6 +8,7 @@ location /auth/ {
 # Note: the following routes are defined in ./roles/content/templates/nginx.conf.j2:
 #  * /.well-known/openid-configuration
 #  * /.well-known/fxa-client-configuration
+#  * /.well-known/apple-app-site-association
 # Most specific route wins, so those are handled by the content server,
 # and any other route under /.well-known is handled by the auth server.
 
