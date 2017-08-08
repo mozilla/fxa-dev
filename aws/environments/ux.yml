@@ -3,6 +3,9 @@ region: us-west-2
 subdomain: ux.dev
 hosted_zone: lcip.org
 ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
-rds_password: Q)vy7]e9Q8G%9f{K
+rds_password: ab4b6475c68a8734
 
-content_git_version: ux-experiments
+ec2_instance_type: t2.medium
+ec2_volume_size: 24
+
+content_docker_tag: feature.colours-photon
