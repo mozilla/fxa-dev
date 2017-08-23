@@ -22,6 +22,7 @@
     name: mysql
     image: mysql{{ ':' + mysql_docker_tag }}
     state: "{{ mysql_docker_state }}"
+    command: mysqld --sql-mode=''
     ports:
       - 3306:3306
     env:

@@ -8,3 +8,4 @@ owner: "rfkelly@mozilla.com"
 reaper_spare_me: "true"
 fxadev_git_version: docker-rfkelly
 auth_docker_tag: feature.device-name-emoji
+authdb_docker_tag: feature.device-name-emoji
