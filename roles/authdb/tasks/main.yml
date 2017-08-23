@@ -28,7 +28,7 @@
 
 - name: run db_patcher
   become: true
-  command: docker run --rm --net=host -e NODE_ENV=stage mozilla/fxa-auth-db-mysql node bin/db_patcher.js
+  command: docker run --rm --net=host -e NODE_ENV=stage mozilla/fxa-auth-db-mysql{{ ':' + authdb_docker_tag }} node bin/db_patcher.js
 
 - name: Start auth-db docker container
   become: true
