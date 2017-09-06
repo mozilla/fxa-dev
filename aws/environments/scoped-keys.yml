@@ -10,6 +10,6 @@ ec2_volume_size: 24
 
 fxadev_git_version: docker-oauth-keys-v2
 content_docker_tag: feature.key-jwk-v2-kS
-oauth_docker_tag: feature.oauth-key-jwk-v3
+oauth_docker_tag: feature.scoped-keys-v5
 
 customs_docker_state: stopped
