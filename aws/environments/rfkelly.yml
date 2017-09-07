@@ -6,5 +6,3 @@ ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02
 rds_password: 3f3449779fbe896ed91398f4b56b6257
 owner: "rfkelly@mozilla.com"
 reaper_spare_me: "true"
-fxadev_git_version: docker-rfkelly
-auth_docker_tag: feature.device-name-emoji
