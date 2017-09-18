@@ -19,6 +19,6 @@
   sudo: true
   supervisorctl: name=fxa-auth-server state=restarted
 
-- name: restart fxa-auth-mailer
-  sudo: true
-  supervisorctl: name=fxa-auth-mailer state=restarted
+#- name: restart fxa-auth-mailer
+#  sudo: true
+#  supervisorctl: name=fxa-auth-mailer state=restarted

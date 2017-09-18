@@ -23,7 +23,6 @@
     - gen dev key-pair
     - gen VAPID key-pair
     - restart fxa-auth-server
-    - restart fxa-auth-mailer
 
 - name: configure fxa-auth-server
   sudo: true
@@ -31,7 +30,6 @@
   template: src=config.json.j2 dest=/data/fxa-auth-server/config/stage.json
   notify: 
     - restart fxa-auth-server
-    - restart fxa-auth-mailer
 
 - name: supervise fxa-auth-server
   sudo: true
