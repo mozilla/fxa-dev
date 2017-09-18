@@ -13,8 +13,8 @@
     - install fxa-auth-db-mysql mysql-patcher devDependency
     - run db patcher
     - restart fxa-auth-db-server
-    - restart fxa-auth-server
-    - restart fxa-auth-mailer
+#    - restart fxa-auth-server
+#    - restart fxa-auth-mailer
 
 - name: configure fxa-auth-db-server
   sudo: true
