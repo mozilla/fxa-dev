@@ -1,13 +1,5 @@
 {
   "contentUrl": "{{ content_public_url }}/oauth/",
-  "db": {
-    "driver": "mysql"
-  },
-  "mysql": {
-    "password": "{{ oauth_db_password }}",
-    "host": "{{ oauth_db_host }}",
-    "connectionLimit": 5
-  },
   "browserid": {
     "issuer": "{{ browserid_issuer }}"
   },
@@ -33,6 +25,57 @@
       "canGrant": false
     },
     {
+      "id": "3a7d05df0d8db810",
+      "name": "Firefox Notes",
+      "hashedSecret": "8182f4df9274c32c08f61f26ad0e003ca8b9755314b9467f069f84b8c14252c6",
+      "redirectUri": "https://716070611e535cc1608605bb18a26acf3c33d06a.extensions.allizom.org/",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true
+    },
+    {
+      "id": "c6d74070a481bc10",
+      "name": "Firefox Notes",
+      "hashedSecret": "9c716ed2927c96cdc0fb7efe57d5f124fb4161066c1ff7f4263069822256ec3f",
+      "redirectUri": "https://dee85c67bd72f3de1f0a0fb62a8fe9b9b1a166d7.extensions.allizom.org",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "applicationScope": "https://identity.mozilla.org/apps/notes"
+    },
+    {
+      "id": "82fdfa37698f256c",
+      "name": "Firefox Notes Local Dev",
+      "hashedSecret": "8d3730ce8dc4f54c278c2abfe79e2ed03687febbe7ff12ef6e93976cc2f35f43",
+      "redirectUri": "http://localhost:3033",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "applicationScope": "https://identity.mozilla.org/apps/notes"
+    },
+    {
+      "id": "ddd334467337344a",
+      "name": "Scoped Key WebExtension",
+      "hashedSecret": "ac287a384b269492655ccd61fcadffe4d40d4d5d648209f96ee955d45f0ca05c",
+      "redirectUri": "https://cad3e32c651f62062e87b786f04c49bea007c8c3.extensions.allizom.org",
+      "imageUri": "",
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "publicClient": true,
+      "applicationScope": "https://identity.mozilla.org/apps/scoped-example"
+    },
+    {
       "id": "263ceaa5546dce83",
       "hashedSecret": "3c32099123471ffb80a7553558e6a6e8589da2235a4e081fe9d76648aa25d050",
       "name": "Loop",
@@ -41,6 +84,7 @@
       "trusted": true,
       "canGrant": false
     },
+
     {
       "id": "11c73e2d918ae5d9",
       "hashedSecret": "728795b0d64220589274dc65b08ab5b5dc790ce65400b0f500af8682166e5f75",
@@ -294,6 +338,18 @@
       "redirectUri": "",
       "trusted": true,
       "canGrant": true
+    }
+  ],
+  "applicationScopes": [
+    {
+      "applicationScope": "https://identity.mozilla.org/apps/notes",
+      "salt": "289a885946ee316844d9ffd0d725ee714901548a1e6507f1a40fb3c2ae0c99f1",
+      "description": "Read and write access to Notes"
+    },
+    {
+      "applicationScope": "https://identity.mozilla.org/apps/scoped-example",
+      "salt": "c929286b3e8a0dadf5d8915fd0b44b9a2473aef07ee48becceb7b9b0d6e53a4d",
+      "description": "Read and write access to scoped key examples"
     }
   ],
   "env": "stage",
