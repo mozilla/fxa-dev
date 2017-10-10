@@ -42,14 +42,6 @@
      owner=root
      mode=0644
 
-- name: get s3 secrets
-  become: true
-  s3: bucket=net.mozaws.ops.hiera-secrets
-      object=/app/fxa.dev.yaml
-      dest=/data/fxa.dev.yml
-      mode=get
-  changed_when: false
-
 - name: read smtp_user
   shell: 'grep -e "fxa::smtp::user" /data/fxa.dev.yml | sed "s/^fxa::smtp::user: ''\([^'']\+\)''/\1/"'
   become: true
