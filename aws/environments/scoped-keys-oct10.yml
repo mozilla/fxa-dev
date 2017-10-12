@@ -12,3 +12,4 @@ fxadev_git_version: docker-oauth-keys-v3
 content_docker_tag: feature.key-jwk-v5
 
 customs_docker_state: stopped
+auth_ip_profiling_recency: '72 hours'
