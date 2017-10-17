@@ -4,7 +4,7 @@
 * [Usage](#usage)
 * [SSH](#ssh)
 * [Custom Docker tags](#custom-docker-tags)
-* [Docker Stopped|Started](#docker-stopped-started)
+* [Docker Stopped|Started](#docker-stoppedstarted)
 * [Custom fxa-dev branch](#custom-fxa-dev-branch)
 * [Layout Notes](#layout-notes)
 * [Example urls](#example-urls)
