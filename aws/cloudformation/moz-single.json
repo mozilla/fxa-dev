@@ -145,10 +145,8 @@
              "Statement":[
                {
                   "Effect":"Allow",
-                  "Action":[ "S3:GetObject" ],
-                  "Resource": [
-                      "arn:aws:s3:::net-mozaws-ops-fxadev"
-                  ]
+                  "Action":[ "S3:ListBucket", "S3:GetObject" ],
+                  "Resource": "arn:aws:s3:::net-mozaws-ops-fxadev"
                },
                { "Effect":"Allow", "Action": [ "ec2:DescribeTags" ], "Resource": "*" },
                { "Effect":"Allow", "Action": [ "elasticache:DescribeCacheClusters" ], "Resource": "*" },
