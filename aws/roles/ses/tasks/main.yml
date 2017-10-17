@@ -44,7 +44,8 @@
 
 - name: get ses info
   become: true
-  aws_s3: 
+  aws_s3:
+    region=us-west-2
     bucket=net-mozaws-ops-fxadev
     object=ses-info
     mode=getstr
