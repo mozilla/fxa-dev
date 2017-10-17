@@ -42,5 +42,23 @@
      owner=root
      mode=0644
 
+- name: get ses info
+  become: true
+  aws_s3: 
+    bucket=net-mozaws-ops-fxadev
+    object=ses-info
+    mode=getstr
+  register: ses_info
+  changed_when: false
+
+- name: install postfix sasl_passwd
+  become: true
+  template:
+    src=sasl_passwd.j2
+    dest=/etc/postfix/sasl_passwd
+    owner=root group=root mode=0600
+  notify:
+    - postmap sasl_passwd
+    - reload postfix
 
 - meta: flush_handlers
