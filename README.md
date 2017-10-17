@@ -1,8 +1,5 @@
 # AWS Ansible-based docker development environment for Firefox Accounts
 
-Table of Contents (ToC)
-======================
-
 * [Prerequisites](#prerequisites)
 * [Usage](#usage)
 * [SSH](#ssh)
