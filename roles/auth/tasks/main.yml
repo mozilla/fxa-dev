@@ -80,6 +80,7 @@
       SMTP_SECURE: "false"
       SMTP_SENDER: "{{ auth_mail_sender }}"
       SECONDARY_EMAIL_ENABLED: "true"
+      SIGNIN_CONFIRMATION_SKIP_FOR_NEW_ACCOUNTS: "false"
       REDIRECT_DOMAIN: "firefox.com"
       VERIFICATION_REMINDER_RATE: 1
       SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^(sync.*@restmail\\.net)$"
