@@ -8,6 +8,6 @@ rds_password: ab4b6475c68a8734
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
 
-fxadev_git_version: docker
+fxadev_git_version: docker-skipForNewAccounts
 
 content_public_url: "http://127.0.0.1:3030"
