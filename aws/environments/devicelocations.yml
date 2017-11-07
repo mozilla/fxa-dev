@@ -1,0 +1,36 @@
+---
+
+# The following variables should be put into a new yml file in this directory.
+# Any variables used by ansible roles may also be set here.
+
+region: us-east-1
+
+# The {{ subdomain }}.{{ host_zone }} will be added to route53
+subdomain: devicelocations.dev
+hosted_zone: lcip.org
+
+# The ARN of the SSL certificate in ACM to use with Cloudfront & ELB
+# If you need to use us-west-2, use:
+# ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/675e0ac8-23af-4153-8295-acb28ccc9f0f
+
+content_docker_tag: feature.devicelocations
+fxadev_git_version: devicelocations
+
+rds_password: 42{B[3RL(g9ZkE+e
+
+# how often to auto-update (defaults to every 10 minutes)
+# the example below will set it to only update on January 1, 00:00 UTC
+cron_time:
+  minute: 0
+  hour: 0
+  day: 1
+  month: 1
+
+# The "Reaper" is a service which will shut down long-running instances that
+# have accidentally been left running (but will attempt to notify you and give
+# you lead time before taking any action). To exempt your stack from being
+# someday terminated, set these values. Note: `owner` will default to
+# "nobody@mozilla.com" reaper_spare_me will default to "false".
+owner: "pbooth@mozilla.com"
+reaper_spare_me: "true"
