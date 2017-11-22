@@ -48,6 +48,7 @@
       SYNC_TOKENSERVER_URL: "{{ sync_tokenserver_url }}"
       FXA_MARKETING_EMAIL_API_URL: "{{ content_public_url }}/basket"
       FXA_MARKETING_EMAIL_PREFERENCES_URL: "https://www-dev.allizom.org/newsletter/existing/"
+      SCOPED_KEYS_ENABLED: 'true'
   register: container
 
 - debug: var=container
