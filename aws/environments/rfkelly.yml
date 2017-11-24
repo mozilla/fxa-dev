@@ -7,3 +7,4 @@ rds_password: 3f3449779fbe896ed91398f4b56b6257
 owner: "rfkelly@mozilla.com"
 reaper_spare_me: "true"
 fxadev_git_version: docker-rfkelly
+oauth_docker_tag: feature.keys-check-authAt
