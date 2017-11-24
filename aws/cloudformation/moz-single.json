@@ -146,23 +146,12 @@
                {
                   "Effect":"Allow",
                   "Action":[ "S3:ListBucket", "S3:GetObject" ],
-                  "Resource": [
-                      "arn:aws:s3:::net.mozaws.ops.hiera-secrets",
-                      "arn:aws:s3:::net.mozaws.prod.ops.rpmrepo-protected",
-                      "arn:aws:s3:::net.mozaws.ops.rpmrepo-puppet"
-                  ]
+                  "Resource": "arn:aws:s3:::net-mozaws-ops-fxadev"
                },
                {
                   "Effect":"Allow",
                   "Action":[ "S3:GetObject" ],
-                  "Resource":[
-                    "arn:aws:s3:::net.mozaws.ops.rpmrepo-protected/*",
-                    "arn:aws:s3:::net.mozaws.ops.rpmrepo-puppet/*",
-                    "arn:aws:s3:::net.mozaws.ops.hiera-secrets/common.yaml",
-                    "arn:aws:s3:::net.mozaws.ops.hiera-secrets/env/dev.yaml",
-                    "arn:aws:s3:::net.mozaws.ops.hiera-secrets/type/fxa.auth_server.dev.yaml",
-                    "arn:aws:s3:::net.mozaws.ops.hiera-secrets/app/fxa.dev.yaml"
-                  ]
+                  "Resource": "arn:aws:s3:::net-mozaws-ops-fxadev/ses-info"
                },
                { "Effect":"Allow", "Action": [ "ec2:DescribeTags" ], "Resource": "*" },
                { "Effect":"Allow", "Action": [ "elasticache:DescribeCacheClusters" ], "Resource": "*" },
@@ -206,8 +195,9 @@
             "\n", "time yum -y --security update",
             "\n", "time yum -y erase sendmail",
             "\n", "time yum -y install cronie docker emacs-nox gcc-c++ git htop libffi-devel lsof memcached mysql nginx ntp openssl-devel postfix rsyslog strace tmux",
+            "\n", "time yum upgrade -y python27-pip python27-setuptools",
             "\n", "time yum -y --enablerepo=epel install moreutils",
-            "\n", "time pip install --install-option='--install-scripts=/usr/bin' -U ansible docker-py",
+            "\n", "time pip install --install-option='--install-scripts=/usr/bin' -U ansible docker-py boto3 botocore",
             "\n", "mkdir -p /data",
             "\n", "chmod 777 /data",
             "\n", "rm -rf /data/fxa-dev",

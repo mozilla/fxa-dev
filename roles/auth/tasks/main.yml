@@ -82,10 +82,9 @@
       SECONDARY_EMAIL_ENABLED: "true"
       REDIRECT_DOMAIN: "firefox.com"
       VERIFICATION_REMINDER_RATE: 1
-      SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^(sync.*@restmail\\.net|.+@mozilla\\.com)$"
-      SIGNIN_UNBLOCK_FORCED_EMAILS: "^(block.*@restmail\\.net|.+@mozilla\\.com)$"
-      # Disable IP Profiling, see https://github.com/mozilla/fxa-auth-server/blob/0ece36baa80c5128f9135afcba04d00922a9e0cb/config/dev.json#L28
-      IP_PROFILING_RECENCY: 0
+      SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^(sync.*@restmail\\.net)$"
+      SIGNIN_UNBLOCK_FORCED_EMAILS: "^(block.*@restmail\\.net)$"
+      IP_PROFILING_RECENCY: "{{ auth_ip_profiling_recency | default('0') }}"
       PORT: "{{ auth_private_port }}"
       SNS_TOPIC_ARN:  "{{ auth_sns_arn }}"
       PROFILE_MESSAGING_REGION: "{{ region }}"

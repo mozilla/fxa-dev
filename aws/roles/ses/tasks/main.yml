@@ -42,25 +42,15 @@
      owner=root
      mode=0644
 
-- name: get s3 secrets
+- name: get ses info
   become: true
-  s3: bucket=net.mozaws.ops.hiera-secrets
-      object=/app/fxa.dev.yaml
-      dest=/data/fxa.dev.yml
-      mode=get
+  aws_s3:
+    region=us-west-2
+    bucket=net-mozaws-ops-fxadev
+    object=ses-info
+    mode=getstr
+  register: ses_info
   changed_when: false
-
-- name: read smtp_user
-  shell: 'grep -e "fxa::smtp::user" /data/fxa.dev.yml | sed "s/^fxa::smtp::user: ''\([^'']\+\)''/\1/"'
-  become: true
-  changed_when: false
-  register: smtp_user
-
-- name: read smtp_pass
-  shell: 'grep -e "fxa::smtp::pass" /data/fxa.dev.yml | sed "s/^fxa::smtp::pass: ''\([^'']\+\)''/\1/"'
-  become: true
-  changed_when: false
-  register: smtp_pass
 
 - name: install postfix sasl_passwd
   become: true

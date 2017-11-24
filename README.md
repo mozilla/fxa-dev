@@ -1,5 +1,14 @@
 # AWS Ansible-based docker development environment for Firefox Accounts
 
+* [Prerequisites](#prerequisites)
+* [Usage](#usage)
+  * [SSH](#ssh)
+  * [Custom Docker tags](#custom-docker-tags)
+  * [Docker Stopped|Started](#docker-stoppedstarted)
+  * [Custom fxa-dev branch](#custom-fxa-dev-branch)
+* [Layout Notes](#layout-notes)
+* [Example urls](#example-urls)
+
 ## Prerequisites
 
 - [ansible](http://docs.ansible.com/intro_installation.html) >=2.2

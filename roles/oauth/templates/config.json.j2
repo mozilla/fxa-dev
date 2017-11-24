@@ -33,13 +33,56 @@
       "canGrant": false
     },
     {
-      "id": "263ceaa5546dce83",
-      "hashedSecret": "3c32099123471ffb80a7553558e6a6e8589da2235a4e081fe9d76648aa25d050",
-      "name": "Loop",
-      "imageUri": "{{ oauth_public_url }}/img/logo@2x.png",
-      "redirectUri": "urn:ietf:wg:oauth:2.0:fx:webchannel",
+      "id": "c6d74070a481bc10",
+      "name": "Firefox Notes",
+      "hashedSecret": "9c716ed2927c96cdc0fb7efe57d5f124fb4161066c1ff7f4263069822256ec3f",
+      "redirectUri": "https://dee85c67bd72f3de1f0a0fb62a8fe9b9b1a166d7.extensions.allizom.org",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
       "trusted": true,
-      "canGrant": false
+      "allowedScopes": "https://identity.mozilla.org/apps/notes"
+    },
+    {
+      "id": "37fdfa37698f251a",
+      "name": "Lockbox Extension",
+      "hashedSecret": "ca287a384b269492655ccd61fcadffe4d40d4d5d648209f96ee955d45f0ca05c",
+      "redirectUri": "https://2aa95473a5115d5f3deb36bb6875cf76f05e4c4d.extensions.allizom.org",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "allowedScopes": "https://identity.mozilla.org/apps/lockbox"
+    },
+    {
+      "id": "98adfa37698f255b",
+      "name": "Lockbox Extension iOS",
+      "hashedSecret": "fe287a384b269492655ccd61fcadffe4d40d4d5d648209f96ee955d45f0ca05c",
+      "redirectUri": "lockbox://redirect.ios",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "allowedScopes": "https://identity.mozilla.org/apps/lockbox"
+    },
+    {
+      "id": "ddd334467337344a",
+      "name": "Scoped Key WebExtension",
+      "hashedSecret": "ac287a384b269492655ccd61fcadffe4d40d4d5d648209f96ee955d45f0ca05c",
+      "redirectUri": "https://cad3e32c651f62062e87b786f04c49bea007c8c3.extensions.allizom.org",
+      "imageUri": "",
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "publicClient": true,
+      "allowedScopes": "https://identity.mozilla.org/apps/scoped-example"
     },
     {
       "id": "11c73e2d918ae5d9",
@@ -285,6 +328,29 @@
       "redirectUri": "https://example2.domain/return?foo=bar",
       "trusted": true,
       "canGrant": true
+    },
+    {
+      "id": "1b1a3e44c54fbb58",
+      "hashedSecret": "894669f8a640e824a52e268d51d7732b1b77267300a11cc77145ad0ef81a0c17",
+      "name": "Firefox Accounts Dev iOS",
+      "imageUri": "{{ oauth_public_url }}/img/logo@2x.png",
+      "redirectUri": "",
+      "trusted": true,
+      "canGrant": true
+    }
+  ],
+  "scopes": [
+    {
+      "scope": "https://identity.mozilla.org/apps/notes",
+      "hasScopedKeys": true
+    },
+    {
+      "scope": "https://identity.mozilla.org/apps/scoped-example",
+      "hasScopedKeys": true
+    },
+    {
+      "scope": "https://identity.mozilla.org/apps/lockbox",
+      "hasScopedKeys": true
     }
   ],
   "env": "stage",
