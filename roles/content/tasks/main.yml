@@ -49,6 +49,7 @@
       FXA_MARKETING_EMAIL_API_URL: "{{ content_public_url }}/basket"
       FXA_MARKETING_EMAIL_PREFERENCES_URL: "https://www-dev.allizom.org/newsletter/existing/"
       SCOPED_KEYS_ENABLED: 'true'
+      SCOPED_KEYS_VALIDATION: '{"https://identity.mozilla.org/apps/notes": { "redirectUris": ["https://dee85c67bd72f3de1f0a0fb62a8fe9b9b1a166d7.extensions.allizom.org","http://localhost:3031"] }}'
   register: container
 
 - debug: var=container
