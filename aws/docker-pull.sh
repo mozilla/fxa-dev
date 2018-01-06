@@ -5,6 +5,7 @@
 
 IMAGES=(
   jrgm/123done
+  mozilla/browserid-verifier
   mozilla/fxa-auth-db-mysql
   mozilla/fxa-auth-server
   mozilla/fxa-basket-proxy

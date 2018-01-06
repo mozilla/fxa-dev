@@ -39,6 +39,7 @@
       - 9010:9010
     command: node bin/server.js
     env:
+      VERIFICATION_URL: http://127.0.0.1:8005/v2
       CONFIG_FILES: "/config/local.json"
     volumes:
       - /data/config/oauth:/config:ro
@@ -61,6 +62,7 @@
       # database on first run. So, have the oauth-internal container skip
       # schema creation and just rely on the main oauth server to do so.
       CREATE_MYSQL_SCHEMA: "false"
+      VERIFICATION_URL: http://127.0.0.1:8005/v2
       CONFIG_FILES: "/config/local.json"
     volumes:
       - /data/config/oauth:/config:ro
