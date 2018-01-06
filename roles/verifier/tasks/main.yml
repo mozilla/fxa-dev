@@ -1,0 +1,39 @@
+---
+
+- name: pull verifier docker image
+  become: true
+  docker_image:
+    # pull image always. In a pending update to ansible, it will only set
+    # changed:true if the image has actually changed. However, docker_container
+    # `state:started` will only re-start if image of configuration has
+    # changed.
+    force: true
+    state: present
+    name: mozilla/browserid-verifier
+    tag: "{{ verifier_docker_tag }}"
+  register: image
+
+- debug: var=image
+
+- name: Start verifier docker container
+  become: true
+  docker_container:
+    name: verifier
+    image: mozilla/browserid-verifier{{ ':' + verifier_docker_tag }}
+    state: "{{ verifier_docker_state }}"
+    network_mode: host
+    ports:
+      - 8005:8005
+    # `start`, as in `npm start`.
+    command: start
+    env:
+      COMPUTECLUSTER_MAX_PROCESSES: 1
+      COMPUTECLUSTER_MAX_BACKLOG: 500
+      IP_ADDRESS: 127.0.0.1
+      PORT: 8005
+      NODE_ENV: production
+  register: container
+
+- debug: var=container
+
+- meta: flush_handlers
