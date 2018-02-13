@@ -10,5 +10,4 @@ ec2_volume_size: 24
 
 customs_docker_state: stopped
 auth_ip_profiling_recency: '72 hours'
-content_docker_tag: feature.newresetpassword
-auth_docker_tag: feature.newresetpassword-auth
+content_docker_tag: feature.settingsgrid
