@@ -39,14 +39,10 @@ http {
 
     port_in_redirect off;
 
-    server {
-        listen 80 default;
-        return 301 https://$host$request_uri;
-    }
-
     include /etc/nginx/conf.d/upstream/*.conf;
 
     server {
+        listen 80 default;
         listen       1443;
         server_name  {{ domain_name }};
 
