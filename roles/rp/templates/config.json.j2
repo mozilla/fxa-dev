@@ -8,7 +8,7 @@
   "oauth_uri": "{{ oauth_public_url }}/v1",
   "profile_uri": "{{ profile_public_url }}/v1",
   "content_uri": "{{ content_public_url }}",
-  "scopes": "profile kv:read kv:write",
+  "scopes": "profile+openid",
   "port": {{ rp_private_port }},
   "preverify_email_jku": "{{ rp_public_url }}/.well-known/public-keys",
   "kv_uri": "{{ kv_public_url }}/v1/data"
