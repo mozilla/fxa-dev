@@ -8,3 +8,4 @@ owner: "rfkelly@mozilla.com"
 reaper_spare_me: "true"
 auth_docker_tag: feature.amr-info
 oauth_docker_tag: feature.amr-info
+content_docker_tag: feature.amr-info
