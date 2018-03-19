@@ -9,3 +9,5 @@ reaper_spare_me: "true"
 fxadev_git_version: docker-rfkelly
 auth_docker_tag: feature.amr-info
 oauth_docker_tag: feature.amr-info
+content_docker_tag: feature.amr-info
+rp_docker_tag: rfkelly/123done
