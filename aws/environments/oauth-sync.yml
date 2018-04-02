@@ -7,3 +7,4 @@ rds_password: 3f3449779fbe896ed91398f4b56b6257
 owner: "rfkelly@mozilla.com"
 reaper_spare_me: "true"
 content_docker_tag: feature.oauth-sync
+sync_docker_tag: feature.oauth-sync
