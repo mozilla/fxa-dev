@@ -72,6 +72,7 @@
       CUSTOMS_SERVER_URL: "{{ customs_server_url }}"
       CONTENT_SERVER_URL: "{{ content_public_url }}"
       OAUTH_URL: "{{ oauth_public_url }}"
+      OAUTH_CLIENT_ID: "98e6508e88680e1a"
       SMS_USE_MOCK: "true"
       SMS_STATUS_GEO_ENABLED: "false"
       SMTP_HOST: "{{ auth_mail_host }}"
