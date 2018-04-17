@@ -7,7 +7,6 @@
     "master": {
       "user": "{{ authdb_primary_user }}",
       "password": "{{ authdb_primary_password }}",
-      "database": "fxa",
       "host": "{{ authdb_primary_host }}",
       "port": 3306,
       "connectionLimit": 10,
@@ -17,7 +16,6 @@
     "slave": {
       "user": "{{ authdb_replica_user }}",
       "password": "{{ authdb_replica_password }}",
-      "database": "fxa",
       "host": "{{ authdb_replica_host }}",
       "port": 3306,
       "connectionLimit": 10,
