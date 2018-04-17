@@ -15,7 +15,6 @@
        force=true
   notify:
     - install fxa-rp dependencies
-    - gen preverified token keypair
     - restart fxa-rp
 
 - name: configure fxa-rp
