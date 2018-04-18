@@ -9,5 +9,5 @@ ec2_instance_type: t2.medium
 ec2_volume_size: 24
 
 fxadev_git_version: docker-vbudhram
-auth_redirect_domain: ''
+auth_redirect_domain: '127.0.0.1'
 content_public_url: "http://127.0.0.1:3030"
