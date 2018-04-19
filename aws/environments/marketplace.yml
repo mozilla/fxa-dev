@@ -3,7 +3,7 @@ region: us-west-2
 subdomain: marketplace.dev
 hosted_zone: lcip.org
 ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
-rds_password: r44?%Wuj8y$BJ,B3
+
 cron_time:
   minute: 0
   hour: 0

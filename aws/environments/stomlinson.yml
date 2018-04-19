@@ -20,7 +20,7 @@ fxadev_git_version: docker
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
 
-rds_password: 42{B[3RL(g9ZkE+e
+
 
 # how often to auto-update (defaults to every 10 minutes)
 # the example below will set it to only update on January 1, 00:00 UTC

@@ -3,7 +3,7 @@ region: us-west-2
 subdomain: latest6.dev
 hosted_zone: lcip.org
 ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
-rds_password: 33yJ(Lv)hr6&=N7t
+
 
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
