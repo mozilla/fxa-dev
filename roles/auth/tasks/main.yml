@@ -81,7 +81,7 @@
       SMTP_SECURE: "false"
       SMTP_SENDER: "{{ auth_mail_sender }}"
       SECONDARY_EMAIL_ENABLED: "true"
-      REDIRECT_DOMAIN: "127.0.0.1"
+      REDIRECT_DOMAIN: "{{ content_public_url }}"
       SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^(sync.*@restmail\\.net)$"
       SIGNIN_UNBLOCK_FORCED_EMAILS: "^(block.*@restmail\\.net)$"
       IP_PROFILING_RECENCY: "{{ auth_ip_profiling_recency | default('0') }}"
