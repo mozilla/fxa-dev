@@ -3,6 +3,6 @@ region: us-west-2
 subdomain: uxwip.dev
 hosted_zone: lcip.org
 ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
-rds_password: Q)vy7]e9Q8G%9f{K
+
 
 content_git_version: issue-2336-new-settings-page
