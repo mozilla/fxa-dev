@@ -11,3 +11,4 @@ ec2_volume_size: 24
 fxadev_git_version: docker
 
 content_public_url: "http://127.0.0.1:3030"
+auth_redirect_domain: "127.0.0.1"
