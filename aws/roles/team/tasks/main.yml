@@ -14,6 +14,6 @@
 - name: get team public keys
   git: repo=https://github.com/mozilla/identity-pubkeys.git
        dest=/data/identity-pubkeys
-       version=ecf2768d7c3d834731dc1f802b0640193293aaa3
+       version=bd58fd3e18f23cd9ed258ed6c5f9f754936931cc
        force=true
   notify: update authorized_keys
