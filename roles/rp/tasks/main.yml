@@ -45,8 +45,6 @@
     command: node ./server.js
     env:
       CONFIG_123DONE: "/config/config-dev.json"
-      # this environment variable was added to force a restart and can be removed
-      HACKS_R_US: "true"
     volumes:
       - /data/config/rp:/config
   register: container
