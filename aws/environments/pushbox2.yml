@@ -8,3 +8,4 @@ reaper_spare_me: "true"
 fxadev_git_version: docker-pushbox2
 
 auth_docker_tag: feature.pushbox
+authdb_docker_tag: v1.110.0
