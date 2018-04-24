@@ -16,10 +16,6 @@
 
 # rely on the 123done image having already been pulled by the rp role
 
-- name: generate rp-untrusted keys
-  become: true
-  command: docker run --rm --net=host -e CONFIG_123DONE=/config/config-dev.json -v /data/config/rp-untrusted:/config jrgm/123done node scripts/gen_keys.js creates=/data/config/rp-untrusted/secret-key.json 
-
 - name: Start 123done docker container as untrusted rp
   become: true
   docker_container:
