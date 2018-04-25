@@ -8,3 +8,27 @@ owner: "rfkelly@mozilla.com"
 reaper_spare_me: "true"
 content_docker_tag: feature.oauth-sync
 sync_docker_tag: feature.oauth-sync
+
+# N.B. the leading newline on the value below is important,
+# it prevents ansible from parsing it as a python dict.
+content_scoped_keys_validation: >-
+
+  {
+    "https://identity.mozilla.com/apps/lockbox": {
+      "redirectUris": [
+        "https://2aa95473a5115d5f3deb36bb6875cf76f05e4c4d.extensions.allizom.org/",
+        "https://mozilla-lockbox.github.io/fxa/ios-redirect.html"
+      ]
+    },
+    "https://identity.mozilla.com/apps/notes": {
+      "redirectUris": [
+        "https://dee85c67bd72f3de1f0a0fb62a8fe9b9b1a166d7.extensions.allizom.org/",
+        "https://mozilla.github.io/notes/fxa/android-redirect.html"
+      ]
+    },
+    "https://identity.mozilla.com/apps/oldsync": {
+      "redirectUris": [
+        "http://localhost:13131/oauth/complete"
+      ]
+    }
+  }
