@@ -8,6 +8,7 @@ oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
 authdb_server_url: "{{ private_protocol }}://127.0.0.1:8000"
 customs_server_url: "{{ private_protocol }}://127.0.0.1:7000"
 auth_mailer_url: "{{ private_protocol }}://127.0.0.1:10136"
+auth_redirect_domain: "firefox.com"
 auth_sns_arn: ""
 auth_private_port: 9000
 auth_git_repo: https://github.com/mozilla/fxa-auth-server.git
