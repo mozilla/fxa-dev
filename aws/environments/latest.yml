@@ -12,4 +12,5 @@ owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 
 content_static_resource_url: https://static-latest.dev.lcip.org
-auth_redirect_domain: {{ domain_name }}
+auth_redirect_domain: "{{ domain_name }}"
+
