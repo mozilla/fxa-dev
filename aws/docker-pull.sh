@@ -4,7 +4,6 @@
 # if changed subseqsently.
 
 IMAGES=(
-  jrgm/123done
   mozilla/browserid-verifier
   mozilla/fxa-auth-db-mysql
   mozilla/fxa-auth-server

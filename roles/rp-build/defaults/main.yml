@@ -1,0 +1,4 @@
+---
+rp_git_repo: https://github.com/mozilla/123done.git
+rp_git_version: oauth
+rp_docker_tag: latest

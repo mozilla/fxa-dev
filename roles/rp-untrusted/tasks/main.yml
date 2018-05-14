@@ -14,13 +14,23 @@
   become_user: app
   template: src=config.json.j2 dest=/data/config/rp-untrusted/config-dev.json
 
-# rely on the 123done image having already been pulled by the rp role
+# Relies on the rp-build role to create the mozilla/123done image.
 
-- name: Start 123done docker container as untrusted rp
+# Note: container renamed to `rp2-untrusted` so that existing fxa-dev boxes
+# will remove the currently running container named `rp-untrusted` and
+# `rp2-untrusted` will not fail to bind on the listening tcp port number.
+
+- name: Ensure removal of existing `rp-untrusted` container.
   become: true
   docker_container:
     name: rp-untrusted
-    image: jrgm/123done{{ ':' + rp_docker_tag }}
+    state: absent
+
+- name: Start 123done docker container as rp2-untrusted
+  become: true
+  docker_container:
+    name: rp2-untrusted
+    image: mozilla/123done{{ ':' + rp_docker_tag }}
     state: "{{ rp_docker_state }}"
     network_mode: host
     ports:
