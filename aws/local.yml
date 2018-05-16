@@ -28,6 +28,7 @@
     - auth
     - content
     - basket-proxy
+    - rp-build
     - rp
     - rp-untrusted
     - oauth

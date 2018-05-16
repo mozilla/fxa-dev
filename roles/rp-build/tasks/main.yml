@@ -1,0 +1,18 @@
+---
+
+# Pulls github.com/mozilla/123done and creates a docker build image from it.
+# This role must run before roles rp and rp-untrusted. The docker_container
+# module will detect if/when the docker image has changed, and will restart
+# the container as needed. @see ../../rp/tasks and ../../rp-untrusted/tasks.
+
+- name: git pull mozilla/123done
+  tags: code
+  become: true
+  git: repo={{ rp_git_repo }}
+       dest=/data/123done
+       version={{ rp_git_version }}
+       force=true
+  notify:
+    - build 123done docker image
+
+- meta: flush_handlers
