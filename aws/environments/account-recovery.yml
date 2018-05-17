@@ -1,0 +1,15 @@
+---
+region: us-west-2
+subdomain: account-recovery.dev
+hosted_zone: lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+
+
+ec2_instance_type: t2.medium
+ec2_volume_size: 24
+
+fxadev_git_version: docker-recovery
+content_docker_tag: feature.account-recovery-screens
+
+customs_docker_state: stopped
+content_static_resource_url: https://static-account-recovery.dev.lcip.org
