@@ -15,6 +15,7 @@ hosted_zone: lcip.org
 ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/675e0ac8-23af-4153-8295-acb28ccc9f0f
 
 fxadev_git_version: pbooth
+auth_docker_tag: feature.sms-budget-check-fix
 
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
