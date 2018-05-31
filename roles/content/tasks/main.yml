@@ -50,7 +50,7 @@
       FXA_MARKETING_EMAIL_PREFERENCES_URL: "https://www-dev.allizom.org/newsletter/existing/"
       SCOPED_KEYS_ENABLED: 'true'
       SCOPED_KEYS_VALIDATION: "{{ content_scoped_keys_validation }}"
-      ALLOWED_METRICS_FLOW_ORIGINS: "http://127.0.0.1:8001,http://127.0.0.1:8000,https://www.mozilla.org,https://www.allizom.org,https://www-dev.allizom.org"
+      ALLOWED_METRICS_FLOW_ORIGINS: "http://127.0.0.1:8001,http://127.0.0.1:8000,https://www.mozilla.org,https://www.allizom.org,https://www-demo5.allizom.org,https://www-dev.allizom.org"
   register: container
 
 - debug: var=container
