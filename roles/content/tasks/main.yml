@@ -38,9 +38,6 @@
       NODE_ENV: "production"
       CONFIG_FILES: "/app/server/config/production.json"
       HOST: "0.0.0.0"
-      EXPERIMENTS_ENABLE_POLLING: 'false'
-      EXPERIMENTS_GIT_REPO: ""
-      EXPERIMENTS_STORAGE_DIR: "/tmp"
       FXA_URL: "{{ auth_public_url }}"
       PUBLIC_URL: "{{ content_public_url }}"
       FXA_OAUTH_URL: "{{ oauth_public_url }}"
