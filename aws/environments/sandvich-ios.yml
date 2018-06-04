@@ -29,7 +29,8 @@ content_scoped_keys_validation: >-
     },
     "https://identity.mozilla.com/apps/oldsync": {
       "redirectUris": [
-        "com.mozilla.sandvich:/oauth2redirect/fxa-provider"
+        "com.mozilla.sandvich:/oauth2redirect/fxa-provider",
+        "https://mozilla-lockbox.github.io/fxa/ios-redirect.html"
       ]
     }
   }
