@@ -7,6 +7,5 @@ reaper_spare_me: "true"
 
 fxadev_git_version: docker-pushbox-ng
 auth_docker_tag: feature.pushbox-ng
-authdb_docker_tag: feature.pushbox-ng
 
 auth_pushbox_enabled: true
