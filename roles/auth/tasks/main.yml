@@ -14,11 +14,6 @@
   file: path=/data/config/auth state=directory owner=app group=app mode=0777
   become: true
 
-#XXX obsolete?
-- name: create shared mount point for auth-mailer configuration info
-  file: path=/data/config/mailer state=directory owner=app group=app mode=0777
-  become: true
-
 - name: pull auth-server docker image
   become: true
   docker_image:
@@ -92,34 +87,6 @@
       LASTACCESSTIME_UPDATES_SAMPLE_RATE: 1
     volumes:
       - /data/config/auth:/config
-  register: container
-
-- debug: var=container
-
-- name: Start auth-mailer docker container
-  become: true
-  docker_container:
-    name: auth-mailer
-    image: mozilla/fxa-auth-server{{ ':' + auth_docker_tag }}
-    state: "{{ auth_docker_state }}"
-    network_mode: host
-    ports:
-      - "{{ auth_mailer_port }}:{{ auth_mailer_port }}"
-    command: node bin/mailer_server.js
-    env:
-      NODE_ENV: "stage"
-      MAILER_PORT: "{{ auth_mailer_port }}"
-      CONTENT_SERVER_URL: "{{ content_public_url }}"
-      IP_ADDRESS: "{{ auth_mail_host }}"
-      PORT: "{{ auth_mail_port }}"
-      # This MUST be quoted. Otherwise, it becomes pythonic `False`,
-      # which node-convict coerces to `true`.
-      MAIL_HTTPS_SECURE: "false"
-      SMTP_SENDER: "{{ auth_mail_sender }}"
-      VERIFICATION_REMINDER_TIME_FIRST: 20000
-      VERIFICATION_REMINDER_TIME_SECOND: 40000
-    volumes:
-      - /data/config/mailer:/config
   register: container
 
 - debug: var=container
