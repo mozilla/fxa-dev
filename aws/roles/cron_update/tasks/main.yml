@@ -28,6 +28,17 @@
   become: true
   file: state=touch path=/data/fxa-dev/rds-remote.yml
 
+- name: stat /data/fxa-dev/rds-remote.yml
+  become: true
+  stat: path=/data/fxa-dev/rds-remote.yml
+  register: rds_remote_file
+
+- name: insert a dummy key-value pair if file size is zero
+  become: true
+  when: rds_remote_file.stat.size == 0
+  # {{':'}} is a workaround for 'mapping values are not allowed in this context' parse error.
+  copy: content="this_space{{':'}} for_rent\n" dest=/data/fxa-dev/rds-remote.yml
+
 # TODO the job should be a shell script that can try to recover from errors
 - name: cron update
   cron: name="fxa update"
