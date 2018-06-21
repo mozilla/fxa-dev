@@ -25,7 +25,7 @@
     ports:
       - 8001:8001
     # `start`, as in `npm start` ?_?
-    command: "/app/bin/service" # TODO: This won't work for sure... :X
+    command: "/app/service"
     env:
       ROCKET_ADDRESS: 127.0.0.1
       ROCKET_ENV: "production"
