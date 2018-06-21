@@ -43,8 +43,8 @@
       #FXA_EMAIL_PROVIDER: ""
       #FXA_EMAIL_REDIS_HOST: ""
       #FXA_EMAIL_REDIS_PORT: ""
-      #FXA_EMAIL_SENDER_ADDRESS: ""
-      #FXA_EMAIL_SENDER_NAME: ""
+      FXA_EMAIL_SENDER_ADDRESS: "verification@email-service2.dev.lcip.org"
+      FXA_EMAIL_SENDER_NAME: "Firefox Accounts"
       #FXA_EMAIL_SENDGRID_KEY: ""
   register: container
 
