@@ -1,0 +1,53 @@
+---
+
+- name: pull email_service docker image
+  become: true
+  docker_image:
+    # pull image always. In a pending update to ansible, it will only set
+    # changed:true if the image has actually changed. However, docker_container
+    # `state:started` will only re-start if image of configuration has
+    # changed.
+    force: true
+    state: present
+    name: mozilla/fxa-email-service
+    tag: "{{ email_service_docker_tag }}"
+  register: image
+
+- debug: var=image
+
+- name: Start email_service docker container
+  become: true
+  docker_container:
+    name: email_service
+    image: mozilla/fxa-email-service{{ ':' + email_service_docker_tag }}
+    state: "{{ email_service_docker_state }}"
+    network_mode: host
+    ports:
+      - 8001:8001
+    # `start`, as in `npm start` ?_?
+    command: "/app/bin/service" # TODO: This won't work for sure... :X
+    env:
+      ROCKET_ADDRESS: 127.0.0.1
+      ROCKET_ENV: "production"
+      PORT: 8001
+      ROCKET_PORT: 8001
+      NODE_ENV: default
+      FXA_EMAIL_AUTHDB_BASEURI: ""
+      #FXA_EMAIL_AWS_REGION: ""
+      #FXA_EMAIL_AWS_KEYS_ACCESS: ""
+      #FXA_EMAIL_AWS_KEYS_SECRET: ""
+      #FXA_EMAIL_AWS_SQSURLS_BOUNCE: ""
+      #FXA_EMAIL_AWS_SQSURLS_COMPLAINT: ""
+      #FXA_EMAIL_AWS_SQSURLS_DELIVERY: ""
+      #FXA_EMAIL_AWS_SQSURLS_NOTIFICATION: ""
+      #FXA_EMAIL_PROVIDER: ""
+      #FXA_EMAIL_REDIS_HOST: ""
+      #FXA_EMAIL_REDIS_PORT: ""
+      #FXA_EMAIL_SENDER_ADDRESS: ""
+      #FXA_EMAIL_SENDER_NAME: ""
+      #FXA_EMAIL_SENDGRID_KEY: ""
+  register: container
+
+- debug: var=container
+
+- meta: flush_handlers
