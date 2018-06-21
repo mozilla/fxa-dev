@@ -32,6 +32,7 @@
       PORT: 8001
       ROCKET_PORT: 8001
       NODE_ENV: default
+      COOL: "yes"
       #FXA_EMAIL_AUTHDB_BASEURI: ""
       #FXA_EMAIL_AWS_REGION: ""
       #FXA_EMAIL_AWS_KEYS_ACCESS: ""
