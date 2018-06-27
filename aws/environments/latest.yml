@@ -12,3 +12,15 @@ owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 
 content_static_resource_url: https://static-latest.dev.lcip.org
+
+# N.B. the leading newline on the value below is important,
+# it prevents ansible from parsing it as a python dict.
+content_scoped_keys_validation: >-
+
+  {
+    "https://identity.mozilla.com/apps/oldsync": {
+      "redirectUris": [
+        "fxaclient://android.redirect"
+      ]
+    }
+  }
