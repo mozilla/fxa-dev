@@ -31,7 +31,7 @@
       PORT: 8001
       ROCKET_PORT: 8001
       NODE_ENV: default
-      FXA_EMAIL_SENDER_ADDRESS: "{{ email_service_sender }}"
+      FXA_EMAIL_SENDER_ADDRESS: "{{ email_service_sender_email }}"
   register: container
 
 - debug: var=container

@@ -2,4 +2,4 @@
 domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 email_service_docker_tag: latest
 email_service_docker_state: started
-email_service_sender: "Firefox Accounts <verification@{{ domain_name }}>"
+email_service_sender_email: "verification@{{ domain_name }}"
