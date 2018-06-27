@@ -24,28 +24,14 @@
     network_mode: host
     ports:
       - 8001:8001
-    # `start`, as in `npm start` ?_?
-    command: "/app/service"
+    command: "/app/bin/fxa-email-service"
     env:
       ROCKET_ADDRESS: 127.0.0.1
       ROCKET_ENV: "production"
       PORT: 8001
       ROCKET_PORT: 8001
       NODE_ENV: default
-      #FXA_EMAIL_AUTHDB_BASEURI: ""
-      #FXA_EMAIL_AWS_REGION: ""
-      #FXA_EMAIL_AWS_KEYS_ACCESS: ""
-      #FXA_EMAIL_AWS_KEYS_SECRET: ""
-      #FXA_EMAIL_AWS_SQSURLS_BOUNCE: ""
-      #FXA_EMAIL_AWS_SQSURLS_COMPLAINT: ""
-      #FXA_EMAIL_AWS_SQSURLS_DELIVERY: ""
-      #FXA_EMAIL_AWS_SQSURLS_NOTIFICATION: ""
-      #FXA_EMAIL_PROVIDER: ""
-      #FXA_EMAIL_REDIS_HOST: ""
-      #FXA_EMAIL_REDIS_PORT: ""
-      FXA_EMAIL_SENDER_ADDRESS: "verification@email-service2.dev.lcip.org"
-      FXA_EMAIL_SENDER_NAME: "Firefox Accounts"
-      #FXA_EMAIL_SENDGRID_KEY: ""
+      FXA_EMAIL_SENDER_ADDRESS: "{{ email_service_sender }}"
   register: container
 
 - debug: var=container
