@@ -31,7 +31,7 @@
       PORT: 8001
       ROCKET_PORT: 8001
       NODE_ENV: default
-      FXA_EMAIL_MESSAGE_ID_HMAC_KEY: "hyperthink"
+      FXA_EMAIL_HMACKEY: "hyperthink"
       FXA_EMAIL_SENDER_ADDRESS: "{{ email_service_sender_email }}"
   register: container
 
