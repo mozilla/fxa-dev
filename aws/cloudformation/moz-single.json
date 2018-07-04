@@ -245,6 +245,7 @@
             " -e basket_queue_url=",         { "Ref": "FxaBasketAccountChangeQueue" },
             " -e oauth_queue_url=",          { "Ref": "FxaOAuthAccountChangeQueue" },
             " -e profile_queue_url=",        { "Ref": "FxaProfileAccountChangeQueue" },
+            " -e pushbox_queue_url=",        { "Ref": "FxaPushboxAccountChangeQueue" },
             " -e profile_update_queue_url=", { "Ref": "FxaProfileUpdateQueue" },
             " -e customs_ban_queue_url=",    { "Ref": "FxaCustomsBanQueue" },
             " -e @/data/fxa-dev/rds-remote.yml",
@@ -341,13 +342,18 @@
       "Type": "AWS::SQS::Queue"
     },
 
+    "FxaPushboxAccountChangeQueue": {
+      "Type": "AWS::SQS::Queue"
+    },
+
     "FxaAccountChangeSNSTopic": {
       "Type" : "AWS::SNS::Topic",
       "Properties" : {
         "Subscription" : [
           { "Endpoint" : { "Fn::GetAtt" : [ "FxaBasketAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" },
           { "Endpoint" : { "Fn::GetAtt" : [ "FxaOAuthAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" },
-          { "Endpoint" : { "Fn::GetAtt" : [ "FxaProfileAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" }
+          { "Endpoint" : { "Fn::GetAtt" : [ "FxaProfileAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" },
+          { "Endpoint" : { "Fn::GetAtt" : [ "FxaPushboxAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" }
         ]
       }
     },
@@ -461,6 +467,36 @@
       }
     },
 
+    "FxaPushboxAccountChangeQueuePolicy": {
+      "Type": "AWS::SQS::QueuePolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Id": "FxaPushboxAccountChangeQueuePolicy",
+          "Statement": [
+            {
+              "Sid": "Allow-SendMessage-To-PushboxAccountChangeQueue-From-SNS",
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:SendMessage"],
+              "Resource": "*",
+              "Condition": {
+                "ArnEquals": {
+                  "aws:SourceArn": { "Ref": "FxaAccountChangeSNSTopic" }
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:ReceiveMessage", "sqs:DeleteMessage"],
+              "Resource": "*"
+            }
+          ]
+        },
+        "Queues": [{ "Ref" : "FxaPushboxAccountChangeQueue" }]
+      }
+    },
+
     "FxaCustomsBanQueue": {
       "Type": "AWS::SQS::Queue"
     },
@@ -565,6 +601,10 @@
     "ProfileAccountChangeQueueURL": {
       "Description": "Fxa Account Changes for the Profile consumer",
       "Value": { "Ref": "FxaProfileAccountChangeQueue" }
+    },
+    "PushboxAccountChangeQueueURL": {
+      "Description": "Fxa Account Changes for the Pushbox consumer",
+      "Value": { "Ref": "FxaPushboxAccountChangeQueue" }
     },
     "ProfileUpdateQueueURL": {
       "Description": "Fxa Account Changes for the Profile consumer",

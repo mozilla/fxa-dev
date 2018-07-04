@@ -14,6 +14,7 @@ IMAGES=(
   mozilla/fxa-oauth-console
   mozilla/syncserver
   mozilla/fxa-profile-server
+  mozilla/pushbox
   mysql:5.6.35
 )
 

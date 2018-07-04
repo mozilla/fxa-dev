@@ -1,0 +1,50 @@
+---
+
+- name: pull pushbox docker image
+  become: true
+  docker_image:
+    # do not force update the mysql server
+    state: present
+    name: mozilla/pushbox
+    tag: "{{ pushbox_docker_tag }}"
+  register: image
+
+- debug: var=image
+
+# The mysql container will have been started prior to this task
+# running. However, on initial startup, the mysql daemon will not be
+# accepting connections for a minute or more. So, we poll the mysql
+# daemon until it has completed startup.
+- name: Check that the mysql daemon has started
+  command: "mysql -uroot -h127.0.0.1 -NBe 'select 1'"
+  register: pushbox_mysql_available
+  until: pushbox_mysql_available.rc == 0
+  retries: 24 # up to 120 seconds
+  delay: 5
+
+- name: Create the pushbox database
+  become: true
+  command: "mysql -uroot -h127.0.0.1 -NBe 'CREATE DATABASE IF NOT EXISTS pushbox'"
+
+- name: Start pushbox container
+  become: true
+  docker_container:
+    name: pushbox
+    image: mozilla/pushbox{{ ':' + pushbox_docker_tag }}
+    state: "{{ pushbox_docker_state }}"
+    network_mode: host
+    ports:
+      - 8057:8057
+    env:
+      ROCKET_DATABASE_URL: "mysql://root@127.0.0.1:3306/pushbox"
+      ROCKET_PORT: "8057"
+      ROCKET_ENV: "development"
+      ROCKET_SERVER_TOKEN: "Correct_Horse_Battery_Staple_1"
+      ROCKET_FXA_HOST: "{{ oauth_public_url }}"
+      ROCKET_SQS_URL: "{{ pushbox_queue_url }}"
+      ROCKET_DRYRUN: false
+      AWS_DEFAULT_REGION: "{{ region }}"
+      RUST_BACKTRACE: "1"
+  register: container
+
+- debug: var=container
