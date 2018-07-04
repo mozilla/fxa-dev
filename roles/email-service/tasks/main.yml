@@ -24,7 +24,7 @@
     network_mode: host
     ports:
       - 8001:8001
-    command: "/app/bin/fxa-email-service"
+    command: "/app/bin/fxa_email_send"
     env:
       ROCKET_ADDRESS: 127.0.0.1
       ROCKET_ENV: "production"
