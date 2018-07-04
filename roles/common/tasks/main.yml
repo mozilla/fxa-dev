@@ -30,9 +30,9 @@
   become: true
   pip: name=ansible state=present extra_args='--install-option="--install-scripts=/usr/bin"'
 
-- name: install docker-py module
+- name: install docker python module
   become: true
-  pip: name=docker-py state=present
+  pip: name=docker state=present
 
 # for mounting configuration information in subdirectories under /data/config
 # XXX fix mode/ownership

@@ -214,7 +214,7 @@
             "\n", "time yum -y install cronie docker emacs-nox gcc-c++ git htop libffi-devel lsof memcached mysql nginx ntp openssl-devel postfix rsyslog strace tmux",
             "\n", "time yum upgrade -y python27-pip python27-setuptools",
             "\n", "time yum -y --enablerepo=epel install moreutils",
-            "\n", "time pip install --install-option='--install-scripts=/usr/bin' -U ansible docker-py boto3 botocore",
+            "\n", "time pip install --install-option='--install-scripts=/usr/bin' -U ansible docker boto3 botocore",
             "\n", "mkdir -p /data",
             "\n", "chmod 777 /data",
             "\n", "rm -rf /data/fxa-dev",
