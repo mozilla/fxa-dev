@@ -33,6 +33,7 @@
       NODE_ENV: default
       FXA_EMAIL_HMACKEY: "hyperthink"
       FXA_EMAIL_SENDER_ADDRESS: "{{ email_service_sender_email }}"
+      RUST_BACKTRACE: "1"
   register: container
 
 - debug: var=container
