@@ -26,11 +26,10 @@
       - 8001:8001
     command: "/app/bin/fxa_email_send"
     env:
-      ROCKET_ADDRESS: 127.0.0.1
       ROCKET_ENV: "production"
-      PORT: 8001
-      ROCKET_PORT: 8001
-      NODE_ENV: default
+      # below was generated with `openssl rand -base64 32`
+      ROCKET_SECRET_KEY: "Y1zCba9PTAGSa7tSOW9Li9HmwLP3aVAY/6fynDm43qQ=" 
+      NODE_ENV: "prod"
       FXA_EMAIL_HMACKEY: "hyperthink"
       FXA_EMAIL_SENDER_ADDRESS: "{{ email_service_sender_email }}"
       RUST_BACKTRACE: "1"
