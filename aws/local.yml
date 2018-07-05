@@ -15,6 +15,7 @@
     - customs
     - authdb
     - auth
+    - email-service
     - content
     - basket-proxy
     - rp-build

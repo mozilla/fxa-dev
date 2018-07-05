@@ -181,7 +181,15 @@
                  "Resource": { "Fn::GetAtt" : [ "FxaProfileUpdateQueue", "Arn" ] }
                },
                { "Effect":"Allow", "Action": [ "SNS:GetSMSAttributes" ], "Resource": "*" },
-               { "Effect":"Allow", "Action": [ "Cloudwatch:GetMetricStatistics" ], "Resource": "*" }
+               { "Effect":"Allow", "Action": [ "Cloudwatch:GetMetricStatistics" ], "Resource": "*" },
+               {
+                 "Effect":"Allow",
+                 "Action": [
+                   "ses:SendEmail",
+                   "ses:SendRawEmail"
+                 ],
+                 "Resource": "*"
+               }
              ]
             }
           }
