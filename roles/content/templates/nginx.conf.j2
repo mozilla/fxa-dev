@@ -3,6 +3,15 @@ location / {
     proxy_set_header Host $http_host;
     proxy_redirect off;
     proxy_pass http://upstream_content_server;
+    gzip on;
+    gzip_disable "msie6";
+    gzip_min_length 1100;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 1;
+    gzip_buffers 32 4k;
+    gzip_http_version 1.1;
+    gzip_types application/javascript application/json application/x-javascript application/xml application/xml+rss text/css text/javascript text/plain text/xml;
 }
 
 # Note: /.well-known/ default route is defined in
