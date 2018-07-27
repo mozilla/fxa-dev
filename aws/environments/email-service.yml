@@ -10,5 +10,5 @@ ec2_volume_size: 24
 
 customs_docker_state: stopped
 auth_ip_profiling_recency: '72 hours'
-auth_docker_tag: feature.emailservice
-fxadev_git_version: docker-emailservice
+email_service_docker_tag: feature.debug-ses
+fxadev_git_version: docker
