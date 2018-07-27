@@ -19,3 +19,6 @@ auth_mail_port: 25
 auth_mail_sender: "Firefox Accounts <verification@{{ domain_name }}>"
 trusted_jku_123done: "{{ public_protocol }}://123done-{{ domain_name }}/.well-known/public-keys"
 trusted_jku_321done: "{{ public_protocol }}://321done-{{ domain_name }}/.well-known/public-keys"
+auth_pushbox_enabled: true
+auth_pushbox_url: http://localhost:8057/
+auth_pushbox_key: Correct_Horse_Battery_Staple_1

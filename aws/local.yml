@@ -12,6 +12,7 @@
     - ses
     - redis
     - memcached
+    - pushbox
     - customs
     - authdb
     - auth

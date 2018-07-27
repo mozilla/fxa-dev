@@ -85,6 +85,9 @@
       PROFILE_MESSAGING_REGION: "{{ region }}"
       PROFILE_UPDATES_QUEUE_URL: "{{ profile_update_queue_url | default('') }}"
       LASTACCESSTIME_UPDATES_SAMPLE_RATE: 1
+      PUSHBOX_ENABLED: "{{ auth_pushbox_enabled }}"
+      PUSHBOX_URL: "{{ auth_pushbox_url }}"
+      PUSHBOX_KEY: "{{ auth_pushbox_key }}"
     volumes:
       - /data/config/auth:/config
   register: container
