@@ -26,12 +26,14 @@
       - 8001:8001
     command: "/app/bin/fxa_email_send"
     env:
-      ROCKET_ENV: "production"
-      # below was generated with `openssl rand -base64 32`
-      ROCKET_SECRET_KEY: "Y1zCba9PTAGSa7tSOW9Li9HmwLP3aVAY/6fynDm43qQ=" 
-      NODE_ENV: "prod"
+      FXA_EMAIL_LOG_FORMAT: 'mozlog'
+      FXA_EMAIL_LOG_LEVEL: 'debug'
+      FXA_EMAIL_ENV: 'production'
       FXA_EMAIL_HMACKEY: "hyperthink"
       FXA_EMAIL_SENDER_ADDRESS: "{{ email_service_sender_email }}"
+      ROCKET_ENV: "production"
+      # below was generated with `openssl rand -base64 32`
+      FXA_EMAIL_SECRETKEY: "Y1zCba9PTAGSa7tSOW9Li9HmwLP3aVAY/6fynDm43qQ=" 
       RUST_BACKTRACE: "1"
   register: container
 
