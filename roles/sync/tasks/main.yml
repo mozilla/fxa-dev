@@ -44,7 +44,7 @@
     ports:
       - 5000:5000
 
-    command: /usr/local/bin/gunicorn --bind localhost:5000 syncserver.wsgi_app
+    command: server
 
 - debug: var=container
 - meta: flush_handlers
