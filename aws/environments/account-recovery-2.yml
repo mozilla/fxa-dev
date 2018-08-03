@@ -9,5 +9,5 @@ ec2_volume_size: 24
 
 auth_ip_profiling_recency: '72 hours'
 fxadev_git_version: docker-recovery-key
-content_git_version: feature.account-recovery-v4
+content_docker_tag: feature.account-recovery-v4
 
