@@ -20,4 +20,6 @@ ec2_instance_type: t2.medium
 ec2_volume_size: 24
 use_rds: "true"
 
+oauth_console_docker_tag: v0.5.1
+
 content_static_resource_url: https://static-stable.dev.lcip.org
