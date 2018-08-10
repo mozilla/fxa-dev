@@ -5,7 +5,6 @@ domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 profile_private_port: 9011
 profile_private_static_port: 9012
 profile_git_repo: https://github.com/mozilla/fxa-profile-server.git
-profile_git_version: master
 profile_docker_tag: latest
 profile_docker_state: started
 profile_public_url: "{{ public_protocol }}://{{ domain_name }}/profile"

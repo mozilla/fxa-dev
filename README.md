@@ -59,8 +59,7 @@ your environments/foo.yml configuration file.
 
 ### Custom fxa-dev branch
 
-You can control the branch for each environment by changing the `{fxadev_git_version}` value in the environment configuration file.
-
+You can control the branch of fxa-dev for each environment by changing the `{fxadev_git_version}` value in the environment configuration file.
 
 ## Layout Notes
 

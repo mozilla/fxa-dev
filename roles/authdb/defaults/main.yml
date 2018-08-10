@@ -3,7 +3,6 @@ public_protocol: https
 domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 authdb_private_port: 8000
 authdb_git_repo: https://github.com/mozilla/fxa-auth-db-mysql.git
-authdb_git_version: master
 authdb_docker_tag: latest
 authdb_docker_state: started
 authdb_primary_host: 127.0.0.1

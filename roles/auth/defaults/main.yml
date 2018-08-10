@@ -11,7 +11,6 @@ auth_redirect_domain: "{{ domain_name }}"
 auth_sns_arn: ""
 auth_private_port: 9000
 auth_git_repo: https://github.com/mozilla/fxa-auth-server.git
-auth_git_version: master
 auth_docker_tag: latest
 auth_docker_state: started
 auth_mail_host: 127.0.0.1
