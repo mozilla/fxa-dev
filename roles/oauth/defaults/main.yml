@@ -8,7 +8,6 @@ oauth_db_host: 127.0.0.1
 oauth_db_password:
 oauth_domain_name: "oauth-{{ domain_name }}"
 oauth_git_repo: https://github.com/mozilla/fxa-oauth-server.git
-oauth_git_version: master
 oauth_docker_tag: latest
 oauth_docker_state: started
 oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"

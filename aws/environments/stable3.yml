@@ -11,14 +11,7 @@ cron_time:
   hour: 22
   weekday: 4
 
-content_git_version: master
-auth_git_version: master
-authdb_git_version: master
-customs_git_version: master
-oauth_git_version: master
-profile_git_version: master
 rp_git_version: oauth
-oauth_console_git_version: v0.5.1
 
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"

@@ -12,7 +12,6 @@ content_static_resource_url: "{{ public_protocol }}://{{ domain_name }}"
 content_public_port: 80
 content_private_port: 3030
 content_git_repo: https://github.com/mozilla/fxa-content-server.git
-content_git_version: master
 content_docker_tag: latest
 content_docker_state: started
 # N.B. the leading newline on the value below is important,
