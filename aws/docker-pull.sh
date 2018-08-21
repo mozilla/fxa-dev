@@ -4,7 +4,7 @@
 # if changed subseqsently.
 
 IMAGES=(
-  jrgm/123done
+  mozilla/browserid-verifier
   mozilla/fxa-auth-db-mysql
   mozilla/fxa-auth-server
   mozilla/fxa-basket-proxy
@@ -14,6 +14,7 @@ IMAGES=(
   mozilla/fxa-oauth-console
   mozilla/syncserver
   mozilla/fxa-profile-server
+  mozilla/pushbox
   mysql:5.6.35
 )
 

@@ -37,13 +37,14 @@
     network_mode: host
     env:
       SYNCSERVER_PUBLIC_URL: "{{ sync_public_url }}"
+      SYNCSERVER_IDENTITY_PROVIDER: "{{ content_public_url }}"
       SYNCSERVER_SECRET: "{{ sync_server_secret }}"
       SYNCSERVER_SQLURI: "{{ sync_sqluri }}"
       SYNCSERVER_BATCH_UPLOAD_ENABLED: true
     ports:
       - 5000:5000
 
-    command: /usr/local/bin/gunicorn --bind localhost:5000 syncserver.wsgi_app
+    command: server
 
 - debug: var=container
 - meta: flush_handlers

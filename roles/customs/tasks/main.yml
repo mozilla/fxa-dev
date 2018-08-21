@@ -26,6 +26,7 @@
       - 7000:7000
     command: node bin/customs_server.js
     env:
+      ALLOWED_PHONE_NUMBERS: "19164400029"
       NODE_ENV: "stage"
       IP_ADDRESS: "0.0.0.0"
       MAX_ACCOUNT_ACCESS: "1000"

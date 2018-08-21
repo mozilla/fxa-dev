@@ -1,0 +1,25 @@
+---
+region: us-west-2
+# N.B., this is the real stable.dev.lcip.org, replacing stable.yml
+subdomain: stable.dev
+hosted_zone: lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+
+# Thursday, 3pm PDT
+cron_time:
+  minute: 0
+  hour: 22
+  weekday: 4
+
+rp_git_version: oauth
+
+owner: "dev-fxacct@mozilla.org"
+reaper_spare_me: "true"
+
+ec2_instance_type: t2.medium
+ec2_volume_size: 24
+use_rds: "true"
+
+oauth_console_docker_tag: v0.5.1
+
+content_static_resource_url: https://static-stable.dev.lcip.org

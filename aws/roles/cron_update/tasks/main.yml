@@ -24,6 +24,21 @@
   file: path=/var/log/ansible state=directory owner=ec2-user group=ec2-user
   become: true
 
+- name: ensure /data/fxa-dev/rds-remote.yml exists for backwards compatibility
+  become: true
+  file: state=touch path=/data/fxa-dev/rds-remote.yml
+
+- name: stat /data/fxa-dev/rds-remote.yml
+  become: true
+  stat: path=/data/fxa-dev/rds-remote.yml
+  register: rds_remote_file
+
+- name: insert a dummy key-value pair if file size is zero
+  become: true
+  when: rds_remote_file.stat.size == 0
+  # {{':'}} is a workaround for 'mapping values are not allowed in this context' parse error.
+  copy: content="this_space{{':'}} for_rent\n" dest=/data/fxa-dev/rds-remote.yml
+
 # TODO the job should be a shell script that can try to recover from errors
 - name: cron update
   cron: name="fxa update"
@@ -32,4 +47,4 @@
         day={{ cron_time.day | default('*') }}
         hour={{ cron_time.hour | default('*') }}
         minute={{ cron_time.minute | default('*/2') }}
-        job="cd /data/fxa-dev/aws; PYTHONUNBUFFERED=1 /usr/bin/lckdo -x /var/tmp/ansible-update.lck /usr/bin/ansible-playbook -i localhost, local.yml --extra-vars \"stack_name={{ stack_name }} auth_sns_arn={{ auth_sns_arn }} basket_queue_url={{ basket_queue_url }} oauth_queue_url={{ oauth_queue_url }} profile_queue_url={{ profile_queue_url }} profile_update_queue_url={{ profile_update_queue_url | default('') }} customs_ban_queue_url={{ customs_ban_queue_url }}\" > /var/log/ansible/update.log"
+        job="cd /data/fxa-dev/aws; PYTHONUNBUFFERED=1 /usr/bin/lckdo -x /var/tmp/ansible-update.lck /usr/bin/ansible-playbook -i localhost, local.yml -e @/data/fxa-dev/rds-remote.yml --extra-vars \"stack_name={{ stack_name }} auth_sns_arn={{ auth_sns_arn }} basket_queue_url={{ basket_queue_url }} oauth_queue_url={{ oauth_queue_url }} profile_queue_url={{ profile_queue_url }} profile_update_queue_url={{ profile_update_queue_url | default('') }} pushbox_queue_url={{ pushbox_queue_url }} customs_ban_queue_url={{ customs_ban_queue_url }}\" > /var/log/ansible/update.log"

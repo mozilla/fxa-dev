@@ -1,15 +1,8 @@
 {
-  "publicKeyFile": "/config/public-key.json",
-  "secretKeyFile": "/config/secret-key.json",
   "client_id": "325b4083e32fe8e7",
   "client_secret": "a084f4c36501ea1eb2de33258421af97b2e67ffbe107d2812f4a14f3579900ef",
   "redirect_uri": "{{ rp_untrusted_public_url }}/api/oauth",
-  "auth_uri": "{{ oauth_public_url }}/v1/authorization",
-  "oauth_uri": "{{ oauth_public_url }}/v1",
-  "profile_uri": "{{ profile_public_url }}/v1",
-  "content_uri": "{{ content_public_url }}",
-  "scopes": "profile:email profile:uid profile:display_name",
-  "port": {{ rp_untrusted_private_port }},
-  "preverify_email_jku": "{{ rp_untrusted_public_url }}/.well-known/public-keys",
-  "kv_uri": "{{ kv_public_url }}/v1/data"
+  "issuer_uri": "{{ content_public_url }}",
+  "scopes": "profile:email profile:uid profile:display_name openid",
+  "port": {{ rp_untrusted_private_port }}
 }

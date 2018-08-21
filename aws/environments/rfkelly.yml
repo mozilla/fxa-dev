@@ -3,6 +3,8 @@ region: us-west-2
 subdomain: rfkelly.dev
 hosted_zone: lcip.org
 ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
-rds_password: 3f3449779fbe896ed91398f4b56b6257
+
 owner: "rfkelly@mozilla.com"
 reaper_spare_me: "true"
+auth_docker_tag: v1.117.2
+authdb_docker_tag: v1.117.0

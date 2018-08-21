@@ -3,14 +3,14 @@ public_protocol: https
 private_protocol: http
 domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 content_public_url: "{{ public_protocol }}://{{ domain_name }}"
+oauth_domain_name: "oauth-{{ domain_name }}"
+oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
 authdb_server_url: "{{ private_protocol }}://127.0.0.1:8000"
 customs_server_url: "{{ private_protocol }}://127.0.0.1:7000"
-auth_mailer_url: "{{ private_protocol }}://127.0.0.1:10136"
-auth_redirect_domain: "firefox.com"
+auth_redirect_domain: "{{ domain_name }}"
 auth_sns_arn: ""
 auth_private_port: 9000
 auth_git_repo: https://github.com/mozilla/fxa-auth-server.git
-auth_git_version: master
 auth_docker_tag: latest
 auth_docker_state: started
 auth_mail_host: 127.0.0.1
@@ -18,6 +18,6 @@ auth_mail_port: 25
 auth_mail_sender: "Firefox Accounts <verification@{{ domain_name }}>"
 trusted_jku_123done: "{{ public_protocol }}://123done-{{ domain_name }}/.well-known/public-keys"
 trusted_jku_321done: "{{ public_protocol }}://321done-{{ domain_name }}/.well-known/public-keys"
-auth_mailer_port: 10136
-auth_mailer_verify_url: "{{ content_public_url }}/v1/verify_email"
-auth_mailer_recovery_url: "{{ content_public_url }}/v1/complete_reset_password"
+auth_pushbox_enabled: true
+auth_pushbox_url: http://localhost:8057/
+auth_pushbox_key: Correct_Horse_Battery_Staple_1

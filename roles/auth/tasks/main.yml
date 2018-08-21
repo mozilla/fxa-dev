@@ -14,11 +14,6 @@
   file: path=/data/config/auth state=directory owner=app group=app mode=0777
   become: true
 
-#XXX obsolete?
-- name: create shared mount point for auth-mailer configuration info
-  file: path=/data/config/mailer state=directory owner=app group=app mode=0777
-  become: true
-
 - name: pull auth-server docker image
   become: true
   docker_image:
@@ -71,6 +66,7 @@
       VAPID_KEYS_FILE: "/config/vapid-keys.json"
       CUSTOMS_SERVER_URL: "{{ customs_server_url }}"
       CONTENT_SERVER_URL: "{{ content_public_url }}"
+      OAUTH_URL: "{{ oauth_public_url }}"
       SMS_USE_MOCK: "true"
       SMS_STATUS_GEO_ENABLED: "false"
       SMTP_HOST: "{{ auth_mail_host }}"
@@ -81,47 +77,20 @@
       SMTP_SENDER: "{{ auth_mail_sender }}"
       SECONDARY_EMAIL_ENABLED: "true"
       SIGNIN_CONFIRMATION_SKIP_FOR_NEW_ACCOUNTS: "true"
-      REDIRECT_DOMAIN: "{{ auth_redirect_domain }}"
-      VERIFICATION_REMINDER_RATE: 1
+      REDIRECT_DOMAIN: "{{ auth_redirect_domain | default('firefox.com')}}"
       SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^(sync.*@restmail\\.net)$"
       SIGNIN_UNBLOCK_FORCED_EMAILS: "^(block.*@restmail\\.net)$"
-      # Disable IP Profiling, see https://github.com/mozilla/fxa-auth-server/blob/0ece36baa80c5128f9135afcba04d00922a9e0cb/config/dev.json#L28
-      IP_PROFILING_RECENCY: 0
+      IP_PROFILING_RECENCY: "{{ auth_ip_profiling_recency | default('0') }}"
       PORT: "{{ auth_private_port }}"
       SNS_TOPIC_ARN:  "{{ auth_sns_arn }}"
       PROFILE_MESSAGING_REGION: "{{ region }}"
       PROFILE_UPDATES_QUEUE_URL: "{{ profile_update_queue_url | default('') }}"
       LASTACCESSTIME_UPDATES_SAMPLE_RATE: 1
+      PUSHBOX_ENABLED: "{{ auth_pushbox_enabled }}"
+      PUSHBOX_URL: "{{ auth_pushbox_url }}"
+      PUSHBOX_KEY: "{{ auth_pushbox_key }}"
     volumes:
       - /data/config/auth:/config
-  register: container
-
-- debug: var=container
-
-- name: Start auth-mailer docker container
-  become: true
-  docker_container:
-    name: auth-mailer
-    image: mozilla/fxa-auth-server{{ ':' + auth_docker_tag }}
-    state: "{{ auth_docker_state }}"
-    network_mode: host
-    ports:
-      - "{{ auth_mailer_port }}:{{ auth_mailer_port }}"
-    command: node bin/mailer_server.js
-    env:
-      NODE_ENV: "stage"
-      MAILER_PORT: "{{ auth_mailer_port }}"
-      CONTENT_SERVER_URL: "{{ content_public_url }}"
-      IP_ADDRESS: "{{ auth_mail_host }}"
-      PORT: "{{ auth_mail_port }}"
-      # This MUST be quoted. Otherwise, it becomes pythonic `False`,
-      # which node-convict coerces to `true`.
-      MAIL_HTTPS_SECURE: "false"
-      SMTP_SENDER: "{{ auth_mail_sender }}"
-      VERIFICATION_REMINDER_TIME_FIRST: 20000
-      VERIFICATION_REMINDER_TIME_SECOND: 40000
-    volumes:
-      - /data/config/mailer:/config
   register: container
 
 - debug: var=container
@@ -146,6 +115,7 @@
       VAPID_KEYS_FILE: "/config/vapid-keys.json"
       CUSTOMS_SERVER_URL: "{{ customs_server_url }}"
       CONTENT_SERVER_URL: "{{ content_public_url }}"
+      OAUTH_URL: "{{ oauth_public_url }}"
       SMTP_HOST: "{{ auth_mail_host }}"
       SMTP_PORT: "{{ auth_mail_port }}"
       # This MUST be quoted. Otherwise, it becomes pythonic False,
@@ -154,8 +124,7 @@
       SMTP_SENDER: "{{ auth_mail_sender }}"
       SECONDARY_EMAIL_ENABLED: "true"
       SIGNIN_CONFIRMATION_SKIP_FOR_NEW_ACCOUNTS: "true"
-      REDIRECT_DOMAIN: "{{ auth_redirect_domain }}"
-      VERIFICATION_REMINDER_RATE: 1
+      REDIRECT_DOMAIN: "{{ auth_redirect_domain | default('firefox.com')}}"
       SIGNIN_CONFIRMATION_FORCE_EMAIL_REGEX: "^sync.*@restmail\\.net$"
       SIGNIN_UNBLOCK_FORCED_EMAILS: "^block.*@restmail\\.net$"
       PORT: "{{ auth_private_port }}"

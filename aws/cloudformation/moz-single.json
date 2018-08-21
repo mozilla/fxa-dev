@@ -62,6 +62,17 @@
         "32",
         "40"
       ]
+    },
+    "RDSPassword": {
+      "Type": "String",
+      "Description": "RDS password",
+      "NoEcho": "true"
+    },
+    "UseRDS": {
+      "Description": "Create and use an RDS database?",
+      "Type": "String",
+      "Default": "false",
+      "AllowedValues": [ "true", "false" ]
     }
   },
 
@@ -77,6 +88,10 @@
       "ap-southeast-2" : { "AMI" : "ami-dac312b4" },
       "sa-east-1"      : { "AMI" : "ami-80086dec" }
     }
+  },
+
+  "Conditions" : {
+    "UseRDS" : { "Fn::Equals" : [{ "Ref" : "UseRDS" }, "true" ]}
   },
 
   "Resources" : {
@@ -164,6 +179,16 @@
                    "sqs:DeleteMessage"
                  ],
                  "Resource": { "Fn::GetAtt" : [ "FxaProfileUpdateQueue", "Arn" ] }
+               },
+               { "Effect":"Allow", "Action": [ "SNS:GetSMSAttributes" ], "Resource": "*" },
+               { "Effect":"Allow", "Action": [ "Cloudwatch:GetMetricStatistics" ], "Resource": "*" },
+               {
+                 "Effect":"Allow",
+                 "Action": [
+                   "ses:SendEmail",
+                   "ses:SendRawEmail"
+                 ],
+                 "Resource": "*"
                }
              ]
             }
@@ -197,14 +222,29 @@
             "\n", "time yum -y install cronie docker emacs-nox gcc-c++ git htop libffi-devel lsof memcached mysql nginx ntp openssl-devel postfix rsyslog strace tmux",
             "\n", "time yum upgrade -y python27-pip python27-setuptools",
             "\n", "time yum -y --enablerepo=epel install moreutils",
-            "\n", "time pip install --install-option='--install-scripts=/usr/bin' -U ansible docker-py boto3 botocore",
+            "\n", "time pip install --install-option='--install-scripts=/usr/bin' -U ansible docker boto3 botocore",
             "\n", "mkdir -p /data",
             "\n", "chmod 777 /data",
             "\n", "rm -rf /data/fxa-dev",
             "\n", "time git clone -b ", { "Ref": "BranchName"  }, " git://github.com/mozilla/fxa-dev.git /data/fxa-dev",
             "\n", "time service docker start",
-            "\n", "date",
             "\n", "time /data/fxa-dev/aws/docker-pull.sh",
+            "\n", "",
+            "\n", "export RDS_ENDPOINT=", { "Fn::If" : [ "UseRDS", { "Fn::GetAtt": [ "FxaRDSInstance", "Endpoint.Address" ]}, "" ] },
+            "\n", "if [ ! -z ${RDS_ENDPOINT} ]; then",
+            "\n", "  echo rds_password: ",             { "Ref": "RDSPassword" }, " >> /data/fxa-dev/rds-remote.yml",
+            "\n", "  echo authdb_primary_password: ",  { "Ref": "RDSPassword" }, " >> /data/fxa-dev/rds-remote.yml",
+            "\n", "  echo authdb_replica_password: ",  { "Ref": "RDSPassword" }, " >> /data/fxa-dev/rds-remote.yml",
+            "\n", "  echo oauth_db_password: ",        { "Ref": "RDSPassword" }, " >> /data/fxa-dev/rds-remote.yml",
+            "\n", "  echo profile_db_password: ",      { "Ref": "RDSPassword" }, " >> /data/fxa-dev/rds-remote.yml",
+            "\n", "  echo authdb_primary_host: ${RDS_ENDPOINT} >> /data/fxa-dev/rds-remote.yml",
+            "\n", "  echo authdb_replica_host: ${RDS_ENDPOINT} >> /data/fxa-dev/rds-remote.yml",
+            "\n", "  echo oauth_db_host:       ${RDS_ENDPOINT} >> /data/fxa-dev/rds-remote.yml",
+            "\n", "  echo profile_db_host:     ${RDS_ENDPOINT} >> /data/fxa-dev/rds-remote.yml",
+            "\n", "else",
+            "\n", "  echo 'this_space: for_rent' >> /data/fxa-dev/rds-remote.yml",
+            "\n", "fi",
+            "\n", "",
             "\n", "su - ec2-user -c '",
             "cd /data/fxa-dev/aws && PYTHONUNBUFFERED=1 time ansible-playbook -i localhost, local.yml",
             " -e fxadev_git_version=",       { "Ref": "BranchName" },
@@ -213,8 +253,10 @@
             " -e basket_queue_url=",         { "Ref": "FxaBasketAccountChangeQueue" },
             " -e oauth_queue_url=",          { "Ref": "FxaOAuthAccountChangeQueue" },
             " -e profile_queue_url=",        { "Ref": "FxaProfileAccountChangeQueue" },
+            " -e pushbox_queue_url=",        { "Ref": "FxaPushboxAccountChangeQueue" },
             " -e profile_update_queue_url=", { "Ref": "FxaProfileUpdateQueue" },
             " -e customs_ban_queue_url=",    { "Ref": "FxaCustomsBanQueue" },
+            " -e @/data/fxa-dev/rds-remote.yml",
             "  | /usr/bin/ts %T",
             "'",
             "\n"
@@ -264,6 +306,34 @@
       }
     },
 
+    "FxaRDSSecurityGroup":{
+      "Type":"AWS::RDS::DBSecurityGroup",
+      "DependsOn": "FxaDevSecurityGroup",
+      "Condition": "UseRDS",
+      "Properties":{
+        "GroupDescription":"SG to Allow access to FXA RDS",
+        "DBSecurityGroupIngress":{
+          "EC2SecurityGroupName": { "Ref":"FxaDevSecurityGroup" }
+        }
+      }
+    },
+
+    "FxaRDSInstance":{
+      "Type":"AWS::RDS::DBInstance",
+      "DependsOn": "FxaRDSSecurityGroup",
+      "Condition": "UseRDS",
+      "Properties":{
+        "AllocatedStorage": "10",
+        "BackupRetentionPeriod": 30,
+        "DBInstanceClass": "db.t2.micro",
+        "DBSecurityGroups": [ { "Ref":"FxaRDSSecurityGroup" } ],
+        "Engine": "MySQL",
+        "EngineVersion": "5.6",
+        "MasterUserPassword": { "Ref" : "RDSPassword" },
+        "MasterUsername": "root"
+      }
+    },
+
     "FxaOAuthAccountChangeQueue": {
       "Type": "AWS::SQS::Queue"
     },
@@ -280,13 +350,18 @@
       "Type": "AWS::SQS::Queue"
     },
 
+    "FxaPushboxAccountChangeQueue": {
+      "Type": "AWS::SQS::Queue"
+    },
+
     "FxaAccountChangeSNSTopic": {
       "Type" : "AWS::SNS::Topic",
       "Properties" : {
         "Subscription" : [
           { "Endpoint" : { "Fn::GetAtt" : [ "FxaBasketAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" },
           { "Endpoint" : { "Fn::GetAtt" : [ "FxaOAuthAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" },
-          { "Endpoint" : { "Fn::GetAtt" : [ "FxaProfileAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" }
+          { "Endpoint" : { "Fn::GetAtt" : [ "FxaProfileAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" },
+          { "Endpoint" : { "Fn::GetAtt" : [ "FxaPushboxAccountChangeQueue", "Arn" ] }, "Protocol" : "sqs" }
         ]
       }
     },
@@ -400,6 +475,36 @@
       }
     },
 
+    "FxaPushboxAccountChangeQueuePolicy": {
+      "Type": "AWS::SQS::QueuePolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Id": "FxaPushboxAccountChangeQueuePolicy",
+          "Statement": [
+            {
+              "Sid": "Allow-SendMessage-To-PushboxAccountChangeQueue-From-SNS",
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:SendMessage"],
+              "Resource": "*",
+              "Condition": {
+                "ArnEquals": {
+                  "aws:SourceArn": { "Ref": "FxaAccountChangeSNSTopic" }
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Principal": {"AWS": "*"},
+              "Action":["sqs:ReceiveMessage", "sqs:DeleteMessage"],
+              "Resource": "*"
+            }
+          ]
+        },
+        "Queues": [{ "Ref" : "FxaPushboxAccountChangeQueue" }]
+      }
+    },
+
     "FxaCustomsBanQueue": {
       "Type": "AWS::SQS::Queue"
     },
@@ -483,6 +588,16 @@
       "Value" : { "Fn::GetAtt" : [ "FxaEc2Instance", "PublicDnsName" ] },
       "Description" : "DNS Name of the newly created EC2 instance"
     },
+    "RDSEndpoint": {
+      "Description": "RDS Endpoint",
+      "Value" : {
+        "Fn::If" : [
+          "UseRDS",
+          { "Fn::GetAtt": [ "FxaRDSInstance", "Endpoint.Address" ]},
+          ""
+        ]
+      }
+    },
     "BasketAccountChangeQueueURL": {
       "Description": "Fxa Account Changes for the Basket API consumer",
       "Value": { "Ref": "FxaBasketAccountChangeQueue" }
@@ -494,6 +609,10 @@
     "ProfileAccountChangeQueueURL": {
       "Description": "Fxa Account Changes for the Profile consumer",
       "Value": { "Ref": "FxaProfileAccountChangeQueue" }
+    },
+    "PushboxAccountChangeQueueURL": {
+      "Description": "Fxa Account Changes for the Pushbox consumer",
+      "Value": { "Ref": "FxaPushboxAccountChangeQueue" }
     },
     "ProfileUpdateQueueURL": {
       "Description": "Fxa Account Changes for the Profile consumer",

@@ -33,13 +33,121 @@
       "canGrant": false
     },
     {
-      "id": "263ceaa5546dce83",
-      "hashedSecret": "3c32099123471ffb80a7553558e6a6e8589da2235a4e081fe9d76648aa25d050",
-      "name": "Loop",
-      "imageUri": "{{ oauth_public_url }}/img/logo@2x.png",
-      "redirectUri": "urn:ietf:wg:oauth:2.0:fx:webchannel",
+      "id": "c6d74070a481bc10",
+      "name": "Notes",
+      "hashedSecret": "9c716ed2927c96cdc0fb7efe57d5f124fb4161066c1ff7f4263069822256ec3f",
+      "redirectUri": "https://dee85c67bd72f3de1f0a0fb62a8fe9b9b1a166d7.extensions.allizom.org/",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
       "trusted": true,
-      "canGrant": false
+      "allowedScopes": "https://identity.mozilla.com/apps/notes"
+    },
+    {
+      "id": "7f368c6886429f19",
+      "name": "Notes Android Dev",
+      "hashedSecret": "9c716ed2927c96cdc0fb7efe57d5f124fb4161066c1ff7f4263069822256ec3f",
+      "redirectUri": "https://mozilla.github.io/notes/fxa/android-redirect.html",
+      "imageUri": "",
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "allowedScopes": "https://identity.mozilla.com/apps/notes",
+      "publicClient": true
+    },
+    {
+      "id": "b7d74070a481bc11",
+      "name": "Notes Android",
+      "hashedSecret": "9c716ed2927c96cdc0fb7efe57d5f124fb4161066c1ff7f4263069822256ec3f",
+      "redirectUri": "https://mozilla-lockbox.github.io/fxa/ios-redirect.html",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "allowedScopes": "https://identity.mozilla.com/apps/notes"
+    },
+    {
+      "id": "37fdfa37698f251a",
+      "name": "Lockbox Extension",
+      "hashedSecret": "ca287a384b269492655ccd61fcadffe4d40d4d5d648209f96ee955d45f0ca05c",
+      "redirectUri": "https://2aa95473a5115d5f3deb36bb6875cf76f05e4c4d.extensions.allizom.org/",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "allowedScopes": "https://identity.mozilla.com/apps/lockbox"
+    },
+    {
+      "id": "98adfa37698f255b",
+      "name": "Lockbox Extension iOS",
+      "hashedSecret": "fe287a384b269492655ccd61fcadffe4d40d4d5d648209f96ee955d45f0ca05c",
+      "redirectUri": "lockbox://redirect.ios",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "allowedScopes": "https://identity.mozilla.com/apps/lockbox"
+    },
+    {
+      "id": "fced6b5e3f4c66b9",
+      "name": "Firefox Send",
+      "hashedSecret": "9bf92c1039659ba630db763a02653159e827436caf486a367f10ecfac1dd6b03",
+      "redirectUri": "https://send2.dev.lcip.org/api/fxa/oauth",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "allowedScopes": "https://identity.mozilla.com/apps/send"
+    },
+    {
+      "id": "ddd334467337344a",
+      "name": "FxA Test WebExtension",
+      "hashedSecret": "ac287a384b269492655ccd61fcadffe4d40d4d5d648209f96ee955d45f0ca05c",
+      "redirectUri": "https://b933c11da20e7655ecad26318f3aaa797c401602.extensions.allizom.org/",
+      "imageUri": "",
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "publicClient": true,
+      "allowedScopes": "https://identity.mozilla.com/apps/scoped-example"
+    },
+    {
+      "id": "22d74070a481bc73",
+      "name": "Test Client iOS",
+      "hashedSecret": "88716ed2927c96cdc0fb7efe57d5f124fb4161066c1ff7f4263069822256ec66",
+      "redirectUri": "com.mozilla.sandvich:/oauth2redirect/fxa-provider",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "allowedScopes": "https://identity.mozilla.com/apps/oldsync"
+    },
+    {
+      "id": "12cc4070a481bc73",
+      "name": "Test Android - APP URL redirect",
+      "hashedSecret": "88716ed2927c96cdc0fb7efe57d5f124fb4161066c1ff7f4263069822256ec66",
+      "redirectUri": "fxaclient://android.redirect",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "allowedScopes": "https://identity.mozilla.com/apps/oldsync"
     },
     {
       "id": "11c73e2d918ae5d9",
@@ -294,6 +402,33 @@
       "redirectUri": "",
       "trusted": true,
       "canGrant": true
+    },
+    {
+      "id": "1a118eae25503e99",
+      "hashedSecret": "19a305e07dc4fdc502321f82745fb0c0de80d31cfa26976ad1117f898cbd1c81",
+      "name": "Mozilla IAM",
+      "imageUri": "",
+      "redirectUri": "https://auth-dev.mozilla.auth0.com/login/callback",
+      "trusted": true,
+      "canGrant": false
+    }
+  ],
+  "scopes": [
+    {
+      "scope": "https://identity.mozilla.com/apps/notes",
+      "hasScopedKeys": true
+    },
+    {
+      "scope": "https://identity.mozilla.com/apps/scoped-example",
+      "hasScopedKeys": true
+    },
+    {
+      "scope": "https://identity.mozilla.com/apps/lockbox",
+      "hasScopedKeys": true
+    },
+    {
+      "scope": "https://identity.mozilla.com/apps/send",
+      "hasScopedKeys": true
     }
   ],
   "env": "stage",

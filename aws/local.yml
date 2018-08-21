@@ -6,32 +6,25 @@
   vars_files:
     - "defaults.yml"
     - "environments/{{ stack_name }}.yml"
-  vars:
-    authdb_primary_host: "127.0.0.1"
-    authdb_primary_password: ""
-    authdb_replica_host: "127.0.0.1"
-    authdb_replica_password: ""
-    oauth_db_host: "127.0.0.1"
-    oauth_db_password: ""
-    profile_db_host: "127.0.0.1"
-    profile_db_password: ""
-    sync_db_host: "127.0.0.1"
-    sync_db_password: ""
   roles:
     - common
     - mysql
     - ses
     - redis
     - memcached
+    - pushbox
     - customs
     - authdb
     - auth
+    - email-service
     - content
     - basket-proxy
+    - rp-build
     - rp
     - rp-untrusted
     - oauth
     - oauth-console
+    - verifier
     - sync
     - profile
     - docker-gc

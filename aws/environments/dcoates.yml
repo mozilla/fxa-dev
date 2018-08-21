@@ -3,12 +3,10 @@ region: us-west-2
 subdomain: dcoates.dev
 hosted_zone: lcip.org
 ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
-rds_password: 3s,hE2;QDw?6)t8e
+
 auth_git_repo: https://github.com/dannycoates/picl-idp.git
-auth_git_version: ab-test
 rp_git_repo: https://github.com/dannycoates/123done.git
 content_git_repo: https://github.com/dannycoates/fxa-content-server.git
-content_git_version: ablify
 cron_time:
   minute: 0
   hour: 0

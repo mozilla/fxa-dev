@@ -10,6 +10,10 @@
     key_name: "{{ stack_name }}-fxadev"
     config_name: "{{ stack_name }}"
   tasks:
+    - name: generate (optional) RDS password
+      shell: openssl rand -hex 16
+      register: rds_password
+
     - name: create key pair
       local_action:
         module: ec2_key
@@ -31,6 +35,8 @@
           BranchName: "{{ fxadev_git_version }}"
           HostedZone: "{{ hosted_zone }}"
           Subdomain: "{{ subdomain }}"
+          RDSPassword: "{{ rds_password.stdout }}"
+          UseRDS: "{{ use_rds | default('false') }}"
           SSLCertificateArn: "{{ ssl_certificate_arn }}"
           EC2InstanceType: "{{ ec2_instance_type }}"
           EC2VolumeSize: "{{ ec2_volume_size | to_json }}"

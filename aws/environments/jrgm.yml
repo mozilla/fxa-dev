@@ -1,0 +1,18 @@
+---
+region: us-west-2
+subdomain: jrgm.dev
+hosted_zone: lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+
+ec2_instance_type: t2.medium
+ec2_volume_size: 24
+fxadev_git_version: docker-remove-obsolete-git-version
+email_service_docker_tag: v1.118.0
+
+# intentional leftover
+oauth_git_version: v1.117.0
+
+owner: "dev-fxacct@mozilla.org"
+reaper_spare_me: "true"
+
+cdn_ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/675e0ac8-23af-4153-8295-acb28ccc9f0f

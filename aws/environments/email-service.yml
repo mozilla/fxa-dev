@@ -1,0 +1,14 @@
+---
+region: us-west-2
+subdomain: email-service.dev
+hosted_zone: lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+
+
+ec2_instance_type: t2.medium
+ec2_volume_size: 24
+
+customs_docker_state: stopped
+auth_ip_profiling_recency: '72 hours'
+email_service_docker_tag: feature.debug-ses
+fxadev_git_version: docker

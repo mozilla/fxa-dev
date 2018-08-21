@@ -3,16 +3,12 @@ region: us-west-2
 subdomain: fxadevtest.dev
 hosted_zone: lcip.org
 ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
-rds_password: ab4b6475c68a8734
 
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
+use_rds: "true"
 
 owner: jrgm@mozilla.com
 reaper_spare_me: "true"
-
-fxadev_git_version: docker
-
-
 
 
