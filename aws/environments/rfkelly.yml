@@ -6,4 +6,5 @@ ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02
 
 owner: "rfkelly@mozilla.com"
 reaper_spare_me: "true"
-auth_docker_tag: feature.sns-msg-attrs
+auth_docker_tag: v1.117.2
+authdb_docker_tag: v1.117.0
