@@ -60,6 +60,7 @@
       NODE_ENV: "stage"
       PUBLIC_URL: "{{ auth_public_url }}"
       DB_BACKEND: "httpdb"
+      DB_POOLEE_TIMEOUT: "{{ auth_db_poolee_timeout | default('5000') }}"
       HTTPDB_URL: "{{ authdb_server_url }}"
       SECRET_KEY_FILE: "/config/secret-key.json"
       PUBLIC_KEY_FILE: "/config/public-key.json"
