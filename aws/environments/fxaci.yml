@@ -14,3 +14,4 @@ content_public_url: "http://127.0.0.1:3030"
 auth_redirect_domain: "127.0.0.1"
 auth_signin_confirmation_skip_for_new_accounts: true
 auth_db_poolee_timeout: 15000
+auth_recovery_code_count: 3

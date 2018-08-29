@@ -22,3 +22,4 @@ auth_pushbox_enabled: true
 auth_pushbox_url: http://localhost:8057/
 auth_pushbox_key: Correct_Horse_Battery_Staple_1
 auth_signin_confirmation_skip_for_new_accounts: false
+auth_recovery_code_count: 8
