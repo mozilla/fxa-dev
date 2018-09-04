@@ -48,7 +48,7 @@ http {
 
     server {
         listen       1443;
-        server_name  {{ domain_name }};
+        server_name  {{ domain_name }} meta-{{ domain_name }};
 
         #charset koi8-r;
 
