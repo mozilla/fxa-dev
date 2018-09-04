@@ -15,6 +15,7 @@ IMAGES=(
   mozilla/syncserver
   mozilla/fxa-profile-server
   mozilla/pushbox
+  rfkelly/channelserver
   mysql:5.6.35
 )
 

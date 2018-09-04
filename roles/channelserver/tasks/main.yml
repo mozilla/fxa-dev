@@ -1,0 +1,55 @@
+---
+
+- name: Pull channelserver docker image
+  become: true
+  docker_image:
+    state: present
+    name: rfkelly/channelserver
+    tag: "{{ channelserver_docker_tag }}"
+  register: image
+
+- debug: var=image
+
+- name: Create directory for downloading geolocation database
+  file: path=/data/config/channelserver/mmdb state=directory owner=app group=app mode=0775
+  become: true
+
+- name: Download geolocation database
+  become: true
+  get_url:
+    url: http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz
+    dest: /data/config/channelserver/mmdb/GeoLite2-City.tar.gz
+
+- name: Unzip geolocation database
+  become: true
+  unarchive:
+    src: /data/config/channelserver/mmdb/GeoLite2-City.tar.gz
+    dest: /data/config/channelserver/mmdb
+    remote_src: yes
+
+- name: Symlink geolocation database
+  become: true
+  shell: ln -sf `ls -1ad --color=never GeoLite2-City_*|tail -1` latest
+  args:
+    chdir: /data/config/channelserver/mmdb
+
+- name: Start channelserver container
+  become: true
+  docker_container:
+    name: channelserver
+    image: rfkelly/channelserver{{ ':' + channelserver_docker_tag }}
+    state: "{{ channelserver_docker_state }}"
+    ports:
+      - 8058:8058
+    env:
+      PAIR_HOSTNAME: "127.0.0.1"
+      PAIR_PORT: "8058"
+      PAIR_MMDB_LOC: "/config/mmdb/latest/GeoLite2-City.mmdb"
+      PAIR_DEBUG: "true"
+      PAIR_VERBOSE: "true"
+      RUST_BACKTRACE: "1"
+    volumes:
+      - /data/config/channelserver:/config
+  register: container
+
+- debug: var=container
