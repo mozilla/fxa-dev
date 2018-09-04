@@ -33,6 +33,16 @@
       "Type": "String",
       "Description" : "subdomain"
     },
+    "VPC": {
+      "Description": "The VPC into which the stack will be deployed",
+      "Type": "String",
+      "Default": "vpc-9037f3f5"
+    },
+    "Subnets": {
+      "Description": "Comma-separated list of subnets on which to deploy the ALB",
+      "Type": "String",
+      "Default": "subnet-63f72706,subnet-4228de35,subnet-b2c3d5f4"
+    },
     "SSLCertificateArn": {
       "Type": "String"
     },
@@ -120,10 +130,10 @@
       }
     },
 
-    "FxaDevELBSecurityGroup" : {
+    "FxaDevLBSecurityGroup" : {
       "Type" : "AWS::EC2::SecurityGroup",
       "Properties" : {
-        "GroupDescription" : "Fxa Dev ELB",
+        "GroupDescription" : "Fxa Dev LB",
         "SecurityGroupIngress" : [
           {
             "IpProtocol" : "tcp",
@@ -274,35 +284,93 @@
       }
     },
 
-    "FxaELB":{
-      "Type":"AWS::ElasticLoadBalancing::LoadBalancer",
+    "FxaLB":{
+      "Type":"AWS::ElasticLoadBalancingV2::LoadBalancer",
       "Properties":{
-        "AvailabilityZones" : { "Fn::GetAZs" : "" },
-        "ConnectionDrainingPolicy":{ "Enabled" : true, "Timeout" : 15 },
-        "HealthCheck":{
-          "Target":"TCP:80",
-          "HealthyThreshold": "2",
-          "UnhealthyThreshold": "2",
-          "Interval": "15",
-          "Timeout": "3"
-        },
-        "Listeners":[
-          {
-            "InstancePort":"1443",
-            "LoadBalancerPort":"443",
-            "Protocol":"HTTPS",
-            "SSLCertificateId":{
-               "Ref" : "SSLCertificateArn"
-            }
-          },
-          {
-            "InstancePort":"80",
-            "LoadBalancerPort":"80",
-            "Protocol":"HTTP"
+        "Subnets": {"Fn::Split": [",", {"Ref": "Subnets"}]},
+        "SecurityGroups": [{ "Fn::GetAtt" : [ "FxaDevLBSecurityGroup", "GroupId" ] }],
+        "LoadBalancerAttributes": [
+          { "Key": "idle_timeout.timeout_seconds", "Value": "500" }
+        ]
+      }
+    },
+
+    "FxaLBTargetPort80":{
+      "Type":"AWS::ElasticLoadBalancingV2::TargetGroup",
+      "Properties":{
+        "TargetType": "instance",
+        "Targets": [{"Id": { "Ref" : "FxaEc2Instance" }, "Port": "80"}],
+        "VpcId": {"Ref": "VPC"},
+        "Port": "80",
+        "Protocol": "HTTP",
+        "HealthCheckProtocol": "HTTP",
+        "HealthCheckIntervalSeconds": "30",
+        "HealthCheckTimeoutSeconds": "3",
+        "HealthyThresholdCount": "2",
+        "UnhealthyThresholdCount": "2",
+        "HealthCheckPath": "/",
+        "Matcher" : {
+          "HttpCode" : "200,301"
+        }
+      }
+    },
+
+    "FxaLBTargetPort1443":{
+      "Type":"AWS::ElasticLoadBalancingV2::TargetGroup",
+      "Properties":{
+        "TargetType": "instance",
+        "Targets": [{"Id": { "Ref" : "FxaEc2Instance" }, "Port": "1443"}],
+        "VpcId": {"Ref": "VPC"},
+        "Port": "1443",
+        "Protocol": "HTTP",
+        "HealthCheckProtocol": "HTTP",
+        "HealthCheckIntervalSeconds": "30",
+        "HealthCheckTimeoutSeconds": "3",
+        "HealthyThresholdCount": "2",
+        "UnhealthyThresholdCount": "2",
+        "HealthCheckPath": "/",
+        "Matcher" : {
+          "HttpCode" : "200"
+        }
+      }
+    },
+
+    "FxaLBListenerHTTPS":{
+      "Type": "AWS::ElasticLoadBalancingV2::Listener",
+      "Properties": {
+        "Port": "443",
+        "Protocol": "HTTPS",
+        "Certificates": [{
+          "CertificateArn": {
+            "Ref": "SSLCertificateArn"
           }
-        ],
-        "Instances": [{ "Ref" : "FxaEc2Instance" }],
-        "SecurityGroups": [{ "Fn::GetAtt" : [ "FxaDevELBSecurityGroup", "GroupId" ] }]
+        }],
+        "DefaultActions": [{
+          "Type": "forward",
+          "TargetGroupArn": {
+              "Ref": "FxaLBTargetPort1443"
+          }
+        }],
+        "LoadBalancerArn": {
+          "Ref": "FxaLB"
+        }
+      }
+    },
+
+    "FxaLBListenerHTTP":{
+      "Type": "AWS::ElasticLoadBalancingV2::Listener",
+      "Properties": {
+        "Port": "80",
+        "Protocol": "HTTP",
+        "DefaultActions": [{
+          "Type": "forward",
+          "TargetGroupArn": {
+              "Ref": "FxaLBTargetPort80"
+          }
+        }],
+        "LoadBalancerArn": {
+          "Ref": "FxaLB"
+        }
       }
     },
 
@@ -544,32 +612,32 @@
             "Name" : { "Fn::Join" : [ "", [{"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
             "Type" : "A",
             "AliasTarget" : {
-              "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },
-              "DNSName" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
+              "HostedZoneId" : { "Fn::GetAtt":[ "FxaLB", "CanonicalHostedZoneID" ] },
+              "DNSName" : { "Fn::GetAtt":[ "FxaLB", "DNSName" ] }
             }
           },
           {
             "Name" : { "Fn::Join" : [ "", ["oauth-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
             "Type" : "A",
             "AliasTarget" : {
-              "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },
-              "DNSName" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
+              "HostedZoneId" : { "Fn::GetAtt":[ "FxaLB", "CanonicalHostedZoneID" ] },
+              "DNSName" : { "Fn::GetAtt":[ "FxaLB", "DNSName" ] }
             }
           },
           {
             "Name" : { "Fn::Join" : [ "", ["123done-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
             "Type" : "A",
             "AliasTarget" : {
-              "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },
-              "DNSName" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
+              "HostedZoneId" : { "Fn::GetAtt":[ "FxaLB", "CanonicalHostedZoneID" ] },
+              "DNSName" : { "Fn::GetAtt":[ "FxaLB", "DNSName" ] }
             }
           },
           {
             "Name" : { "Fn::Join" : [ "", ["321done-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
             "Type" : "A",
             "AliasTarget" : {
-              "HostedZoneId" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneNameID" ] },
-              "DNSName" : { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
+              "HostedZoneId" : { "Fn::GetAtt":[ "FxaLB", "CanonicalHostedZoneID" ] },
+              "DNSName" : { "Fn::GetAtt":[ "FxaLB", "DNSName" ] }
             }
           },
           {
@@ -634,9 +702,9 @@
       "Description": "Content server hostname",
       "Value": { "Fn::Join" : [ "", [ {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"} ] ] }
     },
-    "ELB": {
-      "Description": "The ELB",
-      "Value": { "Fn::GetAtt":[ "FxaELB", "CanonicalHostedZoneName" ] }
+    "LB": {
+      "Description": "The LB",
+      "Value": { "Fn::GetAtt":[ "FxaLB", "DNSName" ] }
     }
   }
 }

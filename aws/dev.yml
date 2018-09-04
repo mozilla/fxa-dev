@@ -47,29 +47,20 @@
 
     - debug: var=stack
 
-    - debug: msg={{ stack | json_query('stack_resources[?logical_resource_id==`FxaELB`].physical_resource_id | [0]') }}
-
-    - name: Waiting for instance to join ELB (ignore FAILED RETRYING log messages)
-      ec2_elb_facts:
-        names:
-          - "{{ stack | json_query('stack_resources[?logical_resource_id==`FxaELB`].physical_resource_id | [0]') }}"
-        region: "{{ region }}"
-      ignore_errors: yes
-      register: fxaelb
-      until: >
-        fxaelb and fxaelb.get('elbs') and (fxaelb.get('elbs') | length) > 0
-          and fxaelb.get('elbs')[0].get('instances_inservice_count')
-          and fxaelb.get('elbs')[0].get('instances_inservice_count') == 1
+    - name: Wait for nginx on the instance to come online (ignore FAILED RETRYING log messages)
+      uri:
+        url: "http://meta-{{ stack['stack_outputs']['ContentHost'] }}:1443/50x.html"
+        follow_redirects: none
+        status_code:
+          - -1
+          - 200
+          - 404
+      register: response
+      until: response and response.get('status') != -1
       retries: 40 # 10 mins
       delay: 15
 
-    - debug: var=fxaelb.get('elbs')[0]['instances_inservice_count']
-
-    - name: Assert that last task did not time out
-      assert:
-        that: fxaelb.get('elbs')[0]['instances_inservice_count'] == 1
-
-    - name: Check that the FxA services are returning a plausible `/__version__`
+    - name: Check that the FxA services are returning a plausible `/__version__` (ignore FAILED RETRYING log messages)
       uri:
         url="{{ item.host }}"
         return_content=yes
