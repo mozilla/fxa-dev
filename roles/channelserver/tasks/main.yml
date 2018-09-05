@@ -1,5 +1,15 @@
 ---
 
+- name: configure nginx upstream
+  become: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_channelserver.conf
+  notify: reload nginx config
+
+- name: configure nginx location
+  become: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_channelserver.conf
+  notify: reload nginx config
+
 - name: Pull channelserver docker image
   become: true
   docker_image:
@@ -42,7 +52,7 @@
     ports:
       - 8058:8058
     env:
-      PAIR_HOSTNAME: "127.0.0.1"
+      PAIR_HOSTNAME: "0.0.0.0"
       PAIR_PORT: "8058"
       PAIR_MMDB_LOC: "/config/mmdb/latest/GeoLite2-City.mmdb"
       PAIR_DEBUG: "true"
