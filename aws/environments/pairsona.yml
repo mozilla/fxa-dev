@@ -6,4 +6,5 @@ ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02
 reaper_spare_me: "true"
 
 content_docker_tag: feature.pairsona
+oauth_docker_tag: feature.pairsona
 fxadev_git_version: pairsona
