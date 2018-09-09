@@ -7,4 +7,5 @@ reaper_spare_me: "true"
 
 content_docker_tag: feature.pairsona
 oauth_docker_tag: feature.pairsona
+auth_docker_tag: v1.119.6
 fxadev_git_version: pairsona
