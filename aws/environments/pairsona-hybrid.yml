@@ -1,0 +1,11 @@
+---
+region: us-west-2
+subdomain: pairsona-hybrid.dev
+hosted_zone: lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+reaper_spare_me: "true"
+
+content_docker_tag: feature.pairsona-hybrid
+oauth_docker_tag: feature.pairsona
+auth_docker_tag: v1.119.6
+fxadev_git_version: pairsona-hybrid
