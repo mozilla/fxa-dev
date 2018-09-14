@@ -82,20 +82,20 @@
       "termsUri": "",
       "privacyUri": "",
       "trusted": true,
-      "allowedScopes": "https://identity.mozilla.com/apps/lockbox"
+      "allowedScopes": "https://identity.mozilla.com/apps/lockbox https://identity.mozilla.com/apps/oldsync"
     },
     {
       "id": "98adfa37698f255b",
-      "name": "Lockbox Extension iOS",
+      "name": "Lockbox for iOS",
       "hashedSecret": "fe287a384b269492655ccd61fcadffe4d40d4d5d648209f96ee955d45f0ca05c",
-      "redirectUri": "lockbox://redirect.ios",
+      "redirectUri": "https://lockbox.firefox.com/fxa/ios-redirect.html",
       "imageUri": "",
       "publicClient": true,
       "canGrant": false,
       "termsUri": "",
       "privacyUri": "",
       "trusted": true,
-      "allowedScopes": "https://identity.mozilla.com/apps/lockbox"
+      "allowedScopes": "https://identity.mozilla.com/apps/lockbox https://identity.mozilla.com/apps/oldsync"
     },
     {
       "id": "fced6b5e3f4c66b9",
@@ -424,6 +424,10 @@
     },
     {
       "scope": "https://identity.mozilla.com/apps/lockbox",
+      "hasScopedKeys": true
+    },
+    {
+      "scope": "https://identity.mozilla.com/apps/oldsync",
       "hasScopedKeys": true
     },
     {
