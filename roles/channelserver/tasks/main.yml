@@ -1,0 +1,39 @@
+---
+
+- name: configure nginx upstream
+  become: true
+  template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_channelserver.conf
+  notify: reload nginx config
+
+- name: configure nginx location
+  become: true
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/location/http_channelserver.conf
+  notify: reload nginx config
+
+- name: Pull channelserver docker image
+  become: true
+  docker_image:
+    state: present
+    name: mozilla/channelserver
+    tag: "{{ channelserver_docker_tag }}"
+  register: image
+
+- debug: var=image
+
+- name: Start channelserver container
+  become: true
+  docker_container:
+    name: channelserver
+    image: mozilla/channelserver{{ ':' + channelserver_docker_tag }}
+    state: "{{ channelserver_docker_state }}"
+    ports:
+      - 8058:8058
+    env:
+      PAIR_HOSTNAME: "0.0.0.0"
+      PAIR_PORT: "8058"
+      PAIR_DEBUG: "true"
+      PAIR_VERBOSE: "true"
+      RUST_BACKTRACE: "1"
+  register: container
+
+- debug: var=container

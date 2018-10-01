@@ -43,6 +43,7 @@
       FXA_OAUTH_URL: "{{ oauth_public_url }}"
       FXA_PROFILE_URL: "{{ profile_public_url }}"
       SYNC_TOKENSERVER_URL: "{{ sync_tokenserver_url }}"
+      PAIRING_CHANNEL_SERVER_URL: "wss://{{ domain_name }}/channelserver/v1/ws/"
       FXA_MARKETING_EMAIL_API_URL: "{{ content_public_url }}/basket"
       FXA_MARKETING_EMAIL_PREFERENCES_URL: "https://www-dev.allizom.org/newsletter/existing/"
       SCOPED_KEYS_ENABLED: 'true'
