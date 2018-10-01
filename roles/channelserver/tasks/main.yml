@@ -24,7 +24,7 @@
   become: true
   docker_container:
     name: channelserver
-    image: mozilla/pairsona{{ ':' + channelserver_docker_tag }}
+    image: mozilla/channelserver{{ ':' + channelserver_docker_tag }}
     state: "{{ channelserver_docker_state }}"
     ports:
       - 8058:8058
