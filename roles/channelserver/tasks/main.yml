@@ -14,7 +14,7 @@
   become: true
   docker_image:
     state: present
-    name: mozilla/pairsona
+    name: mozilla/channelserver
     tag: "{{ channelserver_docker_tag }}"
   register: image
 
