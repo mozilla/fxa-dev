@@ -10,3 +10,4 @@ ec2_volume_size: 24
 
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
+auth_docker_tag: feature.oauth2tok
