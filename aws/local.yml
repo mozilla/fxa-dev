@@ -8,6 +8,7 @@
     - "environments/{{ stack_name }}.yml"
   roles:
     - common
+    - web
     - mysql
     - ses
     - redis

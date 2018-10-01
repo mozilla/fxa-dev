@@ -47,7 +47,20 @@
 
     - debug: var=stack
 
-    - name: Check that the FxA services are returning a plausible `/__version__`
+    - name: Wait for nginx on the instance to come online (ignore FAILED RETRYING log messages)
+      uri:
+        url: "http://meta-{{ stack['stack_outputs']['ContentHost'] }}:1443/50x.html"
+        follow_redirects: none
+        status_code:
+          - -1
+          - 200
+          - 404
+      register: response
+      until: response and response.get('status') != -1
+      retries: 40 # 10 mins
+      delay: 15
+
+    - name: Check that the FxA services are returning a plausible `/__version__` (ignore FAILED RETRYING log messages)
       uri:
         url="{{ item.host }}"
         return_content=yes

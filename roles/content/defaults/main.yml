@@ -42,5 +42,10 @@ content_scoped_keys_validation: >-
        "redirectUris": [
          "https://send2.dev.lcip.org/api/fxa/oauth"
        ]
+     },
+     "https://identity.mozilla.com/admin": {
+       "redirectUris": [
+         "fxaclient://fenix.redirect"
+       ]
      }
   }
