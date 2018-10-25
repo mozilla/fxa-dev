@@ -1,0 +1,15 @@
+---
+region: us-west-2
+subdomain: client-instance-api.dev
+hosted_zone: lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+
+
+ec2_instance_type: t2.medium
+ec2_volume_size: 24
+
+owner: "dev-fxacct@mozilla.org"
+reaper_spare_me: "true"
+auth_docker_tag: feature.oauth-instance-metadata
+oauth_docker_tag: feature.oauth-instance-metadata
+content_docker_tag: feature.oauth-instance-metadata
