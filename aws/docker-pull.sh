@@ -16,7 +16,7 @@ IMAGES=(
   mozilla/fxa-profile-server
   mozilla/pushbox
   mozilla/channelserver
-  mysql:5.6.35
+  mysql:5.7.24
 )
 
 for f in ${IMAGES[*]}; do
