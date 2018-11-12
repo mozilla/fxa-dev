@@ -11,5 +11,6 @@ ec2_volume_size: 24
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 auth_docker_tag: feature.oauth-instance-metadata
+authdb_docker_tag: feature.oauth-instance-metadata
 oauth_docker_tag: feature.oauth-instance-metadata
 content_docker_tag: feature.oauth-instance-metadata
