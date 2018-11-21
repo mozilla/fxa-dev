@@ -41,29 +41,7 @@
     env:
       VERIFICATION_URL: http://127.0.0.1:8005/v2
       CONFIG_FILES: "/config/local.json"
-    volumes:
-      - /data/config/oauth:/config:ro
-  register: container
-
-- debug: var=container
-
-- name: Start oauth-internal docker container
-  become: true
-  docker_container:
-    name: oauth-internal
-    image: mozilla/fxa-oauth-server{{ ':' + oauth_docker_tag }}
-    state: "{{ oauth_docker_state }}"
-    network_mode: host
-    ports:
-      - 9111:9111
-    command: node bin/internal.js
-    env:
-      # The oauth and oauth-internal containers can race to create the `oauth`
-      # database on first run. So, have the oauth-internal container skip
-      # schema creation and just rely on the main oauth server to do so.
-      CREATE_MYSQL_SCHEMA: "false"
-      VERIFICATION_URL: http://127.0.0.1:8005/v2
-      CONFIG_FILES: "/config/local.json"
+      CLIENT_MANAGEMENT_ENABLED: "true"
     volumes:
       - /data/config/oauth:/config:ro
   register: container
