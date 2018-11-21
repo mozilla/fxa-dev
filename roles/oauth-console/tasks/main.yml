@@ -40,7 +40,7 @@
       env:
         PROFILE_URI: "{{ profile_public_uri }}"
         OAUTH_URI: "{{ oauth_public_uri }}"
-        OAUTH_INTERNAL_URI: "{{ oauth_internal_uri }}"
+        OAUTH_INTERNAL_URI: "{{ oauth_public_uri }}"
         BASE_URL: "/console/"
         COOKIE_SECRET: "2be80db1d3cf5ddef69d"
         FXA_OAUTH_CLIENT_ID: "24bdbfa45cd300c5"
