@@ -41,7 +41,6 @@
     env:
       VERIFICATION_URL: http://127.0.0.1:8005/v2
       CONFIG_FILES: "/config/local.json"
-      CLIENT_MANAGEMENT_ENABLED: "true"
     volumes:
       - /data/config/oauth:/config:ro
   register: container
