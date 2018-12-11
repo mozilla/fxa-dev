@@ -2,6 +2,6 @@
 
 - name: cleanup old docker images
   command: |
-    /bin/bash -c "docker images -f 'dangling=true' -q | xargs --no-run-if-empty docker rmi"
+    /bin/bash -c "docker system prune --force --all"
 
 - meta: flush_handlers
