@@ -37,7 +37,7 @@
     network_mode: host
     ports:
       - 9010:9010
-    command: node bin/server.js
+    command: node fxa-oauth-server/bin/server.js
     env:
       VERIFICATION_URL: http://127.0.0.1:8005/v2
       CONFIG_FILES: "/config/local.json"
