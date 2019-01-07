@@ -1,6 +1,7 @@
 ---
 
 - name: cleanup old docker images
+  become: true
   command: |
     /bin/bash -c "docker system prune --force --all"
 
