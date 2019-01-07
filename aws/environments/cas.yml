@@ -1,0 +1,10 @@
+---
+region: us-west-2
+subdomain: cas.dev
+hosted_zone: lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+reaper_spare_me: "true"
+
+fxadev_git_version: docker-cas
+
+content_docker_tag: feature.cas
