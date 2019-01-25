@@ -45,6 +45,7 @@
       SYNC_TOKENSERVER_URL: "{{ sync_tokenserver_url }}"
       #PAIRING_CHANNEL_SERVER_URL: "wss://{{ domain_name }}/channelserver/v1/ws/"
       PAIRING_CHANNEL_SERVER_URL: "wss://dev.channelserver.nonprod.cloudops.mozgcp.net/v1/ws/"
+      PAIRING_SERVER_BASE_URI: "wss://dev.channelserver.nonprod.cloudops.mozgcp.net"
       FXA_MARKETING_EMAIL_API_URL: "{{ content_public_url }}/basket"
       FXA_MARKETING_EMAIL_PREFERENCES_URL: "https://www-dev.allizom.org/newsletter/existing/"
       SCOPED_KEYS_ENABLED: 'true'
