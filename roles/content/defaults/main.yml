@@ -26,7 +26,8 @@ content_scoped_keys_validation: >-
         "https://lockbox.firefox.com/fxa/android-redirect.html",
         "https://accounts.firefox.com/oauth/success/3c49430b43dfba77",
         "https://latest.dev.lcip.org/oauth/success/3c49430b43dfba77",
-        "https://stable.dev.lcip.org/oauth/success/3c49430b43dfba77"
+        "https://stable.dev.lcip.org/oauth/success/3c49430b43dfba77",
+        "https://devicesrefresh.dev.lcip.org/oauth/success/3c49430b43dfba77"
       ]
     },
     "https://identity.mozilla.com/apps/lockbox": {
