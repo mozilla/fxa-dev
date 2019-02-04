@@ -27,6 +27,7 @@ content_scoped_keys_validation: >-
         "https://accounts.firefox.com/oauth/success/3c49430b43dfba77",
         "https://latest.dev.lcip.org/oauth/success/3c49430b43dfba77",
         "https://stable.dev.lcip.org/oauth/success/3c49430b43dfba77",
+        "https://pairsona-qa.dev.lcip.org/oauth/success/3c49430b43dfba77",
         "https://devicesrefresh.dev.lcip.org/oauth/success/3c49430b43dfba77"
       ]
     },
