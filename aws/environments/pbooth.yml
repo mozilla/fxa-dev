@@ -14,7 +14,8 @@ hosted_zone: lcip.org
 # ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
 ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/675e0ac8-23af-4153-8295-acb28ccc9f0f
 
-auth_docker_tag: feature.sms-budget-automation
+fxadev_git_version: pbooth
+content_docker_tag: feature.feature-flags
 
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
@@ -27,5 +28,5 @@ cron_time:
   day: 1
   month: 1
 
-owner: "stomlinson@mozilla.com"
+owner: "pbooth@mozilla.com"
 reaper_spare_me: "false"
