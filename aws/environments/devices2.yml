@@ -7,4 +7,4 @@ reaper_spare_me: "true"
 
 #auth_docker_tag: feature.devices-with-refresh-token
 #oauth_docker_tag: feature.devices-with-refresh-token
-#authdb_docker_tag: feature.devices2
+authdb_docker_tag: feature.devices2
