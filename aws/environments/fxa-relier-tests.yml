@@ -1,0 +1,11 @@
+---
+region: us-west-2
+subdomain: fxa-relier-tests.dev
+hosted_zone: lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+reaper_spare_me: "false"
+
+fxadev_git_version: fxa-relier-tests
+rp_docker_tag: feature.456done
+
+owner: "pbooth@mozilla.com"
