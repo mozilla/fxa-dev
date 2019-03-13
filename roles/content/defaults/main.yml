@@ -29,7 +29,8 @@ content_scoped_keys_validation: >-
         "https://stable.dev.lcip.org/oauth/success/3c49430b43dfba77",
         "https://pairsona-qa.dev.lcip.org/oauth/success/3c49430b43dfba77",
         "https://fenixmigrator.dev.lcip.org/oauth/success/3c49430b43dfba77",
-        "https://devicesrefresh.dev.lcip.org/oauth/success/3c49430b43dfba77"
+        "https://devicesrefresh.dev.lcip.org/oauth/success/3c49430b43dfba77",
+        "https://devices2.dev.lcip.org/oauth/success/3c49430b43dfba77"
       ]
     },
     "https://identity.mozilla.com/apps/lockbox": {
