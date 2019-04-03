@@ -2,5 +2,4 @@
 dependencies:
   - { role: common }
   - { role: web }
-  - { role: rp-build }
   - { role: rp }
