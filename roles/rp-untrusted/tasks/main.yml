@@ -43,8 +43,8 @@
   become: true
   docker_container:
     name: rp2-untrusted
-    image: mozilla/123done{{ ':' + rp_docker_tag }}
-    state: "{{ rp_docker_state }}"
+    image: mozilla/123done{{ ':' + rp_untrusted_docker_tag }}
+    state: "{{ rp_untrusted_docker_state }}"
     network_mode: host
     ports:
       - 4902:4902
