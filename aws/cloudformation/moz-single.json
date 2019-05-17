@@ -644,7 +644,7 @@
             "Name" : { "Fn::Join" : [ "", ["meta-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
             "Type": "A",
             "TTL": "30",
-            "ResourceRecords" : [ { "Fn::GetAtt" : [ "FxaEc2Instance", "PublicIp" ] } ]
+            "ResourceRecords" : [ { "Ref": "FxAEIP" } ]
           }
         ]
       }
