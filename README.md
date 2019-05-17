@@ -80,3 +80,12 @@ You can control the branch of fxa-dev for each environment by changing the `{fxa
 - profile server: https://latest.dev.lcip.org/profile
 - demo oauth site: https://123done-latest.dev.lcip.org
 - ssh access: ec2-user@meta-latest.dev.lcip.org
+
+## About using docker_container and quoting of environment values
+
+`docker_container` (>=2.8) now insists that environment values be quoted. However, when evaluating `"{{ foo }}"`, those quotes are removed. So use the `to_json` jinja2 filter to ensure that the value is quoted. Note: I use `to_json` instead of `quote` because `quote` will not quote Boolean values `true` and `false`.
+
+If not quoted, the error will look like `"Non-string value found for env option. Ambiguous env options must be wrapped in quotes to avoid them being interpreted. Key: ENV_VAR_NAME"`. If you see this error, add a `to_json` in your templates and try again.
+
+
+

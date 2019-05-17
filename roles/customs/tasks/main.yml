@@ -18,6 +18,7 @@
 - name: Start customs-server docker container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: customs
     image: mozilla/fxa-customs-server{{ ':' + customs_docker_tag }}
     state: "{{ customs_docker_state }}"

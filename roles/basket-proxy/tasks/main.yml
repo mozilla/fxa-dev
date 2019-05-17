@@ -39,6 +39,7 @@
 - name: Start basket-proxy server docker container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: basket-proxy
     image: mozilla/fxa-basket-proxy{{ ':' + basket_proxy_docker_tag }}
     state: "{{ basket_docker_state }}"
@@ -54,6 +55,7 @@
 - name: Start basket-event-handler docker container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: basket-event-handler
     image: mozilla/fxa-basket-proxy{{ ':' + basket_proxy_docker_tag }}
     state: "{{ basket_docker_state }}"
@@ -67,6 +69,7 @@
 - name: Start basket-fake docker container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: basket-fake
     image: mozilla/fxa-basket-proxy{{ ':' + basket_proxy_docker_tag }}
     state: "{{ basket_docker_state }}"
