@@ -22,6 +22,11 @@
     - gcc-c++
     - git
     - ntp
+    - python-dnf
+
+- name: update installed packages
+  become: true
+  yum: name=* state=latest
 
 - name: ensure a docker group is created to allow running without sudo
   become: true
