@@ -19,13 +19,14 @@
 - name: Start mysql container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-semi-mandatory-quoting
     name: mysql
     image: mysql{{ ':' + mysql_docker_tag }}
     state: "{{ mysql_docker_state }}"
     ports:
       - 3306:3306
     env:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_ALLOW_EMPTY_PASSWORD: "1"
     volumes:
       - /var/data/mysql:/var/lib/mysql
   register: container

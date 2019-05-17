@@ -23,6 +23,7 @@
 - name: Start channelserver container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-semi-mandatory-quoting
     name: channelserver
     image: mozilla/channelserver{{ ':' + channelserver_docker_tag }}
     state: "{{ channelserver_docker_state }}"

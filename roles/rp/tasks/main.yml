@@ -37,12 +37,14 @@
 - name: Ensure removal of existing `rp` container.
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-semi-mandatory-quoting
     name: rp
     state: absent
 
 - name: Start 123done docker container as trusted rp2
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-semi-mandatory-quoting
     name: rp2
     image: mozilla/123done{{ ':' + rp_docker_tag }}
     state: "{{ rp_docker_state }}"

@@ -28,6 +28,7 @@
 - name: Start content-server docker container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-semi-mandatory-quoting
     name: content
     image: mozilla/fxa-content-server{{ ':' + content_docker_tag }}
     state: "{{ content_docker_state }}"

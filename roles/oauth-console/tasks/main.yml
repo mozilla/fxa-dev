@@ -33,6 +33,7 @@
 - name: start oauth-console docker container
   become: true
   docker_container:
+      # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-semi-mandatory-quoting
       name: oauth-console
       image: mozilla/fxa-oauth-console{{ ':' + oauth_console_docker_tag }}
       state: "{{ oauth_console_docker_state }}"

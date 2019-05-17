@@ -18,6 +18,7 @@
 - name: Start verifier docker container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-semi-mandatory-quoting
     name: verifier
     image: mozilla/browserid-verifier{{ ':' + verifier_docker_tag }}
     state: "{{ verifier_docker_state }}"
@@ -27,11 +28,11 @@
     # `start`, as in `npm start`.
     command: start
     env:
-      COMPUTECLUSTER_MAX_PROCESSES: 1
-      COMPUTECLUSTER_MAX_BACKLOG: 500
-      IP_ADDRESS: 127.0.0.1
-      PORT: 8005
-      NODE_ENV: production
+      COMPUTECLUSTER_MAX_PROCESSES: "1"
+      COMPUTECLUSTER_MAX_BACKLOG: "500"
+      IP_ADDRESS: "127.0.0.1"
+      PORT: "8005"
+      NODE_ENV: "production"
   register: container
 
 - debug: var=container
