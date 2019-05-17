@@ -6,6 +6,7 @@ ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02
 
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
+fxadev_git_version: docker-ansible-2.8
 
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
