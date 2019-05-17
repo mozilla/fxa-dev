@@ -31,16 +31,17 @@
 - name: Start sync docker container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: syncserver
     image: mozilla/syncserver{{ ':' + sync_docker_tag }}
     state: "{{sync_docker_state}}"
     network_mode: host
     env:
-      SYNCSERVER_PUBLIC_URL: "{{ sync_public_url }}"
+      SYNCSERVER_PUBLIC_URL: "{{ sync_public_url | to_json }}"
       SYNCSERVER_IDENTITY_PROVIDER: "{{ content_public_url }}"
       SYNCSERVER_SECRET: "{{ sync_server_secret }}"
       SYNCSERVER_SQLURI: "{{ sync_sqluri }}"
-      SYNCSERVER_BATCH_UPLOAD_ENABLED: true
+      SYNCSERVER_BATCH_UPLOAD_ENABLED: "true"
     ports:
       - 5000:5000
 

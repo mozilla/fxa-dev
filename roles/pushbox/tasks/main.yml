@@ -29,6 +29,7 @@
 - name: Start pushbox container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: pushbox
     image: mozilla/pushbox{{ ':' + pushbox_docker_tag }}
     state: "{{ pushbox_docker_state }}"
@@ -42,7 +43,7 @@
       ROCKET_SERVER_TOKEN: "Correct_Horse_Battery_Staple_1"
       ROCKET_FXA_HOST: "{{ oauth_public_url }}"
       ROCKET_SQS_URL: "{{ pushbox_queue_url }}"
-      ROCKET_DRYRUN: false
+      ROCKET_DRYRUN: "false"
       AWS_DEFAULT_REGION: "{{ region }}"
       RUST_BACKTRACE: "1"
   register: container

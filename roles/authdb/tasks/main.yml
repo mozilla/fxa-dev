@@ -33,6 +33,7 @@
 - name: Start auth-db docker container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: auth-db
     image: mozilla/fxa-auth-db-mysql{{ ':' + authdb_docker_tag }} 
     state: "{{ authdb_docker_state }}"
@@ -42,26 +43,26 @@
     command: node bin/server.js
     env:
       NODE_ENV: "stage"
-      PORT: "{{ authdb_private_port }}"
+      PORT: "{{ authdb_private_port | to_json }}"
       SCHEMA_PATCH_KEY: "schema-patch-level"
       LOG_LEVEL: "info"
-      ENABLE_PRUNING: 1
+      ENABLE_PRUNING: "1"
       MYSQL_USER: "{{ authdb_primary_user }}"
       MYSQL_PASSWORD: "{{ authdb_primary_password }}"
       MYSQL_DATABASE: "fxa"
       MYSQL_HOST: "{{ authdb_primary_host }}"
-      MYSQL_PORT: 3306
-      MYSQL_CONNECTION_LIMIT: 10
+      MYSQL_PORT: "3306"
+      MYSQL_CONNECTION_LIMIT: "10"
       MYSQL_WAIT_FOR_CONNECTIONS: "true"
-      MYSQL_QUEUE_LIMIT: 100
+      MYSQL_QUEUE_LIMIT: "100"
       MYSQL_SLAVE_USER: "{{ authdb_replica_user }}"
       MYSQL_SLAVE_PASSWORD: "{{ authdb_replica_password }}"
       MYSQL_SLAVE_DATABASE: "fxa"
       MYSQL_SLAVE_HOST: "{{ authdb_replica_host }}"
-      MYSQL_SLAVE_PORT: 3306
-      MYSQL_SLAVE_CONNECTION_LIMIT: 10
+      MYSQL_SLAVE_PORT: "3306"
+      MYSQL_SLAVE_CONNECTION_LIMIT: "10"
       MYSQL_SLAVE_WAIT_FOR_CONNECTIONS: "true"
-      MYSQL_SLAVE_QUEUE_LIMIT: 100
+      MYSQL_SLAVE_QUEUE_LIMIT: "100"
   register: container
 
 - debug: var=container
