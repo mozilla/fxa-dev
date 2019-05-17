@@ -15,7 +15,7 @@ ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02
 #ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/675e0ac8-23af-4153-8295-acb28ccc9f0f
 
 fxadev_git_version: stomlinson-docker
-content_docker_tag: feature.babel-7
+content_docker_tag: feature.trailhead-ui
 
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
