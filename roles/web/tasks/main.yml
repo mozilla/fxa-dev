@@ -2,7 +2,10 @@
 
 - name: install nginx
   become: true
-  yum: name=nginx state=present
+  yum:
+    name: nginx
+    state: present
+    use_backend: yum
 
 - name: ensure /etc/nginx/conf.d/upstream directory
   file: path=/etc/nginx/conf.d/upstream state=directory

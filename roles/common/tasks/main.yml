@@ -6,11 +6,17 @@
 
 - name: update installed packages
   become: true
-  yum: name=* state=latest
+  yum:
+    name: '*'
+    state: latest
+    use_backend: yum
 
 - name: install base packages
   become: true
-  yum: name={{ item }} state=present
+  yum:
+    name: "{{ item }}"
+    state: present
+    use_backend: yum
   with_items:
     - docker
     - gcc-c++

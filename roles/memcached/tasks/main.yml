@@ -2,7 +2,10 @@
 
 - name: install memcached
   become: true
-  yum: name=memcached state=present
+  yum:
+    name: memcached
+    state: present
+    use_backend: yum
 
 - name: start memcached
   become: true
