@@ -648,6 +648,15 @@
           }
         ]
       }
+    },
+
+    "FxAEIP" : {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "InstanceId": {
+          "Ref": "FxaEc2Instance"
+        }
+      }
     }
   },
 
@@ -705,6 +714,10 @@
     "LB": {
       "Description": "The LB",
       "Value": { "Fn::GetAtt":[ "FxaLB", "DNSName" ] }
+    },
+    "EIP": {
+      "Description": "Elastic IP for SubHub whitelisting",
+      "Value": { "Ref": "FxAEIP" }
     }
   }
 }
