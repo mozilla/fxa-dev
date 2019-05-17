@@ -6,11 +6,6 @@ ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02
 
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
-fxadev_git_version: docker-remove-obsolete-git-version
-email_service_docker_tag: v1.118.0
-
-# intentional leftover
-oauth_git_version: v1.117.0
 
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
