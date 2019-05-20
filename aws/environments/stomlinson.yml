@@ -3,7 +3,7 @@
 # The following variables should be put into a new yml file in this directory.
 # Any variables used by ansible roles may also be set here.
 
-region: us-east-1
+region: us-west-2
 
 # The {{ subdomain }}.{{ host_zone }} will be added to route53
 subdomain: stomlinson.dev
@@ -11,10 +11,9 @@ hosted_zone: lcip.org
 
 # The ARN of the SSL certificate in ACM to use with Cloudfront & ELB
 # If you need to use us-west-2, use:
-# ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
-ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/675e0ac8-23af-4153-8295-acb28ccc9f0f
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
 
-fxadev_git_version: docker
+fxadev_git_version: docker-ansible-2.8-shane
 
 ec2_instance_type: t2.medium
 ec2_volume_size: 24
