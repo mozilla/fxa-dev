@@ -1,6 +1,6 @@
 ---
 fxadev_git_repo: https://github.com/mozilla/fxa-dev.git
-fxadev_git_version: master
+fxadev_git_version: docker
 cron_time:
   weekday: '*'
   month: '*'
