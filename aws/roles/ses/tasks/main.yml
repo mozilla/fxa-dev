@@ -2,11 +2,17 @@
 
 - name: no sendmail
   become: true
-  yum: name=sendmail state=absent
+  yum:
+    name: sendmail
+    state: absent
+    use_backend: yum
 
 - name: install postfix
   become: true
-  yum: name=postfix state=present
+  yum:
+    name: postfix
+    state: present
+    use_backend: yum
   notify: set MTA to postfix
 
 - name: install postfix main.cf
@@ -24,7 +30,10 @@
 # fedora 20 doesn't include rsyslog by default
 - name: install rsyslog
   become: true
-  yum: name=rsyslog state=present
+  yum:
+    name: rsyslog
+    state: present
+    use_backend: yum
 
 - name: start rsyslog
   become: true

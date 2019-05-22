@@ -2,7 +2,10 @@
 
 - name: install cronie
   become: true
-  yum: name=cronie state=present
+  yum:
+    name: cronie
+    state: present
+    use_backend: yum
 
 - name: start crond
   become: true

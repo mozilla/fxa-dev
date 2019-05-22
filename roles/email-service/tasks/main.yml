@@ -18,6 +18,7 @@
 - name: Start email_service docker container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: email_service
     image: mozilla/fxa-email-service{{ ':' + email_service_docker_tag }}
     state: "{{ email_service_docker_state }}"

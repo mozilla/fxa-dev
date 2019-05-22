@@ -36,12 +36,14 @@
 - name: Ensure removal of existing `rp-untrusted` container.
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: rp-untrusted
     state: absent
 
 - name: Start 123done docker container as rp2-untrusted
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: rp2-untrusted
     image: mozilla/123done{{ ':' + rp_untrusted_docker_tag }}
     state: "{{ rp_untrusted_docker_state }}"

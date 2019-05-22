@@ -31,6 +31,7 @@
 - name: Start oauth docker container
   become: true
   docker_container:
+    # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: oauth
     image: mozilla/fxa-oauth-server{{ ':' + oauth_docker_tag }}
     state: "{{ oauth_docker_state }}"
