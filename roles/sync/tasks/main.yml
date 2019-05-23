@@ -37,7 +37,7 @@
     state: "{{sync_docker_state}}"
     network_mode: host
     env:
-      SYNCSERVER_PUBLIC_URL: "{{ sync_public_url | to_json }}"
+      SYNCSERVER_PUBLIC_URL: "{{ sync_public_url | quote }}"
       SYNCSERVER_IDENTITY_PROVIDER: "{{ content_public_url }}"
       SYNCSERVER_SECRET: "{{ sync_server_secret }}"
       SYNCSERVER_SQLURI: "{{ sync_sqluri }}"
