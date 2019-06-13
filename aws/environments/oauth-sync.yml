@@ -14,6 +14,11 @@ sync_docker_tag: feature.oauth-sync
 content_scoped_keys_validation: >-
 
   {
+    "https://identity.mozilla.com/apps/secure-proxy": {
+      "redirectUris": [
+        "https://secure-proxy.extensions.mozilla.com"
+      ]
+    },
     "https://identity.mozilla.com/apps/lockbox": {
       "redirectUris": [
         "https://2aa95473a5115d5f3deb36bb6875cf76f05e4c4d.extensions.allizom.org/",
