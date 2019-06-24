@@ -92,7 +92,7 @@
       PUSHBOX_URL: "{{ auth_pushbox_url }}"
       PUSHBOX_KEY: "{{ auth_pushbox_key }}"
       RECOVERY_CODE_COUNT: "{{ auth_recovery_code_count | to_json }}"
-      NEW_VAR_2: "false"
+      NEW_VAR_3: "false"
     volumes:
       - /data/config/auth:/config
   register: container
