@@ -153,17 +153,30 @@
       "allowedScopes": "https://identity.mozilla.com/apps/oldsync"
     },
     {
-      "id": "ffcc4070a481bc74",
-      "name": "Fenix - Admin Scope",
+      "id": "a2270f727f45f648",
+      "name": "Firefox Preview - Dev",
       "hashedSecret": "99716ed2927c96cdc0fb7efe57d5f124fb4161066c1ff7f4263069822256ec66",
-      "redirectUri": "fxaclient://fenix.redirect",
+      "redirectUri": "{{ content_public_url }}/oauth/success/a2270f727f45f648",
       "imageUri": "",
       "publicClient": true,
       "canGrant": false,
       "termsUri": "",
       "privacyUri": "",
       "trusted": true,
-      "allowedScopes": "https://identity.mozilla.com/admin"
+      "allowedScopes": "https://identity.mozilla.com/apps/oldsync"
+    },
+    {
+      "id": "1c7882c43994658e",
+      "name": "Test secure proxy",
+      "hashedSecret": "99716ed2927c96cdc0fb7efe57d5f124fb4161066c1ff7f4263069822256ec66",
+      "redirectUri": "https://cb7cbf5bedba243279adcd23bc6b88de7a304388.extensions.allizom.org/",
+      "imageUri": "",
+      "publicClient": true,
+      "canGrant": false,
+      "termsUri": "",
+      "privacyUri": "",
+      "trusted": true,
+      "allowedScopes": "https://identity.mozilla.com/apps/secure-proxy"
     },
     {
       "name": "FxA OAuth Console DEV",
