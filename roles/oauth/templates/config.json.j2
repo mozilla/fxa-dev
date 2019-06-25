@@ -314,6 +314,16 @@
       "privacyUri": "",
       "trusted": true,
       "allowedScopes": "https://identity.mozilla.com/apps/oldsync"
+    },
+    {
+      "id": "a8c528140153d1c6",
+      "name": "Firefox Private Network - Dev",
+      "hashedSecret": "0000000000000000000000000000000000000000000000000000000000000000",
+      "redirectUri": "https://cb7cbf5bedba243279adcd23bc6b88de7a304388.extensions.allizom.org/",
+      "imageUri": "",
+      "canGrant": false,
+      "trusted": true,
+      "publicClient": true
     }
   ],
   "scopes": [
@@ -344,6 +354,10 @@
     {
       "scope": "https://identity.mozilla.com/account/subscriptions",
       "hasScopedKeys": true
+    },
+    {
+      "scope": "https://identity.mozilla.com/apps/secure-proxy",
+      "hasScopedKeys": false
     }
   ],
   "env": "stage",
@@ -364,7 +378,8 @@
     "enabled": true,
     "enabledClientIds": [
       "98e6508e88680e1a",
-      "dcdb5ae7add825d2"
+      "dcdb5ae7add825d2",
+      "a8c528140153d1c6"
     ]
   },
   "allowHttpRedirects": true,
