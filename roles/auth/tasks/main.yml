@@ -46,6 +46,16 @@
     mozilla/fxa-auth-server node scripts/gen_vapid_keys.js
     creates=/data/config/auth/vapid-keys.json
 
+- name: get sub info
+  become: true
+  aws_s3:
+    region=us-west-2
+    bucket=net-mozaws-ops-fxadev
+    object=sub-info
+    mode=getstr
+  register: sub_info
+  changed_when: false
+
 - name: Start auth-server docker container
   become: true
   docker_container:
@@ -84,7 +94,8 @@
       SIGNIN_UNBLOCK_FORCED_EMAILS: "^(block.*@restmail\\.net)$"
       SUBSCRIPTIONS_ENABLED: "true"
       SUBHUB_ENABLED: "true"
-      SUBHUB_URL: "https://dev.fxa.mozilla-subhub.app/v1/swagger.json"
+      SUBHUB_KEY: "{{ sub_info.contents }}"
+      SUBHUB_URL: "https://dev.fxa.mozilla-subhub.app"
       IP_PROFILING_RECENCY: "{{ auth_ip_profiling_recency | default('0') }}"
       PORT: "{{ auth_private_port | to_json }}"
       SNS_TOPIC_ARN:  "{{ auth_sns_arn }}"
@@ -137,7 +148,8 @@
       SIGNIN_UNBLOCK_FORCED_EMAILS: "^block.*@restmail\\.net$"
       SUBSCRIPTIONS_ENABLED: "true"
       SUBHUB_ENABLED: "true"
-      SUBHUB_URL: "https://dev.fxa.mozilla-subhub.app/v1/swagger.json"
+      SUBHUB_KEY: "{{ sub_info.contents }}"
+      SUBHUB_URL: "https://dev.fxa.mozilla-subhub.app"
       PORT: "{{ auth_private_port | to_json }}"
       SNS_TOPIC_ARN:  "{{ auth_sns_arn }}"
       PROFILE_MESSAGING_REGION: "{{ region }}"
