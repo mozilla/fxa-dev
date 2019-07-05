@@ -222,7 +222,8 @@
       "imageUri": "{{ oauth_public_url }}/img/logo@2x.png",
       "redirectUri": "",
       "trusted": true,
-      "canGrant": true
+      "canGrant": true,
+      "publicClient": true
     },
     {
       "id": "3c49430b43dfba77",
@@ -269,7 +270,8 @@
       "imageUri": "https://example2.domain/logo",
       "redirectUri": "https://example2.domain/return?foo=bar",
       "trusted": true,
-      "canGrant": true
+      "canGrant": true,
+      "publicClient": true
     },
     {
       "id": "1b1a3e44c54fbb58",
@@ -344,6 +346,13 @@
     "keyFile": "../config/key.json",
     "key": {},
     "issuer": "{{ content_public_url }}"
+  },
+  "jwtAccessTokens": {
+    "enabled": true,
+    "enabledClientIds": {
+      "98e6508e88680e1a",
+      "dcdb5ae7add825d2"
+    }
   },
   "allowHttpRedirects": true,
   "authServerSecrets": ["megaz0rd"]
