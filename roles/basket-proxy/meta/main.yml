@@ -1,5 +1,0 @@
----
-dependencies:
-  - { role: common }
-  - { role: web }
-  - { role: content }

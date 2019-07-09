@@ -7,7 +7,6 @@ IMAGES=(
   mozilla/browserid-verifier
   mozilla/fxa-auth-db-mysql
   mozilla/fxa-auth-server
-  mozilla/fxa-basket-proxy
   mozilla/fxa-content-server
   mozilla/fxa-customs-server
   mozilla/fxa-oauth-server
