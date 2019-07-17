@@ -42,6 +42,7 @@
     env:
       VERIFICATION_URL: http://127.0.0.1:8005/v2
       CONFIG_FILES: "/config/local.json"
+      PPID_ENABLED: 'false'
     volumes:
       - /data/config/oauth:/config:ro
   register: container
