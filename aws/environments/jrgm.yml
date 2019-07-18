@@ -10,4 +10,6 @@ ec2_volume_size: 24
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 
+fxadev_git_version: fix-subscription-config
+
 cdn_ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/675e0ac8-23af-4153-8295-acb28ccc9f0f

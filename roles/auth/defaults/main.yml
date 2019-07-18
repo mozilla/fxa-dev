@@ -23,5 +23,9 @@ auth_pushbox_url: http://localhost:8057/
 auth_pushbox_key: Correct_Horse_Battery_Staple_1
 auth_signin_confirmation_skip_for_new_accounts: false
 auth_recovery_code_count: 8
-subscriptions_product_capabilities: '{"prod_Ex9Z1q5yVydhyk": [ "123donePro" ]}'
-subscriptions_client_capabilities: '{"dcdb5ae7add825d2": [ "123donePro" ]}'
+subscriptions_product_capabilities:
+  prod_Ex9Z1q5yVydhyk:
+    - 123donePro
+subscriptions_client_capabilities: 
+  dcdb5ae7add825d2:
+    - 123donePro
