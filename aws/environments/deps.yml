@@ -1,0 +1,13 @@
+---
+region: us-west-2
+subdomain: deps.dev
+hosted_zone: lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+reaper_spare_me: "false"
+
+fxadev_git_version: deps
+auth_docker_tag: feature.content-server-local-deps
+content_docker_tag: feature.content-server-local-deps
+oauth_docker_tag: feature.content-server-local-deps
+
+owner: "pbooth@mozilla.com"
