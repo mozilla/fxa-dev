@@ -1,7 +1,0 @@
----
-basket_proxy_git_repo: https://github.com/mozilla/fxa-basket-proxy.git
-basket_proxy_docker_tag: latest
-basket_docker_state: started
-basket_private_port: 1114
-basket_api_port: 10140
-
