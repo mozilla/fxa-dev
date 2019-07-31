@@ -1,8 +1,0 @@
----
-region: us-west-2
-subdomain: pairsona2.dev
-hosted_zone: lcip.org
-ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
-reaper_spare_me: "true"
-
-content_docker_tag: feature.pairsona2
