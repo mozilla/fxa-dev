@@ -30,7 +30,8 @@ content_scoped_keys_validation: >-
         "https://stable.dev.lcip.org/oauth/success/a2270f727f45f648",
         "https://latest.dev.lcip.org/oauth/success/a2270f727f45f648",
         "https://stable.dev.lcip.org/oauth/success/85da77264642d6a1",
-        "https://latest.dev.lcip.org/oauth/success/85da77264642d6a1"
+        "https://latest.dev.lcip.org/oauth/success/85da77264642d6a1",
+        "https://oauthchannel.dev.lcip.org/oauth/success/a2270f727f45f648"
       ]
     },
     "https://identity.mozilla.com/apps/secure-proxy": {
