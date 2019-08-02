@@ -1,0 +1,14 @@
+---
+region: us-west-2
+subdomain: signup-codes.dev
+hosted_zone: lcip.org
+ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
+
+owner: "vbudhram@mozilla.com"
+reaper_spare_me: "true"
+
+fxadev_git_version: docker-signup-codes
+auth_docker_tag: feature.signup-codes
+authdb_docker_tag: feature.signup-codes
+oauth_docker_tag: feature.signup-codes
+content_docker_tag: feature.signup-codes
