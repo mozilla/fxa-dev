@@ -10,6 +10,9 @@
     key_name: "{{ stack_name }}-fxadev"
     config_name: "{{ stack_name }}"
   tasks:
+    - name: check that chosen remote branch exists (did you push?). Aborts if not.
+      command: git rev-parse origin/"{{ fxadev_git_version }}"
+      
     - name: generate (optional) RDS password
       shell: openssl rand -hex 16
       register: rds_password
