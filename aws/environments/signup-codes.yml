@@ -8,7 +8,4 @@ owner: "vbudhram@mozilla.com"
 reaper_spare_me: "true"
 
 fxadev_git_version: docker-signup-codes
-auth_docker_tag: feature.signup-codes
-authdb_docker_tag: feature.signup-codes
-oauth_docker_tag: feature.signup-codes
 content_docker_tag: feature.signup-codes
