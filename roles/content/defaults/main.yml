@@ -60,6 +60,11 @@ content_scoped_keys_validation: >-
          "https://send2.dev.lcip.org/api/fxa/oauth"
        ]
      },
+     "https://identity.mozilla.com/apps/monitor": {
+       "redirectUris": [
+         "http://localhost:6060/oauth/confirmed"
+       ]
+     },
      "https://identity.mozilla.com/admin": {
        "redirectUris": [
          "fxaclient://fenix.redirect"
