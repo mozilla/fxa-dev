@@ -14,6 +14,10 @@
 - [ansible](http://docs.ansible.com/intro_installation.html) >=2.2
 - [boto](https://github.com/boto/boto#installation) >=2.6
 
+### macOS
+
+Use: `brew install ansible && pip install boto3`
+
 ## Usage
 
 To run on AWS change directory to `aws`
