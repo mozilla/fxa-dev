@@ -11,4 +11,4 @@ ec2_volume_size: 24
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 auth_docker_tag: feature.sessioncode
-pauth_docker_tag: feature.sessioncode
+oauth_docker_tag: feature.sessioncode
