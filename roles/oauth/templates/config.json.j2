@@ -220,17 +220,8 @@
       "redirectUri": "{{ content_public_url }}/oauth/success/3c49430b43dfba77",
       "canGrant": true,
       "trusted": true,
-      "allowedScopes": "https://identity.mozilla.com/apps/oldsync",
+      "allowedScopes": "https://identity.mozilla.com/apps/oldsync https://identity.mozilla.com/tokens/session",
       "publicClient": true
-    },
-    {
-      "id": "4ff309037e461cc4",
-      "name": "BuddyUp",
-      "hashedSecret": "97285a0eec1a29bc9f14267251d32fbcaf56dd7f0fb5f1121bcede6b4f11a8ab",
-      "imageUri": "",
-      "redirectUri": "https://support.mozilla.org/redirects/buddyup-fxa-oauth",
-      "trusted": true,
-      "canGrant": false
     },
     {
       "id": "66041b7ec3991ec0",
@@ -344,6 +335,10 @@
     },
     {
       "scope": "https://identity.mozilla.com/account/subscriptions",
+      "hasScopedKeys": false
+    },
+    {
+      "scope": " https://identity.mozilla.com/tokens/session",
       "hasScopedKeys": false
     }
   ],
