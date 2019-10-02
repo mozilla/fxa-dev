@@ -9,6 +9,6 @@ profile_docker_tag: latest
 profile_docker_state: started
 profile_public_url: "{{ public_protocol }}://{{ domain_name }}/profile"
 profile_db_host: 127.0.0.1
-profile_db_password:
+profile_db_password: ""
 oauth_domain_name: "oauth-{{ domain_name }}"
 oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
