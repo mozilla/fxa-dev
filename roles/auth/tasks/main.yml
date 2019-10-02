@@ -134,7 +134,7 @@
       MYSQL_PASSWORD: "{{ oauth_db_password }}"
       ISSUER: "{{ browserid_issuer }}"
       CONTENT_URL: "{{ content_public_url }}/oauth/"
-      FXA_OPENID_KEY: "fxa-oauth-server/config/key.json"
+      FXA_OPENID_KEYFILE: "fxa-oauth-server/config/key.json"
       FXA_OPENID_ISSUER: "{{ content_public_url }}"
       FXA_EVENTS_QUEUE_URL: "{{ oauth_queue_url }}"
       FXA_EVENTS_REGION: "{{ region }}"
