@@ -4,7 +4,7 @@ private_protocol: http
 domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 oauth_private_port: 9010
 oauth_db_host: 127.0.0.1
-oauth_db_password:
+oauth_db_password: ""
 oauth_domain_name: "oauth-{{ domain_name }}"
 oauth_git_repo: https://github.com/mozilla/fxa-oauth-server.git
 oauth_docker_tag: latest
