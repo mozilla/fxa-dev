@@ -11,3 +11,6 @@ ec2_volume_size: 24
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 fxadev_git_version: docker-fpn
+
+oauth_docker_tag: feature.fpn-fixes
+
