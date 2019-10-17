@@ -1,6 +1,6 @@
 ---
 region: us-west-2
-subdomain: oauthchannel.dev
+subdomain: fpnfenix.dev
 hosted_zone: lcip.org
 ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/ef6bb380-b02e-4433-9355-aec09dedd381
 
@@ -10,4 +10,4 @@ ec2_volume_size: 24
 
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
-content_docker_tag: feature.fenix-channel
+fxadev_git_version: docker-fpn
