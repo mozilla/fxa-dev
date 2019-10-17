@@ -40,7 +40,8 @@ content_scoped_keys_validation: >-
     },
     "https://identity.mozilla.com/apps/secure-proxy": {
       "redirectUris": [
-        "https://cb7cbf5bedba243279adcd23bc6b88de7a304388.extensions.allizom.org/"
+        "https://cb7cbf5bedba243279adcd23bc6b88de7a304388.extensions.allizom.org/",
+        "https://fpnfenix.dev.lcip.org/oauth/success/a2270f727f45f648"
       ]
     },
     "https://identity.mozilla.com/apps/lockbox": {
