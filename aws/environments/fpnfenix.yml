@@ -12,5 +12,6 @@ owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 fxadev_git_version: docker-fpn
 
+auth_docker_tag: feature.fpn-fixes
 oauth_docker_tag: feature.fpn-fixes
 
