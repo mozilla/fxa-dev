@@ -10,6 +10,17 @@ ec2_volume_size: 24
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 
+fxadev_git_version: docker-jrgm2-oauth-classic
+
+auth_docker_tag: v1.149.3
+authdb_docker_tag: v1.149.3
+content_docker_tag: v1.149.3
+customs_docker_tag: v1.149.3
+oauth_console_docker_tag: v1.149.3
+oauth_docker_tag: v1.149.3
+profile_docker_tag: v1.149.3
+
+
 cdn_ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/675e0ac8-23af-4153-8295-acb28ccc9f0f
 content_static_resource_url: https://static-jrgm2.dev.lcip.org
 
