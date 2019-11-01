@@ -16,7 +16,7 @@ auth_docker_tag: v1.149.3
 authdb_docker_tag: v1.149.3
 content_docker_tag: v1.149.3
 customs_docker_tag: v1.149.3
-oauth_console_docker_tag: v1.149.3
+oauth_console_docker_tag: latest
 oauth_docker_tag: v1.149.3
 profile_docker_tag: v1.149.3
 
