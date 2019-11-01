@@ -14,6 +14,11 @@
   file: path=/data/config/auth state=directory owner=app group=app mode=0777
   become: true
 
+# until oauth is entirely ripped out of this...
+- name: create shared mount point for openid key - both oauth and auth will mount and read
+  file: path=/data/config/openid state=directory owner=app group=app mode=0777
+  become: true
+
 - name: pull auth-server docker image
   become: true
   docker_image:
@@ -46,6 +51,15 @@
     mozilla/fxa-auth-server node scripts/gen_vapid_keys.js
     creates=/data/config/auth/vapid-keys.json
 
+- name: generate oauth/auth openid key file, and dummy oldkeyfile
+  become: true
+  command: >-
+    docker run --rm --net=host -v /data/config/openid:/openid
+      -e FXA_OPENID_KEYFILE=/openid/openid-key.json
+      -e FXA_OPENID_OLDKEYFILE=/openid/openid-old-key.json
+    mozilla/fxa-auth-server node fxa-oauth-server/scripts/gen_keys.js
+    creates=/data/config/openid/openid-key.json
+
 - name: get sub info
   become: true
   aws_s3:
@@ -66,7 +80,7 @@
     network_mode: host
     ports:
       - 9000:9000
-    command: sh scripts/start-server.sh
+    command: node /app/bin/key_server.js
     env:
       NODE_ENV: "stage"
       PUBLIC_URL: "{{ auth_public_url }}"
@@ -76,7 +90,7 @@
       ISSUER: "{{ browserid_issuer }}"
       CONTENT_URL: "{{ content_public_url }}/oauth/"
       AUTH_SERVER_SECRETS: "megaz0rd"
-      FXA_OPENID_KEYFILE: "/app/fxa-oauth-server/config/key.json"
+      FXA_OPENID_KEYFILE: "/openid/openid-key.json"
       FXA_OPENID_ISSUER: "{{ content_public_url }}"
       FXA_EVENTS_QUEUE_URL: "{{ oauth_queue_url }}"
       FXA_EVENTS_REGION: "{{ region }}"
@@ -124,6 +138,7 @@
       NEW_VAR_6: "false"
     volumes:
       - /data/config/auth:/config
+      - /data/config/openid:/openid
   register: container
 
 - debug: var=container
@@ -148,7 +163,7 @@
       ISSUER: "{{ browserid_issuer }}"
       CONTENT_URL: "{{ content_public_url }}/oauth/"
       AUTH_SERVER_SECRETS: "megaz0rd"
-      FXA_OPENID_KEYFILE: "/app/fxa-oauth-server/config/key.json"
+      FXA_OPENID_KEYFILE: "/openid/openid-key.json"
       FXA_OPENID_ISSUER: "{{ content_public_url }}"
       FXA_EVENTS_QUEUE_URL: "{{ oauth_queue_url }}"
       FXA_EVENTS_REGION: "{{ region }}"
@@ -184,6 +199,7 @@
       PROFILE_UPDATES_QUEUE_URL: "{{ profile_update_queue_url | default('') }}"
     volumes:
       - /data/config/auth:/config
+      - /data/config/openid:/openid
   register: container
 
 - debug: var=container
