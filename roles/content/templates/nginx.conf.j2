@@ -2,6 +2,7 @@ location / {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
+    resolver 172.31.0.2 valid=30s;
     proxy_pass http://upstream_content_server;
     gzip on;
     gzip_disable "msie6";
@@ -23,6 +24,7 @@ location /.well-known/openid-configuration {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
+    resolver 172.31.0.2 valid=30s;
     proxy_pass http://upstream_content_server;
 }
 
@@ -30,6 +32,7 @@ location /.well-known/fxa-client-configuration {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
+    resolver 172.31.0.2 valid=30s;
     proxy_pass http://upstream_content_server;
 }
 
@@ -37,6 +40,7 @@ location /.well-known/apple-app-site-association {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
+    resolver 172.31.0.2 valid=30s;
     proxy_pass http://upstream_content_server;
 }
 
@@ -44,5 +48,6 @@ location /.well-known/change-password {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
+    resolver 172.31.0.2 valid=30s;
     proxy_pass http://upstream_content_server;
 }
