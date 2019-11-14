@@ -51,12 +51,14 @@
     mozilla/fxa-auth-server node scripts/gen_vapid_keys.js
     creates=/data/config/auth/vapid-keys.json
 
+# must be NODE_ENV!=production to avoid "'pushbox.key' must be set in production"
 - name: generate oauth/auth openid key file, and dummy oldkeyfile
   become: true
   command: >-
     docker run --rm --net=host -v /data/config/openid:/openid
       -e FXA_OPENID_KEYFILE=/openid/openid-key.json
       -e FXA_OPENID_OLDKEYFILE=/openid/openid-old-key.json
+      -e NODE_ENV=dev
     mozilla/fxa-auth-server node scripts/oauth_gen_keys.js
     creates=/data/config/openid/openid-key.json
 
