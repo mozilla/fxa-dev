@@ -4,7 +4,7 @@ private_protocol: http
 domain_name: "{{ subdomain }}.{{ hosted_zone }}"
 
 oauth_console_private_port: 10137
-oauth_private_port: 9010
+oauth_private_port: 9000
 profile_public_port: 1111
 
 oauth_domain_name: "oauth-{{ domain_name }}"

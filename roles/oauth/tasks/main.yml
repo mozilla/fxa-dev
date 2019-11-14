@@ -5,6 +5,10 @@
   template: src=upstream.conf.j2 dest=/etc/nginx/conf.d/upstream/http_fxa_oauth.conf
   notify: reload nginx config
 
+# Note: this role depends on the auth role to create a mount at
+# /data/openid with an openid key file. This is a transitional step in
+# moving oauth into the auth-server.
+
 - name: create shared mount point for configuration info
   file: path=/data/config/oauth state=directory owner=app group=app mode=0777
   become: true
@@ -45,6 +49,7 @@
       PPID_ENABLED: 'false'
     volumes:
       - /data/config/oauth:/config:ro
+      - /data/config/openid:/openid:ro
   register: container
 
 - debug: var=container
