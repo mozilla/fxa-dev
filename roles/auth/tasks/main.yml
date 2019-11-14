@@ -57,7 +57,7 @@
     docker run --rm --net=host -v /data/config/openid:/openid
       -e FXA_OPENID_KEYFILE=/openid/openid-key.json
       -e FXA_OPENID_OLDKEYFILE=/openid/openid-old-key.json
-    mozilla/fxa-auth-server node fxa-oauth-server/scripts/gen_keys.js
+    mozilla/fxa-auth-server node scripts/oauth_gen_keys.js
     creates=/data/config/openid/openid-key.json
 
 - name: get sub info
