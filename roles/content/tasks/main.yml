@@ -47,7 +47,7 @@
       #PAIRING_CHANNEL_SERVER_URL: "wss://{{ domain_name }}/channelserver/v1/ws/"
       PAIRING_CHANNEL_SERVER_URL: "wss://dev.channelserver.nonprod.cloudops.mozgcp.net/v1/ws/"
       PAIRING_SERVER_BASE_URI: "wss://dev.channelserver.nonprod.cloudops.mozgcp.net"
-      SUBSCRIPTIONS_ENABLED: "true"
+      SUBSCRIPTIONS_ENABLED: "false"
       SUBSCRIPTIONS_MANAGEMENT_URL: "https://payments-dev.fxa.nonprod.cloudops.mozgcp.net"
       FXA_MARKETING_EMAIL_PREFERENCES_URL: "https://www-dev.allizom.org/newsletter/existing/"
       SCOPED_KEYS_ENABLED: 'true'
