@@ -44,7 +44,7 @@
       - 9010:9010
     command: node fxa-oauth-server/bin/server.js
     env:
-      VERIFICATION_URL: http://127.0.0.1:8005/v2
+      VERIFICATION_URL: http://localhost:8005/v2
       CONFIG_FILES: "/config/local.json"
       PPID_ENABLED: 'false'
     volumes:
