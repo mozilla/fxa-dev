@@ -11,4 +11,4 @@ ec2_volume_size: 24
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 
-content_public_url: "http://127.0.0.1:3030"
+content_public_url: "http://localhost:3030"
