@@ -39,6 +39,7 @@
       NODE_ENV: "production"
       CONFIG_FILES: "/app/server/config/production.json"
       HOST: "0.0.0.0"
+      NEW_SETTINGS: "true"
       FXA_URL: "{{ auth_public_url }}"
       PUBLIC_URL: "{{ content_public_url }}"
       FXA_OAUTH_URL: "{{ oauth_public_url }}"
