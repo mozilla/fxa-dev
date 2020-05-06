@@ -97,7 +97,15 @@
       FXA_EVENTS_QUEUE_URL: "{{ oauth_queue_url }}"
       FXA_EVENTS_REGION: "{{ region }}"
       JWT_ACCESS_TOKENS_ENABLED_CLIENT_IDS: "98e6508e88680e1a,dcdb5ae7add825d2,1c7882c43994658e,a8c528140153d1c6"
-      OAUTH_PROMPT_NONE_ENABLED_CLIENT_IDS: "dcdb5ae7add825d2,7f368c6886429f19,802d56ef2a9af9fa,241585c1745a144d"
+      # NOTE: the following client IDs were added for AMO prompt=none testing,
+      # but are only valid on stable.dev.lcip.org:
+      #   0f95f6474c24c1dc: redirects to http://localhost:3000/fxa-authenticate
+      #   285dd6fd9907a74c: redirects to https://addons-dev.allizom.org/api/auth/authenticate-callback/
+      #   4dce1adfa7901c08: redirects to http://localhost:3000/api/auth/authenticate-callback/?config=local
+      #   79cf52c56c81ef2a: also redirects to http://localhost:3000/api/auth/authenticate-callback/?config=local
+      #                     (seems like it couldn't hurt to have two, not sure which is the duplicate)
+      #   a25796da7bc73ffa: redirects to http://olympia.test/api/auth/authenticate-callback/
+      OAUTH_PROMPT_NONE_ENABLED_CLIENT_IDS: "dcdb5ae7add825d2,7f368c6886429f19,802d56ef2a9af9fa,241585c1745a144d,0f95f6474c24c1dc,285dd6fd9907a74c,4dce1adfa7901c08,79cf52c56c81ef2a,a25796da7bc73ffa"
       PPID_ENABLED: "false"
       DB_BACKEND: "httpdb"
       DB_POOLEE_TIMEOUT: "{{ auth_db_poolee_timeout | default('5000') }}"
