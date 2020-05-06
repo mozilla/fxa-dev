@@ -25,8 +25,7 @@
     network_mode: host
     ports:
       - 8005:8005
-    # `start`, as in `npm start`.
-    command: start
+    command: node server.js
     env:
       COMPUTECLUSTER_MAX_PROCESSES: "1"
       COMPUTECLUSTER_MAX_BACKLOG: "500"
