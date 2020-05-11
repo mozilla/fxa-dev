@@ -23,7 +23,6 @@
     - rp
     - rp-untrusted
     - oauth
-    - oauth-console
     - verifier
     - sync
     - profile

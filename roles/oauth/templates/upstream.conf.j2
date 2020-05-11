@@ -2,9 +2,6 @@ upstream upstream_oauth_server {
     server 127.0.0.1:{{ oauth_private_port }};
 }
 
-# pull in upstream_oauth_console_server
-include /etc/nginx/conf.d/oauth_console/upstream/*.conf;
-
 server {
   listen 1443;
   server_name {{ oauth_domain_name }};
@@ -18,7 +15,4 @@ server {
     rewrite ^/(.*)$ /auth/$1 break;
     proxy_pass http://upstream_oauth_server;
   }
-
-  # pull in location /console
-  include /etc/nginx/conf.d/oauth_console/location/*.conf;
 }

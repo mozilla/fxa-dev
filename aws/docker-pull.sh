@@ -10,7 +10,6 @@ IMAGES=(
   mozilla/fxa-content-server
   mozilla/fxa-customs-server
   mozilla/fxa-oauth-server
-  mozilla/fxa-oauth-console
   mozilla/syncserver
   mozilla/fxa-profile-server
   mozilla/pushbox
