@@ -40,7 +40,7 @@
     docker run --rm --net=host -v /data/config/auth:/config
       -e SECRET_KEY_FILE=/config/secret-key.json
       -e PUBLIC_KEY_FILE=/config/public-key.json
-    mozilla/fxa-auth-server node scripts/gen_keys.js
+    mozilla/fxa-auth-server sh -c 'apt-get update && apt-get install -y openssl && node scripts/gen_keys.js'
     creates=/data/config/auth/secret-key.json
 
 - name: generate vapid keys
