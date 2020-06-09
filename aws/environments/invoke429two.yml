@@ -1,6 +1,6 @@
 ---
 region: us-west-2
-subdomain: invoke429.dev
+subdomain: invoke429two.dev
 hosted_zone: lcip.org
 ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/74e4edea-7418-40d5-9f6f-3a76fdf44341
 
