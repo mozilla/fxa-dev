@@ -622,6 +622,14 @@
             }
           },
           {
+            "Name" : { "Fn::Join" : [ "", ["graphql-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
+            "Type" : "A",
+            "AliasTarget" : {
+              "HostedZoneId" : { "Fn::GetAtt":[ "FxaLB", "CanonicalHostedZoneID" ] },
+              "DNSName" : { "Fn::GetAtt":[ "FxaLB", "DNSName" ] }
+            }
+          },
+          {
             "Name" : { "Fn::Join" : [ "", ["oauth-", {"Ref" : "Subdomain"}, ".", {"Ref" : "HostedZone"}, "."]]},
             "Type" : "A",
             "AliasTarget" : {
