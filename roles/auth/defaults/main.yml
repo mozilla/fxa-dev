@@ -2,9 +2,12 @@
 public_protocol: https
 private_protocol: http
 domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+browserid_issuer: "{{ domain_name }}"
 content_public_url: "{{ public_protocol }}://{{ domain_name }}"
 oauth_domain_name: "oauth-{{ domain_name }}"
 oauth_public_url: "{{ public_protocol }}://{{ oauth_domain_name }}"
+oauth_db_host: 127.0.0.1
+oauth_db_password: ""
 authdb_server_url: "{{ private_protocol }}://127.0.0.1:8000"
 customs_server_url: "{{ private_protocol }}://127.0.0.1:7000"
 auth_redirect_domain: "{{ domain_name }}"
