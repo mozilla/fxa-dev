@@ -10,5 +10,7 @@ ec2_volume_size: 24
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 
+fxadev_git_version: jrgm-remove-stale-oauth-container-config
+
 cdn_ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/8c0e2ca1-a204-44a2-ae7e-82c7898cbd8f
 content_static_resource_url: https://static-jrgm2.dev.lcip.org
