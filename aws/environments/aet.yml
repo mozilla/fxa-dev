@@ -7,7 +7,6 @@ ssl_certificate_arn: arn:aws:acm:us-west-2:927034868273:certificate/74e4edea-741
 owner: "rfkelly@mozilla.com"
 reaper_spare_me: "true"
 
-auth_docker_tag: v1.178.0
-content_docker_tag: dockerpush.aet
-profile_docker_tag: dockerpush.aet
+content_docker_tag: latest
+profile_docker_tag: latest
 fxadev_git_version: aet-dev-environment
