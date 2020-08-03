@@ -39,17 +39,17 @@
       ACCESS_TOKEN_REDIS_HOST: 127.0.0.1
       SENTRY_DSN: ''
       AUTH_MYSQL_DATABASE: fxa
-      AUTH_MYSQL_HOST: 127.0.0.1
+      AUTH_MYSQL_HOST: "{{ authdb_primary_host }}"
       AUTH_MYSQL_USERNAME: root
-      AUTH_MYSQL_PASSWORD: ''
+      AUTH_MYSQL_PASSWORD: "{{ authdb_primary_password }}"
       OAUTH_MYSQL_DATABASE: fxa_oauth
-      OAUTH_MYSQL_HOST: 127.0.0.1
+      OAUTH_MYSQL_HOST: "{{ oauth_db_host }}"
       OAUTH_MYSQL_USERNAME: root
-      OAUTH_MYSQL_PASSWORD: ''
+      OAUTH_MYSQL_PASSWORD: "{{ oauth_db_password }}"
       PROFILE_MYSQL_DATABASE: fxa_profile
-      PROFILE_MYSQL_HOST: 127.0.0.1
+      PROFILE_MYSQL_HOST: "{{ profile_db_host }}"
       PROFILE_MYSQL_USERNAME: root
-      PROFILE_MYSQL_PASSWORD: ''
+      PROFILE_MYSQL_PASSWORD: "{{ profile_db_password }}"
 
   register: container
 
