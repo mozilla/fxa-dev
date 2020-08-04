@@ -26,6 +26,7 @@
     - verifier
     - sync
     - profile
+    - graphql-api
     - docker-gc
     - cron_update
     - team

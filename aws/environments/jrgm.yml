@@ -10,6 +10,7 @@ ec2_volume_size: 24
 owner: "dev-fxacct@mozilla.org"
 reaper_spare_me: "true"
 
-fxadev_git_version: docker-jrgm-fix-auth-oauth
+fxadev_git_version: jrgm-fxa-graphql-api
+#graphql_api_docker_tag: dockerpush.graphql-api-dbg
 
 cdn_ssl_certificate_arn: arn:aws:acm:us-east-1:927034868273:certificate/8c0e2ca1-a204-44a2-ae7e-82c7898cbd8f

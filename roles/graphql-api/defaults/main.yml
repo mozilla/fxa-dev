@@ -1,0 +1,19 @@
+---
+public_protocol: https
+private_protocol: http
+domain_name: "{{ subdomain }}.{{ hosted_zone }}"
+graphql_domain_name: "graphql-{{ domain_name }}"
+
+graphql_api_private_port: 8290
+graphql_api_git_repo: https://github.com/mozilla/fxa.git
+graphql_api_docker_tag: latest
+graphql_api_docker_state: started
+
+authdb_primary_host: 127.0.0.1
+authdb_primary_password: ""
+authdb_replica_host: 127.0.0.1
+authdb_replica_password: ""
+oauth_db_host: 127.0.0.1
+oauth_db_password: ""
+profile_db_host: 127.0.0.1
+profile_db_password: ""
