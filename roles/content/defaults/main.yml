@@ -14,6 +14,9 @@ content_private_port: 3030
 content_git_repo: https://github.com/mozilla/fxa-content-server.git
 content_docker_tag: latest
 content_docker_state: started
+content_oauth_prompt_none_enabled_client_ids:
+  - '9ebfe2c2f9ea3c58'
+  - 'edd29a80019d61a1'
 # N.B. the leading newline on the value below is important,
 # it prevents ansible from parsing it as a python dict.
 content_scoped_keys_validation: >-
