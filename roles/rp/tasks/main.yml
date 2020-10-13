@@ -23,12 +23,11 @@
     # changed.
     force: true
     state: present
-    name: mozilla/123done
+    name: mozilla/fxa-mono
     tag: "{{ rp_docker_tag }}"
   register: image
 
 - debug: var=image
-
 
 # Note: container renamed to `rp2` so that existing fxa-dev boxes will remove
 # the currently running container named `rp` and `rp2` will not fail to bind
@@ -46,11 +45,12 @@
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: rp2
-    image: mozilla/123done{{ ':' + rp_docker_tag }}
+    image: mozilla/fxa-mono{{ ':' + rp_docker_tag }}
     state: "{{ rp_docker_state }}"
     network_mode: host
     ports:
       - 4900:4900
+    working_dir: /fxa/packages/123done
     command: node ./server.js
     env:
       CONFIG_123DONE: "/config/config-dev.json"

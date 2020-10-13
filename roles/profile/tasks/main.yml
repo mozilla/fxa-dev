@@ -37,7 +37,7 @@
     # changed.
     force: true
     state: present
-    name: mozilla/fxa-profile-server
+    name: mozilla/fxa-mono
     tag: "{{ profile_docker_tag }}"
   register: image
 
@@ -48,11 +48,12 @@
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: profile
-    image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }} 
+    image: mozilla/fxa-mono{{ ':' + profile_docker_tag }} 
     state: "{{ profile_docker_state }}"
     network_mode: host
     ports:
       - 9011:9011
+    working_dir: /fxa/packages/fxa-profile-server
     command: node bin/server.js
     env:
       CONFIG_FILES: "/config/local.json"
@@ -67,11 +68,12 @@
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: profile-worker
-    image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }}
+    image: mozilla/fxa-mono{{ ':' + profile_docker_tag }}
     state: "{{ profile_docker_state }}"
     network_mode: host
     ports:
       - 1113:1113
+    working_dir: /fxa/packages/fxa-profile-server
     command: node bin/worker.js
     env:
       CONFIG_FILES: "/config/local.json,/config/worker.json"
@@ -86,11 +88,12 @@
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: profile-static
-    image: mozilla/fxa-profile-server{{ ':' + profile_docker_tag }}
+    image: mozilla/fxa-mono{{ ':' + profile_docker_tag }}
     state: "{{ profile_docker_state }}"
     network_mode: host
     ports:
       - 9012:9012
+    working_dir: /fxa/packages/fxa-profile-server
     command: node bin/_static.js
     env:
       CONFIG_FILES: "/config/local.json"

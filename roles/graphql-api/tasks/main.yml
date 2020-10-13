@@ -14,7 +14,7 @@
     # changed.
     force: true
     state: present
-    name: mozilla/fxa-graphql-api
+    name: mozilla/fxa-mono
     tag: "{{ graphql_api_docker_tag }}"
   register: image
 
@@ -25,12 +25,13 @@
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: graphql-api
-    image: mozilla/fxa-graphql-api{{ ':' + graphql_api_docker_tag }}
+    image: mozilla/fxa-mono{{ ':' + graphql_api_docker_tag }}
     state: "{{ graphql_api_docker_state }}"
     network_mode: host
     ports:
       - "{{ graphql_api_private_port }}:{{ graphql_api_private_port }}"
-    command: node dist/bin/main.js
+    working_dir: /fxa/packages/fxa-graphql-api/dist/fxa-graphql-api/src
+    command: node bin/main.js
     env:
       # using development to start; may switch to production
       NODE_ENV: "development"

@@ -9,7 +9,7 @@
     # changed.
     force: true
     state: present
-    name: mozilla/fxa-customs-server
+    name: mozilla/fxa-mono
     tag: "{{ customs_docker_tag }}"
   register: image
 
@@ -20,11 +20,12 @@
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: customs
-    image: mozilla/fxa-customs-server{{ ':' + customs_docker_tag }}
+    image: mozilla/fxa-mono{{ ':' + customs_docker_tag }}
     state: "{{ customs_docker_state }}"
     network_mode: host
     ports:
       - 7000:7000
+    working_dir: /fxa/packages/fxa-customs-server
     command: node bin/customs_server.js
     env:
       ALLOWED_PHONE_NUMBERS: "19164400029"

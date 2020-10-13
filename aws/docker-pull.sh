@@ -4,16 +4,11 @@
 # if changed subseqsently.
 
 IMAGES=(
-  mozilla/browserid-verifier
-  mozilla/fxa-auth-db-mysql
-  mozilla/fxa-auth-server
-  mozilla/fxa-content-server
-  mozilla/fxa-customs-server
-  mozilla/fxa-graphql-api
-  mozilla/syncserver
-  mozilla/fxa-profile-server
-  mozilla/pushbox
   mozilla/channelserver
+  mozilla/fxa-email-service
+  mozilla/fxa-mono
+  mozilla/pushbox
+  mozilla/syncserver
   mysql:5.6.35
 )
 
