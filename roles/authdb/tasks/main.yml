@@ -28,18 +28,19 @@
 
 - name: run db_patcher
   become: true
-  command: docker run --rm --net=host -e MYSQL_PASSWORD="{{ authdb_primary_password }}" -e MYSQL_HOST="{{ authdb_primary_host }}" -e NODE_ENV=stage mozilla/fxa-auth-db-mysql{{ ':' + authdb_docker_tag }} node bin/db_patcher.js
+  command: docker run --rm --net=host -e MYSQL_PASSWORD="{{ authdb_primary_password }}" -e MYSQL_HOST="{{ authdb_primary_host }}" -e NODE_ENV=stage -w=/fxa/packages/fxa-auth-db-mysql mozilla/fxa-mono:{{ authdb_docker_tag }} node bin/db_patcher.js
 
 - name: Start auth-db docker container
   become: true
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: auth-db
-    image: mozilla/fxa-auth-db-mysql{{ ':' + authdb_docker_tag }} 
+    image: mozilla/fxa-mono:{{ authdb_docker_tag }}
     state: "{{ authdb_docker_state }}"
     network_mode: host
     ports:
       - "{{ authdb_private_port }}:{{ authdb_private_port }}"
+    working_dir: /fxa/packages/fxa-auth-db-mysql
     command: node bin/server.js
     env:
       NODE_ENV: "stage"
