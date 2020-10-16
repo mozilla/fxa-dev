@@ -22,5 +22,3 @@ use_rds: "true"
 
 content_static_resource_url: https://static-stable.dev.lcip.org
 auth_recovery_code_count: 3
-
-fxadev_git_version: fxa-mono-docker-image
