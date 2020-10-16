@@ -9,7 +9,7 @@
     # changed.
     force: true
     state: present
-    name: mozilla/fxa-auth-db-mysql
+    name: mozilla/fxa-mono
     tag: "{{ authdb_docker_tag }}"
   register: image
 
