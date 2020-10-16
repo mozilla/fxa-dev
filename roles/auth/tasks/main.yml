@@ -28,7 +28,7 @@
     # changed.
     force: true
     state: present
-    name: mozilla/fxa-auth-server
+    name: mozilla/fxa-mono
     tag: "{{ auth_docker_tag }}"
   register: image
 
@@ -40,7 +40,8 @@
     docker run --rm --net=host -v /data/config/auth:/config
       -e SECRET_KEY_FILE=/config/secret-key.json
       -e PUBLIC_KEY_FILE=/config/public-key.json
-    mozilla/fxa-auth-server node scripts/gen_keys.js
+      -w /fxa/packages/fxa-auth-server/dist/fxa-auth-server
+    mozilla/fxa-mono node scripts/gen_keys.js
     creates=/data/config/auth/secret-key.json
 
 - name: generate vapid keys
@@ -48,7 +49,8 @@
   command: >-
     docker run --rm --net=host -v /data/config/auth:/config
       -e VAPID_KEYS_FILE=/config/vapid-keys.json
-    mozilla/fxa-auth-server node scripts/gen_vapid_keys.js
+      -w /fxa/packages/fxa-auth-server/dist/fxa-auth-server
+    mozilla/fxa-mono node scripts/gen_vapid_keys.js
     creates=/data/config/auth/vapid-keys.json
 
 # must be NODE_ENV!=production to avoid "'pushbox.key' must be set in production"
@@ -59,7 +61,8 @@
       -e FXA_OPENID_KEYFILE=/openid/openid-key.json
       -e FXA_OPENID_OLDKEYFILE=/openid/openid-old-key.json
       -e NODE_ENV=dev
-    mozilla/fxa-auth-server node scripts/oauth_gen_keys.js
+      -w /fxa/packages/fxa-auth-server/dist/fxa-auth-server
+    mozilla/fxa-mono node scripts/oauth_gen_keys.js
     creates=/data/config/openid/openid-key.json
 
 - name: get sub info
@@ -77,12 +80,13 @@
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: auth-server
-    image: mozilla/fxa-auth-server{{ ':' + auth_docker_tag }}
+    image: mozilla/fxa-mono{{ ':' + auth_docker_tag }}
     state: "{{ auth_docker_state }}"
     network_mode: host
     ports:
       - 9000:9000
-    command: node /app/bin/key_server.js
+    working_dir: /fxa/packages/fxa-auth-server/dist/fxa-auth-server
+    command: node bin/key_server.js
     env:
       NODE_ENV: "stage"
       PUBLIC_URL: "{{ auth_public_url }}"
@@ -158,11 +162,12 @@
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: auth-profile-update
-    image: mozilla/fxa-auth-server{{ ':' + auth_docker_tag }}
+    image: mozilla/fxa-mono{{ ':' + auth_docker_tag }}
     state: started
     network_mode: host
     ports:
       - 9000:9000
+    working_dir: /fxa/packages/fxa-auth-server/dist/fxa-auth-server
     command: node bin/profile_server_messaging.js
     env:
       NODE_ENV: "stage"

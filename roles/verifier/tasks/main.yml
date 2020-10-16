@@ -9,7 +9,7 @@
     # changed.
     force: true
     state: present
-    name: mozilla/browserid-verifier
+    name: mozilla/fxa-mono
     tag: "{{ verifier_docker_tag }}"
   register: image
 
@@ -20,11 +20,12 @@
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: verifier
-    image: mozilla/browserid-verifier{{ ':' + verifier_docker_tag }}
+    image: mozilla/fxa-mono{{ ':' + verifier_docker_tag }}
     state: "{{ verifier_docker_state }}"
     network_mode: host
     ports:
       - 8005:8005
+    working_dir: /fxa/packages/browserid-verifier
     command: node server.js
     env:
       COMPUTECLUSTER_MAX_PROCESSES: "1"

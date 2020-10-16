@@ -19,7 +19,7 @@
     # changed.
     force: true
     state: present
-    name: mozilla/fxa-content-server
+    name: mozilla/fxa-mono
     tag: "{{ content_docker_tag }}"
   register: image
 
@@ -30,14 +30,15 @@
   docker_container:
     # See note in https://github.com/mozilla/fxa-dev/tree/docker#about-using-docker_container-and-quoting-of-environment-values
     name: content
-    image: mozilla/fxa-content-server{{ ':' + content_docker_tag }}
+    image: mozilla/fxa-mono{{ ':' + content_docker_tag }}
     state: "{{ content_docker_state }}"
     ports:
       - 3030:3030
+    working_dir: /fxa/packages/fxa-content-server
     command: node server/bin/fxa-content-server.js
     env:
       NODE_ENV: "production"
-      CONFIG_FILES: "/app/server/config/production.json"
+      CONFIG_FILES: "server/config/production.json"
       HOST: "0.0.0.0"
       NEW_SETTINGS: "true"
       FXA_URL: "{{ auth_public_url }}"
