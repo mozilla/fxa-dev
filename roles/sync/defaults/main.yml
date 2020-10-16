@@ -6,7 +6,7 @@ sync_private_port: 5000
 
 sync_git_repo: https://github.com/mozilla-services/syncserver.git
 
-sync_docker_tag: latest
+sync_docker_tag: "1.9.1"
 sync_docker_state: started
 
 sync_public_url: "{{ public_protocol }}://{{ domain_name }}/syncserver"
