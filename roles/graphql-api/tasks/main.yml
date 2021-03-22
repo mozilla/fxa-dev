@@ -30,8 +30,8 @@
     network_mode: host
     ports:
       - "{{ graphql_api_private_port }}:{{ graphql_api_private_port }}"
-    working_dir: /fxa/packages/fxa-graphql-api/dist/fxa-graphql-api/src
-    command: node bin/main.js
+    working_dir: /fxa/packages/fxa-graphql-api/dist
+    command: node main.js
     env:
       # using development to start; may switch to production
       NODE_ENV: "development"

@@ -57,6 +57,7 @@
       SCOPED_KEYS_VALIDATION: "{{ content_scoped_keys_validation }}"
       ALLOWED_METRICS_FLOW_ORIGINS: "null,http://localhost:8001,http://localhost:8000,http://localhost:8000,https://www.mozilla.org,https://www.allizom.org,https://www-demo5.allizom.org,https://www-demo4.allizom.org,https://www-demo3.allizom.org,https://www-demo2.allizom.org,https://www-demo1.allizom.org,https://www-dev.allizom.org,https://fx-breach-alerts.herokuapp.com,https://monitor-v2.herokuapp.com"
       OAUTH_PROMPT_NONE_ENABLED_CLIENT_IDS: "{{ content_oauth_prompt_none_enabled_client_ids | join(',') }}"
+      FXA_GQL_URL: "{{ graphql_api_public_url }}"
   register: container
 
 - debug: var=container
