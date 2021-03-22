@@ -150,6 +150,11 @@
       PUSHBOX_KEY: "{{ auth_pushbox_key }}"
       RECOVERY_CODE_COUNT: "{{ auth_recovery_code_count | to_json }}"
       NEW_VAR_6: "false"
+      SUBSCRIPTIONS_PAYPAL_ENABLED: "true"
+      PAYPAL_SANDBOX: "true"
+      PAYPAL_NVP_USER: "sb-kqeao5376498_api1.business.example.com"
+      PAYPAL_NVP_PWD: "Q9ET6BUSS4K8259K"
+      PAYPAL_NVP_SIGNATURE: "AxTRlKRjNRdaZJcMuXFEDt2RlpVTAVEC9dkivazIxfAFWyQA8lZCGzqp"
     volumes:
       - /data/config/auth:/config
       - /data/config/openid:/openid
