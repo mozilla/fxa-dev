@@ -14,3 +14,8 @@ reaper_spare_me: "true"
 content_static_resource_url: https://static-latest.dev.lcip.org
 auth_signin_confirmation_skip_for_new_accounts: true
 auth_recovery_code_count: 3
+
+fxadev_git_version: debug-fxa-dev
+auth_docker_tag: v1.202.3
+content_docker_tag: v1.202.3
+graphql_api_docker_tag: v1.202.3
