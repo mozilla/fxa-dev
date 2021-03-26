@@ -14,3 +14,11 @@ reaper_spare_me: "true"
 content_static_resource_url: https://static-latest.dev.lcip.org
 auth_signin_confirmation_skip_for_new_accounts: true
 auth_recovery_code_count: 3
+
+# Update once an hour because of Docker Hub rate limits
+cron_time:
+  weekday: '*'
+  month: '*'
+  day: '*'
+  hour: '*'
+  minute: '15'
